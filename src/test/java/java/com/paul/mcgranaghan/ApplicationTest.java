@@ -1,4 +1,4 @@
-package java.com.paul.mcg;
+package java.com.paul.mcgranaghan;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
