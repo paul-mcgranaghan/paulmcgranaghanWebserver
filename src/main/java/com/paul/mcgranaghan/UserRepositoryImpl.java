@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -14,10 +16,22 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository{
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private RowMapper<User> userRowMapper = new UsesrRowMapper();
+    private RowMapper<User> userRowMapper = new UserRowMapper();
+
+    private static final String GET_ALL_USERS_SQL ="Select * From \"User\"";
+
+    private static final String INSERT_INTO_USER = "INSERT INTO \"User\" (user_id, name ,email, last_updated) values (:user_id, :name, :email, CURRENT_TIMESTAMP)";
+
+    Map<String, Object> paramMap = new HashMap<String, Object>();
+
 
     @Override
     public <S extends User> S save(S entity) {
+        paramMap.put("name", entity.getName());
+        paramMap.put("email", entity.getEmail());
+        paramMap.put("user_id", "U1000");
+
+        namedParameterJdbcTemplate.update(INSERT_INTO_USER, paramMap);
         return null;
     }
 
@@ -36,10 +50,9 @@ public class UserRepositoryImpl implements UserRepository{
         return false;
     }
 
-    @Override
     public Iterable<User> findAll() {
         log.info("Requesting all user info");
-        return namedParameterJdbcTemplate.query("Select * From \"User\"", userRowMapper);
+        return namedParameterJdbcTemplate.query(GET_ALL_USERS_SQL, userRowMapper);
     }
 
     @Override
