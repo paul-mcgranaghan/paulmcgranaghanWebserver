@@ -13,25 +13,23 @@ import java.util.Optional;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements UserRepository {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private RowMapper<User> userRowMapper = new UserRowMapper();
 
-    private static final String GET_ALL_USERS_SQL ="Select * From \"User\"";
+    private final RowMapper<User> userRowMapper = new UserRowMapper();
 
-    private static final String INSERT_INTO_USER = "INSERT INTO \"User\" (user_id, name ,email, last_updated) values (:user_id, :name, :email, CURRENT_TIMESTAMP)";
+    private static final String GET_ALL_USERS_SQL = "SELECT * FROM \"User\"";
+    private static final String INSERT_INTO_USER_SQL = "INSERT INTO \"User\" (user_id, name ,email, last_updated) values (:user_id, :name, :email, CURRENT_TIMESTAMP)";
+    private static final String GET_NEXT_USER_SEQ_SQL = "SELECT nextval('public.User_ID_Seq')";
 
-    Map<String, Object> paramMap = new HashMap<String, Object>();
-
-
-    @Override
     public <S extends User> S save(S entity) {
+        Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", entity.getName());
         paramMap.put("email", entity.getEmail());
-        paramMap.put("user_id", "U1000");
+        paramMap.put("user_id", "U" + getNextUserId());
 
-        namedParameterJdbcTemplate.update(INSERT_INTO_USER, paramMap);
+        namedParameterJdbcTemplate.update(INSERT_INTO_USER_SQL, paramMap);
         return null;
     }
 
@@ -50,6 +48,15 @@ public class UserRepositoryImpl implements UserRepository{
         return false;
     }
 
+    private Integer getNextUserId() {
+        /* TODO: Not sure about this, don't need the param,
+         *  but seems odd to make an new jdbcTemplate just have one that doesn't require param
+         */
+        Map<String, Object> paramMap = new HashMap<>();
+        return namedParameterJdbcTemplate.queryForObject(GET_NEXT_USER_SEQ_SQL, paramMap, Integer.class);
+    }
+
+    @Override
     public Iterable<User> findAll() {
         log.info("Requesting all user info");
         return namedParameterJdbcTemplate.query(GET_ALL_USERS_SQL, userRowMapper);
@@ -72,16 +79,13 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public void delete(User entity) {
-
     }
 
     @Override
     public void deleteAll(Iterable<? extends User> entities) {
-
     }
 
     @Override
     public void deleteAll() {
-
     }
 }
