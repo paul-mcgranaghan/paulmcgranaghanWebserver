@@ -1,4 +1,4 @@
-package com.paul.mcgranaghan;
+package com.paul.mcgranaghan.webserver;
 
 import org.springframework.jdbc.core.RowMapper;
 

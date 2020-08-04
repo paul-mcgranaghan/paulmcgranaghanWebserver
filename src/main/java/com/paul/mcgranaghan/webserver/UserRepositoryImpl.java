@@ -1,4 +1,4 @@
-package com.paul.mcgranaghan;
+package com.paul.mcgranaghan.webserver;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

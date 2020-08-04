@@ -1,4 +1,4 @@
-package com.paul.mcgranaghan;
+package com.paul.mcgranaghan.webserver;
 
 import lombok.Getter;
 import lombok.Setter;

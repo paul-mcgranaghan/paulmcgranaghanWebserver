@@ -1,4 +1,4 @@
-package com.paul.mcgranaghan;
+package com.paul.mcgranaghan.webserver;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
