@@ -1,5 +1,7 @@
 package com.paul.mcgranaghan.webserver;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +13,8 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class User {
 
     @Id
