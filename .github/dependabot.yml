@@ -10,12 +10,7 @@ updates:
     schedule:
       interval: "weekly"
       
-  - package-ecosystem: "postgresql" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "weekly"
-  
-  - package-ecosystem: "org.springframework.boot" # See documentation for possible values
+  - package-ecosystem: "gradle" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
