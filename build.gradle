@@ -24,7 +24,7 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 
     compileOnly 'org.projectlombok:lombok:1.18.12'
-    compileOnly group: 'com.google.guava', name: 'guava', version: '11.0.2'
+    compileOnly group: 'com.google.guava', name: 'guava', version: '23.0'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
     testImplementation 'org.projectlombok:lombok:1.18.12'
