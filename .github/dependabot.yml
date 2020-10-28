@@ -8,4 +8,14 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/src/main/js/angularclient/" # Location of package manifests
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      
+  - package-ecosystem: "postgresql" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  
+  - package-ecosystem: "org.springframework.boot" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
