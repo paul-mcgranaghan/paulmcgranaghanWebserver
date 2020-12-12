@@ -1,0 +1,29 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="paulmcg" id="changelog-1.0">
+        <createTable tableName="User">
+            <column name="name" type="TEXT">
+                <constraints  nullable="false"  primaryKey="false"  unique="false"/>
+            </column>
+            <column name="age" type="smallint">
+                <constraints  nullable="false"  primaryKey="false"  unique="false"/>
+            </column>
+            <column name="user_id" type="TEXT">
+                <constraints  nullable="false"  primaryKey="true"  unique="true"/>
+            </column>
+            <column name="last_updated" type="TIMESTAMP WITH TIME ZONE">
+                <constraints  nullable="false"  primaryKey="false"  unique="true"/>
+            </column>
+            <column name="email" type="TEXT">
+                <constraints  nullable="false"  primaryKey="false"  unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="paulmcg" id="changelog-1.0">
+        <createIndex tableName="User" indexName="User_IDX">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
