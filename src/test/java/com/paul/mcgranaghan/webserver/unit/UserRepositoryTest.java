@@ -1,4 +1,4 @@
-package com.paul.mcgranaghan.webserver;
+package com.paul.mcgranaghan.webserver.unit;
 
 import com.paul.mcgranaghan.webserver.dto.User;
 import com.paul.mcgranaghan.webserver.repository.UserRepository;

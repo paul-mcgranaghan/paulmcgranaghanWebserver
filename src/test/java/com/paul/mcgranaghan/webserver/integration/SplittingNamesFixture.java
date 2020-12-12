@@ -1,4 +1,4 @@
-package com.paul.mcgranaghan.webserver;
+package com.paul.mcgranaghan.webserver.integration;
 
 import org.concordion.integration.junit4.ConcordionRunner;
 import org.junit.runner.RunWith;
@@ -14,8 +14,8 @@ public class SplittingNamesFixture {
         return result;
     }
 
-    public static class Result {
-        String firstName;
-        String lastName;
+    class Result {
+        public String firstName;
+        public String lastName;
     }
 }

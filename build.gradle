@@ -27,6 +27,13 @@ dependencies {
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
     compileOnly group: 'com.google.guava', name: 'guava', version: '23.0'
 
+    testCompile group: 'org.concordion', name: 'concordion', version: '3.0.1'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.5.RELEASE'
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+}
+
+test {
+    systemProperties['concordion.output.dir'] = "$reporting.baseDir/spec"
+    testLogging.showStandardStreams = true
+    outputs.upToDateWhen { false }
 }
