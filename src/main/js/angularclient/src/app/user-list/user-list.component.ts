@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../model/user';
-import { UserService } from '../service/user.service';
+import {Component, OnInit} from '@angular/core';
+import {User} from '../model/user';
+import {UserService} from '../service/user.service';
 
 @Component({
   selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  templateUrl: './user-list.component.html'
 })
 export class UserListComponent implements OnInit {
 
@@ -14,7 +13,8 @@ export class UserListComponent implements OnInit {
   constructor(private userService: UserService) {
   }
 
-  ngOnInit(): void {this.userService.findAll().subscribe(data => {
+  ngOnInit(): void {
+    this.userService.findAll().subscribe(data => {
       this.users = data;
     });
   }
