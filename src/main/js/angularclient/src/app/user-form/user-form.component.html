@@ -1,41 +1,46 @@
-<div class="card my-5">
+<div class="mat-card my-5">
   <div class="card-body">
-    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+
       <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" [(ngModel)]="user.name"
-               class="form-control"
+        <input #name="ngModel" [(ngModel)]="user.name"
+               class="form-control mat- mat-app-background"
                id="name"
                name="name"
                placeholder="Enter your name"
-               required #name="ngModel">
+               required type="text">
+        <div [hidden]="!name.pristine" class="alert mat-error">Name is required</div>
       </div>
-      <div [hidden]="!name.pristine" class="alert alert-danger">Name is required</div>
+
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" [(ngModel)]="user.email"
+        <input #email="ngModel" [(ngModel)]="user.email"
                class="form-control"
                id="email"
                name="email"
                placeholder="Enter your email address"
-               required #email="ngModel">
-        <div [hidden]="!email.pristine" class="alert alert-danger">Email is required</div>
+               required type="email">
+        <div [hidden]="!email.pristine" class="alert mat-error">Email is required</div>
       </div>
+
       <div class="form-group">
         <label for="age">Age</label>
-        <input type="number" [(ngModel)]="user.age"
+        <input #age="ngModel" [(ngModel)]="user.age"
                class="form-control"
                id="age"
                name="age"
                placeholder="Enter your age"
-               required #age="ngModel">
-        <div [hidden]="!age.pristine" class="alert alert-danger">Age is required</div>
+               required type="number">
+        <div [hidden]="!age.pristine" class="alert mat-error">Age is required</div>
       </div>
-      <button type="submit" [disabled]="!userForm.form.valid"
-              class="btn btn-info">Submit
+
+      <button [disabled]="!userForm.form.valid" class="btn mat-raised-button mat-primary"
+              type="submit">Submit
       </button>
+
+
     </form>
   </div>
-
 
 </div>
