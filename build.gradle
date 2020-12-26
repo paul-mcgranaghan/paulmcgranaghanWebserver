@@ -24,12 +24,26 @@ dependencies {
 
     runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.200'
 
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
     compileOnly group: 'com.google.guava', name: 'guava', version: '23.0'
 
     testCompile group: 'org.concordion', name: 'concordion', version: '3.0.1'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.4.1'
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+}
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': archiveVersion,
+                'Main-Class': 'com.mkyong.DateUtils'
+    }
+    archiveBaseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
 
 test {
