@@ -20,7 +20,7 @@ dependencies {
     implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.2.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.1'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.18'
-    implementation group: 'junit', name: 'junit', version: '4.12'
+    implementation group: 'junit', name: 'junit', version: '4.13.1'
 
     runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.200'
 
