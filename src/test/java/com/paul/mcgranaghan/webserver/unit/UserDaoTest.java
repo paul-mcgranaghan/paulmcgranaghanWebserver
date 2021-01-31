@@ -9,7 +9,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,10 +23,7 @@ import static org.mockito.Mockito.when;
 class UserDaoTest {
 
     @Mock
-    private NamedParameterJdbcTemplate mockTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_DEEP_STUBS);
-
-    @Mock
-    private DataSource dataSource;
+    private final NamedParameterJdbcTemplate mockTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_DEEP_STUBS);
 
     private final UserDao underTest = new UserDao(mockTemplate);
 

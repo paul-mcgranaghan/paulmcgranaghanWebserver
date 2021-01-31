@@ -14,7 +14,7 @@ public class SplittingNamesFixture {
         return result;
     }
 
-    class Result {
+    static class Result {
         public String firstName;
         public String lastName;
     }
