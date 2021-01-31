@@ -1,7 +1,7 @@
 package com.paul.mcgranaghan.webserver.unit;
 
 import com.paul.mcgranaghan.webserver.dto.User;
-import com.paul.mcgranaghan.webserver.repository.UserRepository;
+import com.paul.mcgranaghan.webserver.repository.UserDao;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-class UserRepositoryTest {
+class UserDaoTest {
 
     @Mock
     private NamedParameterJdbcTemplate mockTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_DEEP_STUBS);
@@ -29,7 +29,7 @@ class UserRepositoryTest {
     @Mock
     private DataSource dataSource;
 
-    private final UserRepository underTest = new UserRepository(dataSource, mockTemplate);
+    private final UserDao underTest = new UserDao(mockTemplate);
 
     @Test
     public void saveUserEntity() {

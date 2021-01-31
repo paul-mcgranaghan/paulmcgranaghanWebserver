@@ -14,3 +14,5 @@ last name [Smith](- "?=#result.lastName").
 
 The full name [John Smith](- "#name") is [broken](- "#result = split(#name)") into first
 name [John](- "?=#result.firstName") and last name [Smith](- "?=#result.lastName").
+
+:joy:
