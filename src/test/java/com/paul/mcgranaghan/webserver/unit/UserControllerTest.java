@@ -12,7 +12,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,10 +25,9 @@ class UserControllerTest {
 
     private final NamedParameterJdbcTemplate mockNamedParameterJdbcTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_DEEP_STUBS);
     private final User user = User.builder().name("name").email("email").age(12).build();
+
     @Mock
-    private DataSource dataSource;
-    @Mock
-    private UserDao mockUserDao = new UserDao(mockNamedParameterJdbcTemplate);
+    private final UserDao mockUserDao = new UserDao(mockNamedParameterJdbcTemplate);
     private final UserController underTest = new UserController(mockUserDao);
 
     @Test
