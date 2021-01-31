@@ -2,7 +2,7 @@ package com.paul.mcgranaghan.webserver.unit;
 
 import com.paul.mcgranaghan.webserver.api.UserController;
 import com.paul.mcgranaghan.webserver.dto.User;
-import com.paul.mcgranaghan.webserver.repository.UserRepository;
+import com.paul.mcgranaghan.webserver.repository.UserDao;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -29,8 +29,8 @@ class UserControllerTest {
     @Mock
     private DataSource dataSource;
     @Mock
-    private UserRepository mockUserRepository = new UserRepository(dataSource, mockNamedParameterJdbcTemplate);
-    private final UserController underTest = new UserController(mockUserRepository);
+    private UserDao mockUserDao = new UserDao(mockNamedParameterJdbcTemplate);
+    private final UserController underTest = new UserController(mockUserDao);
 
     @Test
     public void getAllUsers_positive() {

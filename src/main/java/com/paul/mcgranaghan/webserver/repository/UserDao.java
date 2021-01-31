@@ -1,51 +1,29 @@
 package com.paul.mcgranaghan.webserver.repository;
 
 import com.paul.mcgranaghan.webserver.dto.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Repository
-/*@RequiredArgsConstructor*/
-public class UserRepository {
+@RequiredArgsConstructor
+public class UserDao {
 
     private static final String GET_ALL_USERS_SQL = "SELECT * FROM \"User\"";
     private static final String INSERT_INTO_USER_SQL = "INSERT INTO \"User\" (user_id, age, name ,email, last_updated) values (:user_id, :age, :name, :email, CURRENT_TIMESTAMP)";
     private static final String GET_NEXT_USER_SEQ_SQL = "SELECT nextval('public.User_ID_Seq')";
     private static final String GET_USER_BY_ID = GET_ALL_USERS_SQL + " WHERE user_id= :user_id";
 
-    //@Autowired
-    private final DataSource dataSource;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final RowMapper<User> userRowMapper = new UserRowMapper();
-
-    /*    @Bean
-        @Value("dataSource")
-        public DataSource dataSource() {
-            return new EmbeddedDatabaseBuilder()
-                    .setType(EmbeddedDatabaseType.H2)
-                    .build();
-        }
-
-        @Bean
-        @Value("namedParameterJdbcTemplate")
-        public NamedParameterJdbcTemplate namedParameterJdbcTemplate(@Autowired @Qualifier("dataSource") DataSource dataSource) {
-            return new NamedParameterJdbcTemplate(dataSource);
-        }
-    */
-    public UserRepository(DataSource dataSource, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.dataSource = dataSource;
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-
-    }
 
     public void save(User entity) {
         Map<String, Object> paramMap = new HashMap<>();
