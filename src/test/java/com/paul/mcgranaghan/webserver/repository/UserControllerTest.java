@@ -1,9 +1,8 @@
-package com.paul.mcgranaghan.webserver.unit;
+package com.paul.mcgranaghan.webserver.repository;
 
 import com.paul.mcgranaghan.webserver.api.UserController;
 import com.paul.mcgranaghan.webserver.dto.User;
-import com.paul.mcgranaghan.webserver.repository.UserDao;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -21,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-class UserControllerTest {
+public class UserControllerTest {
 
     private final NamedParameterJdbcTemplate mockNamedParameterJdbcTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_DEEP_STUBS);
     private final User user = User.builder().name("name").email("email").age(12).build();
