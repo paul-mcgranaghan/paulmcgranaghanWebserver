@@ -45,7 +45,7 @@ public class UserDao {
         } catch (DataAccessException e) {
             log.error("Cannot get user id={}", id, e);
         }
-        return requestedUser == null;
+        return requestedUser != null;
     }
 
     private String getNextUserId() {
