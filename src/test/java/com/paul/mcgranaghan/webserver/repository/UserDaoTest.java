@@ -1,6 +1,7 @@
 package com.paul.mcgranaghan.webserver.repository;
 
 import com.paul.mcgranaghan.webserver.dto.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,7 +22,12 @@ public class UserDaoTest {
     @Mock
     private NamedParameterJdbcTemplate mockTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_MOCKS);
 
-    private final UserDao underTest = new UserDao(mockTemplate);
+    private UserDao underTest;
+
+    @Before
+    public void before() {
+        underTest = new UserDao(mockTemplate);
+    }
 
     @Test
     public void saveUserEntity() {
