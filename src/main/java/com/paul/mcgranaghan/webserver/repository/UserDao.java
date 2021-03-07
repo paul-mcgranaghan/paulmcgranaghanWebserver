@@ -39,13 +39,13 @@ public class UserDao {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("user_id", id);
 
-        User requestedUser = null;
         try {
-            requestedUser = namedParameterJdbcTemplate.queryForObject(GET_USER_BY_ID, paramMap, User.class);
+            User requestedUser = namedParameterJdbcTemplate.queryForObject(GET_USER_BY_ID, paramMap, User.class);
+            return requestedUser != null;
         } catch (DataAccessException e) {
             log.error("Cannot get user id={}", id, e);
         }
-        return requestedUser != null;
+        return false;
     }
 
     private String getNextUserId() {
