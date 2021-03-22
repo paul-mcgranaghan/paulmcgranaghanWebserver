@@ -15,7 +15,7 @@ repositories {
 ext {
     springBootVersion = '2.4.3'
     mybatisVersion = '2.1.4'
-    springBatchVersion = '4.3.1'
+    springBatchVersion = '4.3.2'
     lombokVersion = '1.18.18'
     liquibaseVersion = '4.3.1'
     postgresqlVersion = '42.2.19.jre7'
