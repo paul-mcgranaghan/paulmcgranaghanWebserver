@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.3'
+    id 'org.springframework.boot' version '2.4.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java-library'
     id 'project-report'
@@ -13,15 +13,15 @@ repositories {
 }
 
 ext {
-    springBootVersion = '2.4.3'
+    springBootVersion = '2.4.4'
     mybatisVersion = '2.1.4'
-    springBatchVersion = '4.3.1'
+    springBatchVersion = '4.3.2'
     lombokVersion = '1.18.18'
     liquibaseVersion = '4.3.1'
     postgresqlVersion = '42.2.19.jre7'
     hsqldbVersion = '2.5.1'
     h2databaseVersion = '1.4.200'
-    guavaVersion = '30.1-jre'
+    guavaVersion = '30.1.1-jre'
     junitVersion = '4.13.2'
     concordionVersion = '3.0.1'
     sl4jVersion = '2.0.0-alpha1'
