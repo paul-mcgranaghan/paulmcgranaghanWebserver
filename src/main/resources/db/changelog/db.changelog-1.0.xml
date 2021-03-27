@@ -1,29 +1,51 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet author="paulmcg" id="changelog-1.0">
-        <createTable tableName="User">
+
+    <changeSet id="changelog-1.1" author="paulmcg">
+        <createTable tableName="User" schemaName="public">
             <column name="name" type="TEXT">
-                <constraints  nullable="false"  primaryKey="false"  unique="false"/>
+                <constraints nullable="false" primaryKey="false" unique="false"/>
             </column>
             <column name="age" type="smallint">
-                <constraints  nullable="false"  primaryKey="false"  unique="false"/>
+                <constraints nullable="false" primaryKey="false" unique="false"/>
             </column>
             <column name="user_id" type="TEXT">
-                <constraints  nullable="false"  primaryKey="true"  unique="true"/>
+                <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
             <column name="last_updated" type="TIMESTAMP WITH TIME ZONE">
-                <constraints  nullable="false"  primaryKey="false"  unique="true"/>
+                <constraints nullable="false" primaryKey="false" unique="true"/>
             </column>
             <column name="email" type="TEXT">
-                <constraints  nullable="false"  primaryKey="false"  unique="false"/>
+                <constraints nullable="false" primaryKey="false" unique="false"/>
             </column>
         </createTable>
+        <rollback>
+            <dropTable tableName="User" schemaName="public"/>
+        </rollback>
     </changeSet>
-    <changeSet author="paulmcg" id="changelog-1.0">
-        <createIndex tableName="User" indexName="User_IDX">
+
+    <changeSet id="changelog-1.2" author="paulmcg">
+        <createSequence schemaName="public"
+                        sequenceName="USER_ID_SEQ"
+                        startValue="1"
+                        incrementBy="1"
+                        minValue="1"
+                        maxValue="9223372036854775807"
+                        cacheSize="1"
+        />
+        <rollback>
+            <dropSequence sequenceName="USER_ID_SEQ"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="changelog-1.3" author="paulmcg">
+        <createIndex tableName="User" schemaName="public" indexName="User_IDX">
             <column name="user_id"/>
         </createIndex>
+        <rollback>
+            <dropIndex tableName="User" indexName="User_IDX"/>
+        </rollback>
     </changeSet>
 </databaseChangeLog>

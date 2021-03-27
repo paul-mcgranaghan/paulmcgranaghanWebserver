@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.4.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
+    id 'java-library'
     id 'project-report'
 }
 
@@ -24,34 +24,36 @@ ext {
     guavaVersion = '30.1-jre'
     junitVersion = '4.13.2'
     concordionVersion = '3.0.1'
-    sl4jVersion = '1.0.13.5'
+    sl4jVersion = '2.0.0-alpha1'
 }
 
 dependencies {
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
-
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
 
     implementation "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
-    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisVersion"
 
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisVersion"
     implementation "org.liquibase:liquibase-core:$liquibaseVersion"
     implementation "org.postgresql:postgresql:$postgresqlVersion"
-
+    //implementation "org.slf4j:slf4j-api:2.0.0-alpha1"
     implementation "junit:junit:$junitVersion"
 
     runtimeOnly "com.h2database:h2:$h2databaseVersion"
     runtimeOnly "org.hsqldb:hsqldb:$hsqldbVersion"
 
-    compileOnly "org.projectlombok:lombok:$lombokVersion"
     compileOnly "com.google.guava:guava:$guavaVersion"
 
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     testImplementation "org.springframework.batch:spring-batch-test:$springBatchVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    //testImplementation "org.slf4j:slf4j-api:2.14.1"
+
     testCompile "org.concordion:concordion:$concordionVersion"
 
 }

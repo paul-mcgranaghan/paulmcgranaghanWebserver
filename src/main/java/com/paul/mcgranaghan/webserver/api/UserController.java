@@ -18,12 +18,12 @@ public class UserController {
 
     private final UserDao userDao;
 
-    @GetMapping("/users")
+    @GetMapping("/users/listAll")
     public List<User> getUsers() {
         return userDao.findAll();
     }
 
-    @PostMapping("/users")
+    @PostMapping("/users/addUser")
     void addUser(@RequestBody User user) {
         userDao.save(user);
     }
