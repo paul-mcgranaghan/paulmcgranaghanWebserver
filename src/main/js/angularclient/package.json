@@ -22,7 +22,7 @@
     "@angular/cdk": "^11.0.2",
     "@angular/material": "^11.0.2",
     "rxjs": "~6.6.6",
-    "rxjs-compat": "^6.6.3",
+    "rxjs-compat": "^6.6.7",
     "tslib": "^2.1.0",
     "zone.js": "~0.10.3"
   },
