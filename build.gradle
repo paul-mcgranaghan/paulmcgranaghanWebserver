@@ -29,7 +29,9 @@ ext {
 
 dependencies {
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
     compileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly "com.google.guava:guava:$guavaVersion"
 
     implementation "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
@@ -39,22 +41,18 @@ dependencies {
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisVersion"
     implementation "org.liquibase:liquibase-core:$liquibaseVersion"
     implementation "org.postgresql:postgresql:$postgresqlVersion"
-    //implementation "org.slf4j:slf4j-api:2.0.0-alpha1"
-    implementation "junit:junit:$junitVersion"
 
     runtimeOnly "com.h2database:h2:$h2databaseVersion"
     runtimeOnly "org.hsqldb:hsqldb:$hsqldbVersion"
 
-    compileOnly "com.google.guava:guava:$guavaVersion"
+    testCompileOnly "org.concordion:concordion:$concordionVersion"
+    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
 
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     testImplementation "org.springframework.batch:spring-batch-test:$springBatchVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
-    //testImplementation "org.slf4j:slf4j-api:2.14.1"
-
-    testCompile "org.concordion:concordion:$concordionVersion"
 
 }
 

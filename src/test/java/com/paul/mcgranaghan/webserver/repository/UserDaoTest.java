@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 public class UserDaoTest {
 
     @Mock
-    private NamedParameterJdbcTemplate mockTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_MOCKS);
+    private final NamedParameterJdbcTemplate mockTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_MOCKS);
 
     private UserDao underTest;
 
