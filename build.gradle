@@ -19,7 +19,7 @@ ext {
     lombokVersion = '1.18.20'
     liquibaseVersion = '4.3.2'
     postgresqlVersion = '42.2.19.jre7'
-    hsqldbVersion = '2.5.1'
+    hsqldbVersion = '2.6.0'
     h2databaseVersion = '1.4.200'
     guavaVersion = '30.1.1-jre'
     junitVersion = '4.13.2'
