@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 @RunWith(ConcordionRunner.class)
 public class SplittingNamesFixture {
 
+    public String Ignored;
+
     public Result split(String fullName) {
         Result result = new Result();
         String[] words = fullName.split(" ");

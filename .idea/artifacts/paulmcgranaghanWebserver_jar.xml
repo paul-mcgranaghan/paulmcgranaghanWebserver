@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/paulmcgranaghanWebserver_jar</output-path>
     <root id="archive" name="paulmcgranaghanWebserver.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/webservice/main/java/META-INF/MANIFEST.MF" />
       </element>
     </root>
   </artifact>

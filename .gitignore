@@ -26,4 +26,4 @@ hs_err_pid*
 .gradle/
 out/*
 build/*
-/src/main/js/angularclient/package-lock.json
+/webserver/main/js/angularclient/package-lock.json
