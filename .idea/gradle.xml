@@ -8,14 +8,27 @@
         <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="C:/Gradle/gradle-6.5" />
+        <option name="gradleHome" value="C:/Program Files/gradle-7.0-rc-1" />
         <option name="gradleJvm" value="14" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/integrationTests" />
-            <option value="$PROJECT_DIR$/src" />
-            <option value="$PROJECT_DIR$/src/integrationTests" />
+            <option value="$PROJECT_DIR$/batch" />
+            <option value="$PROJECT_DIR$/webservice" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="delegatedBuild" value="true" />
+        <option name="testRunner" value="GRADLE" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/batch" />
+        <option name="gradleHome" value="C:/Program Files/gradle-7.0-rc-1" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/batch" />
+            <option value="$PROJECT_DIR$/webservice" />
           </set>
         </option>
       </GradleProjectSettings>
