@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/paulmcgranaghanWebserver.iml" filepath="$PROJECT_DIR$/.idea/paulmcgranaghanWebserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/src/paulmcgranaghanWebserver.src.main.iml" filepath="$PROJECT_DIR$/.idea/modules/src/paulmcgranaghanWebserver.src.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/src/paulmcgranaghanWebserver.src.test.iml" filepath="$PROJECT_DIR$/.idea/modules/src/paulmcgranaghanWebserver.src.test.iml" />
     </modules>
   </component>
 </project>
