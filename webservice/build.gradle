@@ -38,7 +38,7 @@ dependencies {
 
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0"
     implementation "org.liquibase:liquibase-core:4.3.5"
-    implementation "org.postgresql:postgresql:42.2.20.jre7"
+    implementation "org.postgresql:postgresql:42.2.22.jre7"
 
     runtimeOnly "com.h2database:h2:1.4.200"
     runtimeOnly "org.hsqldb:hsqldb:2.6.0"
