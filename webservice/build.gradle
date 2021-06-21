@@ -43,7 +43,7 @@ dependencies {
     runtimeOnly "com.h2database:h2:1.4.200"
     runtimeOnly "org.hsqldb:hsqldb:2.6.0"
 
-    testCompileOnly "org.concordion:concordion:3.0.1"
+    testCompileOnly "org.concordion:concordion:3.1.1"
     testCompileOnly "org.projectlombok:lombok:1.18.20"
 
     testAnnotationProcessor "org.projectlombok:lombok:1.18.20"
