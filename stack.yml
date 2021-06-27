@@ -1,8 +1,7 @@
 # Use postgres/example user/password credentials
-version: '3.1'
+version: "3.1"
 
 services:
-
   db:
     image: postgres
     restart: always
@@ -17,7 +16,7 @@ services:
     ports:
       - 9001:8080
       - 5432:5432
-    
+
   portainer-instance:
     image: portainer/portainer-ce:latest
     restart: always
@@ -26,9 +25,9 @@ services:
       - 9000:9000
 
   rabbitmq3:
-        image: rabbitmq:3-management
-        environment: 
-            RABBITMQ_ERLANG_COOKIE: 'secret cookie here'
-        ports:
-            - 15672:15672
-            - 5672:5672
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "secret cookie here"
+    ports:
+      - 15672:15672
+      - 5672:5672
