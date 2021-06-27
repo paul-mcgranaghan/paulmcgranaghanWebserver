@@ -10,6 +10,7 @@ export class UserService {
   private addUserUrl: string;
 
   constructor(private http: HttpClient) {
+
     this.usersUrl = 'http://localhost:8090/users/listAll';
     this.addUserUrl = 'http://localhost:8090/users/addUser';
   }
