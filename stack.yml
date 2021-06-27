@@ -24,3 +24,11 @@ services:
     ports:
       - 8000:8000
       - 9000:9000
+
+  rabbitmq3:
+        image: rabbitmq:3-management
+        environment: 
+            RABBITMQ_ERLANG_COOKIE: 'secret cookie here'
+        ports:
+            - 15672:15672
+            - 5672:5672
