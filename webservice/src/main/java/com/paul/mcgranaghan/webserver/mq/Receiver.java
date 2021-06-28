@@ -1,4 +1,4 @@
-package com.paul.mcgranaghan.webserver;
+package com.paul.mcgranaghan.webserver.mq;
 
 import org.springframework.stereotype.Component;
 
