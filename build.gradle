@@ -5,7 +5,7 @@ plugins {
     id 'project-report'
 }
 
-group 'com.paul.mcgranaghan'
+group 'com.paul.mcgranaghan.webserver'
 version '1.0-SNAPSHOT'
 sourceCompatibility = '16'
 
@@ -28,21 +28,16 @@ ext {
     sl4jVersion = '2.0.0-alpha1'
 }
 
-
-//create a single Jar with all dependencies
-task fatJar(type: Jar) {
-    manifest {
-        attributes 'Implementation-Title': 'Gradle Jar File Example',
-                'Implementation-Version': archiveVersion,
-                'Main-Class': 'com.paul.mcgranaghan.webserver.Application'
-    }
-    archiveBaseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-}
-
 test {
     systemProperties['concordion.output.dir'] = "$reporting.baseDir/spec"
     testLogging.showStandardStreams = true
     outputs.upToDateWhen { false }
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
 }
