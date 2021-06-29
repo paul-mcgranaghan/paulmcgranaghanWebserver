@@ -27,6 +27,4 @@ hs_err_pid*
 .gradle/
 /out/*
 */build/*
-package-lock.json
-/gradle-wrapper.jar
 /.idea/*
