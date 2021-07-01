@@ -1,5 +1,4 @@
 rootProject.name = 'paulmcgranaghanWebserver'
-findProject(':src:integrationTests')?.name = 'integrationTests'
 include 'batch'
 include 'webservice'
 

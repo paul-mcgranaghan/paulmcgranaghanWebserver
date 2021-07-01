@@ -19,8 +19,8 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="delegatedBuild" value="true" />
-        <option name="testRunner" value="GRADLE" />
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/batch" />
         <option name="gradleHome" value="C:/Program Files/gradle-7.0-rc-1" />
