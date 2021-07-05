@@ -11,7 +11,7 @@ ext {
     springBatchVersion = '4.3.3'
     lombokVersion = '1.18.20'
     liquibaseVersion = '4.3.5'
-    postgresqlVersion = '42.2.20.jre7'
+    postgresqlVersion = '42.2.22.jre7'
     hsqldbVersion = '2.6.0'
     h2databaseVersion = '1.4.200'
     guavaVersion = '30.1.1-jre'
