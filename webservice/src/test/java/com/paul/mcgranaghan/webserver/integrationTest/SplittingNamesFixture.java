@@ -1,4 +1,4 @@
-package com.paul.mcgranaghan.webserver;
+package com.paul.mcgranaghan.webserver.integrationTest;
 
 import org.concordion.integration.junit4.ConcordionRunner;
 import org.junit.runner.RunWith;

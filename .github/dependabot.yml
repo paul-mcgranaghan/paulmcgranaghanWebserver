@@ -9,8 +9,16 @@ updates:
     directory: "/src/main/js/angularclient/" # Location of package manifests
     schedule:
       interval: "weekly"
-      
+
   - package-ecosystem: "gradle" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/webservice/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+
+
+
