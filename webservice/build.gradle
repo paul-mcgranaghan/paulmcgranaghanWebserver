@@ -3,6 +3,7 @@ plugins {
     id 'io.spring.dependency-management'
     id 'java-library'
     id 'project-report'
+    id "io.freefair.lombok"
 }
 
 ext {
@@ -26,9 +27,6 @@ repositories {
 
 
 dependencies {
-    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
-
-    compileOnly "org.projectlombok:lombok:$lombokVersion"
     compileOnly "com.google.guava:guava:$guavaVersion"
 
     implementation "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"
@@ -44,10 +42,6 @@ dependencies {
 
     runtimeOnly "com.h2database:h2:$h2databaseVersion"
     runtimeOnly "org.hsqldb:hsqldb:$hsqldbVersion"
-
-    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
-
-    testAnnotationProcessor "org.projectlombok:$lombokVersion"
 
     testImplementation "org.concordion:concordion:3.1.1"
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
