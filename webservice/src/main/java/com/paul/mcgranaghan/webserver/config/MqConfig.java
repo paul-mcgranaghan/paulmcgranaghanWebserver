@@ -51,7 +51,7 @@ public class MqConfig {
     @Bean
     ConnectionFactory connectionFactory() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
-        cachingConnectionFactory.setAddresses("192.168.1.86:5672");
+        cachingConnectionFactory.setAddresses("192.168.0.19:5672");
         return cachingConnectionFactory;
     }
 

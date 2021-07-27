@@ -3,7 +3,7 @@ plugins {
     id 'io.spring.dependency-management'
     id 'java-library'
     id 'project-report'
-    id "io.freefair.lombok"
+    id 'io.freefair.lombok'
 }
 
 ext {
