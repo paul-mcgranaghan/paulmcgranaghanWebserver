@@ -10,6 +10,7 @@ import {UserFormComponent} from './user-form/user-form.component';
 import {UserService} from './service/user.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {MatIconModule} from '@angular/material/icon';
     FormsModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule.forRoot([])
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
