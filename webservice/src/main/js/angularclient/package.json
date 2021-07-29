@@ -9,7 +9,7 @@
     "zone.js": "0.11.4",
     "jasmine-core": "3.8.0",
     "@angular/core": "12.1.4",
-    "@angular/forms": "12.0.4",
+    "@angular/forms": "12.1.4",
     "@angular/common": "12.0.4",
     "@angular/router": "12.0.4",
     "jasmine-marbles": "0.8.3",
