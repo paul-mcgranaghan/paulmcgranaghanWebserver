@@ -19,14 +19,9 @@ services:
     depends_on:
       - db
 
-
   mq:
     container_name: rabbitMQ
     image: rabbitmq:3-management
-    environment:
-      RABBITMQ_DEFAULT_USER: "guest"
-      RABBITMQ_DEFAULT_PASS: "guest"
-      RABBITMQ_ERLANG_COOKIE: "secret cookie here"
     ports:
       - 5672:5672
       - 15672:15672
