@@ -1,11 +1,13 @@
 package com.paul.mcgranaghan.webserver.repository;
 
 import com.paul.mcgranaghan.webserver.dto.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Mapper
 public class UserRowMapper implements RowMapper<User> {
 
     @Override

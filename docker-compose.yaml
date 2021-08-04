@@ -1,0 +1,54 @@
+version: '3.3'
+services:
+  db:
+    container_name: db
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: "Pip3Quinn"
+      #POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  mq:
+    container_name: rabbitMQ
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  webService:
+    image: webservice:latest
+    ports:
+      - 8090:8090
+    depends_on:
+      - db
+      - mq
+
+  portainer:
+    image: portainer/portainer-ce
+    ports:
+      - 8000:8000
+      - 9000:9000
+    restart: always
+    volumes:
+      - portainer_data:/data portainer/portainer-ce
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  postgres_data:
+    external: true
+  portainer_data:
+    external: true
+
+
+
