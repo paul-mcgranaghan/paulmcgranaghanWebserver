@@ -29,7 +29,7 @@ bootJar {
 ext {
     javaSource = '16'
     javaTarget = '16'
-    springBootVersion = '2.5.2'
+    springBootVersion = '2.5.3'
     mybatisVersion = '2.2.0'
     springBatchVersion = '4.3.3'
     lombokVersion = '1.18.20'
