@@ -1,13 +1,8 @@
 plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
-    id 'java'
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+    id 'java-library'
+    id 'io.freefair.lombok'
 }
 
 repositories {
@@ -15,17 +10,11 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok'
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'org.postgresql:postgresql'
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springframework.boot:spring-boot-starter-batch'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.amqp:spring-rabbit-test'
-    testImplementation 'org.springframework.batch:spring-batch-test'
+    implementation(libraries.postgresDb, libraries.springBatch)
+    testImplementation(libraries.springBootTest)
+
 }
 
-test {
-    useJUnitPlatform()
+task prepareKotlinBuildScriptModel {
+
 }

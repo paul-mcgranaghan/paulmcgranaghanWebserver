@@ -1,9 +1,9 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.3'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
     id 'java-library'
     id 'project-report'
-    id 'io.freefair.lombok' version '6.1.0-m3'
+    id 'io.freefair.lombok'
 }
 
 group 'com.paul.mcgranaghan'
@@ -27,21 +27,6 @@ bootJar {
 
 
 ext {
-    javaSource = '16'
-    javaTarget = '16'
-    springBootVersion = '2.5.3'
-    mybatisVersion = '2.2.0'
-    springBatchVersion = '4.3.3'
-    lombokVersion = '1.18.20'
-    liquibaseVersion = '4.4.3'
-    postgresqlVersion = '42.2.23.jre7'
-    hsqldbVersion = '2.6.0'
-    h2databaseVersion = '1.4.200'
-    guavaVersion = '30.1.1-jre'
-    junitVersion = '4.13.2'
-    concordionVersion = '3.1.3'
-    sl4jVersion = '2.0.0-alpha1'
-    dockerVersion = '6.7.0'
 
     ext.libraries = [
             docker           : [
@@ -53,25 +38,33 @@ ext {
             mybatisSpringBoot: [
                     "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisVersion"
             ],
+            liquibase        : [
+                    "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion",
+                    "org.liquibase:liquibase-core:$liquibaseVersion"
+            ],
             postgresDb       : [
-                    "org.liquibase:liquibase-core:$liquibaseVersion",
                     "org.postgresql:postgresql:$postgresqlVersion",
                     "com.h2database:h2:$h2databaseVersion",
                     "org.hsqldb:hsqldb:$hsqldbVersion"
             ],
+            mQueue           : [
+                    "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"
+            ],
             springBootStarter: [
-                    "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion",
+                    "javax:javaee-api:$javaEEVersion",
                     "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                     "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
-                    "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion",
-                    "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion",
                     "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+            ],
+            springBatch      : [
+                    "org.springframework.boot:spring-boot-starter-batch:$springBootVersion"
             ],
             concordion       : [
                     "org.concordion:concordion:$concordionVersion"
             ],
             springBatchTest  : [
-                    "org.springframework.batch:spring-batch-test:$springBatchVersion"
+                    "org.springframework.batch:spring-batch-test:$springBatchVersion",
+                    "org.junit.platform:junit-platform-runner:$junitVersion"
             ],
             springBootTest   : [
                     "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
