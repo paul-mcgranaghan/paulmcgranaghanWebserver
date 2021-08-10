@@ -1,5 +1,13 @@
+pluginManagement {
+    plugins {
+        id 'io.spring.dependency-management' version springVersion
+        id 'org.springframework.boot' version springBootVersion
+        id 'io.freefair.lombok' version lombokVersion
+    }
+}
 rootProject.name = 'paulmcgranaghanWebserver'
 include 'batch'
 include 'webservice'
+
 
 
