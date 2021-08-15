@@ -34,6 +34,12 @@ services:
       - db
       - mq
 
+  website:
+    build: website/
+    image: paul/website:latest
+    ports:
+      - 4200:4200
+
   portainer:
     image: portainer/portainer-ce
     ports:

@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "..//..//..//..//build//libs//angularWeb",
+            "outputPath": "src/build/libs/angularWeb",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,19 +62,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angularclient:build",
+            "browserTarget": "website:build",
             "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angularclient:build:production"
+              "browserTarget": "website:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angularclient:build"
+            "browserTarget": "website:build"
           }
         },
         "test": {
@@ -114,18 +114,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angularclient:serve"
+            "devServerTarget": "website:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angularclient:serve:production"
+              "devServerTarget": "website:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "angularclient",
+  "defaultProject": "website",
   "cli": {
     "analytics": "1a04fdf0-1bd2-4c7d-bd99-1c4317be47ef"
   }
