@@ -41,14 +41,14 @@ services:
       - 9000:9000
     restart: always
     volumes:
-      - portainer_data:/data portainer/portainer-ce
+      - portainer_data:/var/run/docker.sock portainer/portainer-ce
       - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   postgres_data:
-    external: true
+    external: false
   portainer_data:
-    external: true
+    external: false
 
 
 
