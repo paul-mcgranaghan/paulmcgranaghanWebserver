@@ -8,6 +8,7 @@ pluginManagement {
 rootProject.name = 'paulmcgranaghanWebserver'
 include 'batch'
 include 'webservice'
+include 'ui'
 
 
 
