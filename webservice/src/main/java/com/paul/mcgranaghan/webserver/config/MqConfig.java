@@ -9,14 +9,20 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 public class MqConfig {
-    static final String topicExchangeName = "spring-boot-exchange";
 
-    static final String queueName = "rabbit@f26b8953c06b";
+    static final String topicExchangeName = "spring-boot-exchange";
+    static final String queueName = "rabbit@webservice_users";
+
+    @Value("${rabbit.mq.host}")
+    public String rabbitMQHost;
 
     @Bean
     Queue queue() {
@@ -51,7 +57,7 @@ public class MqConfig {
     @Bean
     ConnectionFactory connectionFactory() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
-        cachingConnectionFactory.setAddresses("192.168.0.19:5672");
+        cachingConnectionFactory.setAddresses(rabbitMQHost);
         return cachingConnectionFactory;
     }
 
