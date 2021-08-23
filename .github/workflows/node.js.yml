@@ -11,7 +11,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./webservice/src/main/js/angularclient/
+    working-directory: ./ui/
 jobs:
   build:
     runs-on: ubuntu-latest

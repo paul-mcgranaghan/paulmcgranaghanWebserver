@@ -1,3 +1,5 @@
-POSTGRES_PASSWORD=Pip3Quinn
+POSTGRES_PASSWORD=Pip3Quinn2
 RABBITMQ_DEFAULT_USER=guest
 RABBITMQ_DEFAULT_PASS=guest
+DATA_SOURCE_URL=jdbc:postgresql://host.docker.internal:5432/postgres
+RABBIT_MQ_URL=host.docker.internal:5672

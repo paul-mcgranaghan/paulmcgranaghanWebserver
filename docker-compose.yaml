@@ -4,10 +4,10 @@ services:
     container_name: db
     image: postgres:latest
     environment:
+      POSTGRES_USERNAME: "postgres"
       POSTGRES_PASSWORD: "Pip3Quinn"
-      #POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -15,7 +15,7 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - db
 
@@ -23,32 +23,47 @@ services:
     container_name: rabbitMQ
     image: rabbitmq:3-management
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitMQ_data:/var/lib/rabbitmq/data
 
   webService:
+    build: webservice/
     image: webservice:latest
     ports:
-      - 8090:8090
+      - "8090:8090"
     depends_on:
       - db
       - mq
+    env_file:
+      - config/.dev
+
+  ui:
+    hostname: localhost
+    build: ui/
+    image: paul/ui:latest
+    ports:
+      - "4200:4200"
 
   portainer:
     image: portainer/portainer-ce
     ports:
-      - 8000:8000
-      - 9000:9000
+      - "8000:8000"
+      - "9000:9000"
     restart: always
     volumes:
-      - portainer_data:/data portainer/portainer-ce
+      - portainer_data:/var/run/docker.sock portainer/portainer-ce
       - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   postgres_data:
-    external: true
+    external: false
   portainer_data:
-    external: true
+    external: false
+  rabbitMQ_data:
+    external: false
+
 
 
 
