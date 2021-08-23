@@ -48,7 +48,7 @@ public class UserDaoTest {
     public void existsById() {
         when(mockTemplate.queryForObject(anyString(), anyMap(), Mockito.eq(User.class))).thenReturn(User.builder().id("U1").build());
 
-        boolean actual = underTest.existsById("U1");
+        boolean actual = underTest.existsById("U2");
         assertTrue(actual);
     }
 }
