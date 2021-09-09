@@ -15,5 +15,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Set default Branch
+      run: git config --global init.defaultBranch main
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag webservice:$(date +%s)
