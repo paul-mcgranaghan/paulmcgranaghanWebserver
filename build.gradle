@@ -1,9 +1,9 @@
 plugins {
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
-    id 'java-library'
-    id 'project-report'
-    id 'io.freefair.lombok'
+    id "org.springframework.boot"
+    id "io.spring.dependency-management"
+    id "java-library"
+    id "project-report"
+    id "io.freefair.lombok" version "$lombokVersion"
 }
 
 group 'com.paul.mcgranaghan'
@@ -54,7 +54,8 @@ ext {
                     "javax:javaee-api:$javaEEVersion",
                     "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                     "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
-                    "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+                    "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
+                    "org.springdoc:springdoc-openapi-ui:$springdocVersion"
             ],
             springBatch      : [
                     "org.springframework.boot:spring-boot-starter-batch:$springBootVersion"
