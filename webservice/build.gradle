@@ -17,7 +17,8 @@ dependencies {
             libraries.mybatisSpringBoot,
             libraries.postgresDb,
             libraries.mQueue,
-            libraries.liquibase)
+            libraries.liquibase,
+            libraries.auth0)
 
     testImplementation(libraries.concordion,
             libraries.springBootTest)
@@ -32,4 +33,7 @@ jar {
     }
 }
 
+bootJar {
+    enabled = true
+}
 

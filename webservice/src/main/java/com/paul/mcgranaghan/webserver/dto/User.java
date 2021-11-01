@@ -21,5 +21,6 @@ public class User {
     public String email;
     public int age;
     public String name;
+    public boolean darkMode;
 
 }

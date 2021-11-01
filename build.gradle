@@ -57,6 +57,12 @@ ext {
                     "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
                     "org.springdoc:springdoc-openapi-ui:$springdocVersion"
             ],
+            auth0            : [
+                    "org.springframework.boot:spring-boot-starter-oauth2-client:$springBootVersion",
+                    "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion",
+                    "org.thymeleaf.extras:thymeleaf-extras-springsecurity5:$thymeleafSpringVersion",
+                    "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:$thymeleafLayoutVersion"
+            ],
             springBatch      : [
                     "org.springframework.boot:spring-boot-starter-batch:$springBootVersion"
             ],

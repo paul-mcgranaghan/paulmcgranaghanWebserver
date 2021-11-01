@@ -3,4 +3,5 @@ export class User {
   name: string;
   age: bigint;
   email: string;
+  darkMode: boolean;
 }

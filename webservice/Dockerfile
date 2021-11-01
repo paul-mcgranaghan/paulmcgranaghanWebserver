@@ -1,5 +1,5 @@
 # For Java 11, try this
-FROM openjdk:16
+FROM openjdk:jdk-buster
 
 # Refer to Maven build -> finalName
 ARG JAR_FILE=./build/libs/webservice.jar

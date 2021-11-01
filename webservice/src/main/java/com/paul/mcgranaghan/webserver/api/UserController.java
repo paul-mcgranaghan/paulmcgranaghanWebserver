@@ -8,6 +8,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +44,21 @@ public class UserController {
     @PostMapping("/addUser")
     void addUser(@RequestBody User user) {
         userDao.save(user);
+    }
+
+    @Operation(summary = "Set Dark mode preference for user")
+    @PostMapping("/setDarkMode")
+    void setDarkMode(@RequestBody boolean darkMode, String userId) {
+        userDao.setDarkMode(darkMode, userId);
+    }
+
+    @Operation(summary = "Home Redirect with Auth0 Integration")
+    @GetMapping("/")
+    public String home(Model model, @AuthenticationPrincipal OidcUser principal) {
+        if (principal != null) {
+            model.addAttribute("profile", principal.getClaims());
+        }
+        return "index";
     }
 
     public boolean existsById(String id) {

@@ -20,9 +20,10 @@ public class UserDao {
     private final static Log log = LogFactory.getLog(UserDao.class);
 
     private static final String GET_ALL_USERS_SQL = "SELECT * FROM \"User\"";
-    private static final String INSERT_INTO_USER_SQL = "INSERT INTO \"User\" (user_id, age, name ,email, last_updated) values (:user_id, :age, :name, :email, CURRENT_TIMESTAMP)";
+    private static final String INSERT_INTO_USER_SQL = "INSERT INTO \"User\" (user_id, age, name ,email, last_updated, dark_mode) values (:user_id, :age, :name, :email, CURRENT_TIMESTAMP, true)";
     private static final String GET_NEXT_USER_SEQ_SQL = "SELECT nextval('public.User_ID_Seq')";
     private static final String GET_USER_BY_ID = GET_ALL_USERS_SQL + " WHERE user_id = :user_id";
+    private static final String UPDATE_DARK_MODE_SQL = "UPDATE \"User\" set dark_mode = :dark_mode where user_id = :user_id ";
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final RowMapper<User> userRowMapper = new UserRowMapper();
 
@@ -37,6 +38,15 @@ public class UserDao {
         paramMap.put("age", entity.getAge());
         log.info("Inserting new User: " + userId);
         namedParameterJdbcTemplate.update(INSERT_INTO_USER_SQL, paramMap);
+    }
+
+    public void setDarkMode(boolean darkMode, String userId) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("dark_mode", darkMode);
+        paramMap.put("user_id", userId);
+
+        log.info("Setting dark mode to: " + darkMode + " for user id: " + userId);
+        namedParameterJdbcTemplate.update(UPDATE_DARK_MODE_SQL, paramMap);
     }
 
     public boolean existsById(String id) {

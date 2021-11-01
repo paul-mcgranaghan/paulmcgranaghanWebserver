@@ -13,12 +13,15 @@ import {MatIconModule} from '@angular/material/icon';
 import {RouterModule} from '@angular/router';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatPseudoCheckboxModule} from "@angular/material/core";
+import {AuthModule} from "@auth0/auth0-angular";
+import {AuthButtonComponent} from './auth-button/auth-button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserListComponent,
-    UserFormComponent
+    UserFormComponent,
+    AuthButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,13 @@ import {MatPseudoCheckboxModule} from "@angular/material/core";
     RouterModule.forRoot([]),
     MatSlideToggleModule,
     ReactiveFormsModule,
-    MatPseudoCheckboxModule
+    MatPseudoCheckboxModule,
+
+    // Import the module into the application, with configuration
+    AuthModule.forRoot({
+      domain: 'dev-k8m0dma6.eu.auth0.com',
+      clientId: 'Kx1nzicJj2MWMELFY7oRR8t6RKGStpCV'
+    }),
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
