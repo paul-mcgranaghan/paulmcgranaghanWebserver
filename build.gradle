@@ -52,6 +52,7 @@ ext {
             ],
             springBootStarter: [
                     "javax:javaee-api:$javaEEVersion",
+                    "org.springframework.cloud:spring-cloud-starter-sleuth",
                     "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                     "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
                     "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
