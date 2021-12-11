@@ -2,7 +2,7 @@
 FROM openjdk:16
 
 # Refer to Maven build -> finalName
-ARG JAR_FILE=./build/libs/webservice.jar
+ARG JAR_FILE=./build/libs/paulmcgranaghanWebserver-1.0-SNAPSHOT-plain.jar
 
 # cd /opt/app
 WORKDIR /opt/app
