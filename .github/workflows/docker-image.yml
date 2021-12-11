@@ -19,4 +19,4 @@ jobs:
       run: git config --global init.defaultBranch main
     - name: Build the Docker image
       working-directory: ./webservice/
-      run: docker build  .\webservice --file Dockerfile --tag webservice:$(date +%s)
+      run: docker build  . --file Dockerfile --tag webservice:$(date +%s)
