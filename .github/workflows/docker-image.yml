@@ -8,14 +8,13 @@ on:
 
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-    - name: Set default Branch
-      run: git config --global init.defaultBranch main
     - name: Build the Docker image
-      run: docker build  .\webservice --file Dockerfile --tag webservice:$(date +%s)
+      run: |
+        docker build  ./webservice -t paul/webservice:$(date +%s)
+      
+      
+      
