@@ -28,7 +28,7 @@ bootJar {
 
 ext {
 
-    ext.libraries = [
+    libraries = [
             docker           : [
                     "com.bmuschko:gradle-docker-plugin:$dockerVersion"
             ],
@@ -47,11 +47,15 @@ ext {
                     "com.h2database:h2:$h2databaseVersion",
                     "org.hsqldb:hsqldb:$hsqldbVersion"
             ],
+            mongoDb       : [
+                    "org.mongodb:mongodb-driver-sync:$mongoDbVerison"
+            ],
             mQueue           : [
                     "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"
             ],
             springBootStarter: [
                     "javax:javaee-api:$javaEEVersion",
+                    "org.springframework.cloud:spring-cloud-starter-sleuth:$springSleuthVersion",
                     "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                     "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
                     "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
