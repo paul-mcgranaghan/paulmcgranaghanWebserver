@@ -6,17 +6,15 @@ on:
   pull_request:
     branches: [ main ]
 
-defaults:
-  run:
-    working-directory: ./webservice/
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag webservice:$(date +%s)
+      run: |
+        docker build  ./webservice -t paul/webservice:$(date +%s)
+      
+      
+      
