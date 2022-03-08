@@ -1,14 +1,16 @@
 plugins {
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
-    id 'java-library'
-    id 'project-report'
-    id 'io.freefair.lombok'
+    id "org.springframework.boot"
+    id "io.spring.dependency-management"
+    id "java-library"
+    id "project-report"
+    id "io.freefair.lombok" version "$lombokVersion"
 }
 
 group 'com.paul.mcgranaghan'
 version '1.0-SNAPSHOT'
 
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 allprojects {
     repositories {
@@ -28,7 +30,7 @@ bootJar {
 
 ext {
 
-    ext.libraries = [
+    libraries = [
             docker           : [
                     "com.bmuschko:gradle-docker-plugin:$dockerVersion"
             ],
@@ -47,15 +49,25 @@ ext {
                     "com.h2database:h2:$h2databaseVersion",
                     "org.hsqldb:hsqldb:$hsqldbVersion"
             ],
+            mongoDb       : [
+                    "org.mongodb:mongodb-driver-sync:$mongoDbVerison"
+            ],
             mQueue           : [
                     "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"
             ],
             springBootStarter: [
                     "javax:javaee-api:$javaEEVersion",
-                    "org.springframework.cloud:spring-cloud-starter-sleuth",
+                    "org.springframework.cloud:spring-cloud-starter-sleuth:$springSleuthVersion",
                     "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                     "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
-                    "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+                    "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
+                    "org.springdoc:springdoc-openapi-ui:$springdocVersion"
+            ],
+            auth0            : [
+                    "org.springframework.boot:spring-boot-starter-oauth2-client:$springBootVersion",
+                    "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion",
+                    "org.thymeleaf.extras:thymeleaf-extras-springsecurity5:$thymeleafSpringVersion",
+                    "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:$thymeleafLayoutVersion"
             ],
             springBatch      : [
                     "org.springframework.boot:spring-boot-starter-batch:$springBootVersion"

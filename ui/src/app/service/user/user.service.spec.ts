@@ -3,7 +3,7 @@ import {TestBed, waitForAsync} from '@angular/core/testing';
 import {UserService} from './user.service';
 import {mock} from 'ts-mockito';
 import {HttpClient} from '@angular/common/http';
-import {UserFormComponent} from '../user-form/user-form.component';
+import {UserFormComponent} from '../../user-form/user-form.component';
 
 describe('UserServiceService', () => {
   let service: UserService = new UserService(mock(HttpClient));
