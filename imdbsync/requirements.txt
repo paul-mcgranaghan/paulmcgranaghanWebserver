@@ -1,0 +1,7 @@
+pip==22.0.3
+schedule
+#urllib==3.10.2
+#gzip
+#os
+pandas
+#datetime
