@@ -17,6 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserDao {
 
+
     private final static Log log = LogFactory.getLog(UserDao.class);
 
     private static final String GET_ALL_USERS_SQL = "SELECT * FROM \"User\"";

@@ -42,6 +42,13 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
       - ME_CONFIG_MONGODB_SERVER=mongodb
 
+  imdbFileSync:
+    build: filesync/
+    image: paul/filesync:1.0-SNAPSHOT
+    depends_on:
+      - mongodb
+    volumes:
+      - imdb_file_data:/var/lib/imdb/data/files
   mq:
     container_name: rabbitMQ
     image: rabbitmq:3-management
@@ -53,7 +60,7 @@ services:
 
   webService:
     build: webservice/
-    image: paul/webservice:1.0.0
+    image: paul/webservice:1.0-SNAPSHOT
     ports:
       - "8090:8090"
     depends_on:
@@ -87,6 +94,8 @@ volumes:
   rabbitMQ_data:
     external: false
   mongo_data:
+    external: false
+  imdb_file_data:
     external: false
 
 

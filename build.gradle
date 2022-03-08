@@ -9,6 +9,8 @@ plugins {
 group 'com.paul.mcgranaghan'
 version '1.0-SNAPSHOT'
 
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 allprojects {
     repositories {

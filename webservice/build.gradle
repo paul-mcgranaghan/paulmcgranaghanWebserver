@@ -18,7 +18,7 @@ dependencies {
             libraries.postgresDb,
             libraries.mQueue,
             libraries.liquibase,
-            libraries.auth0,
+            //libraries.auth0,
             libraries.mongoDb)
 
     testImplementation(libraries.concordion,

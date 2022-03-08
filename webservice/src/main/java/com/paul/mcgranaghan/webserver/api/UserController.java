@@ -8,8 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +50,7 @@ public class UserController {
         userDao.setDarkMode(darkMode, userId);
     }
 
+/*
     @Operation(summary = "Home Redirect with Auth0 Integration")
     @GetMapping("/")
     public String home(Model model, @AuthenticationPrincipal OidcUser principal) {
@@ -60,6 +59,7 @@ public class UserController {
         }
         return "index";
     }
+*/
 
     public boolean existsById(String id) {
         return userDao.existsById(id);

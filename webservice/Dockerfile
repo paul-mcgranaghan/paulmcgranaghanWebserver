@@ -2,7 +2,7 @@
 FROM openjdk:jdk-buster
 
 # Refer to Maven build -> finalName
-ARG JAR_FILE=./build/libs/paulmcgranaghanWebserver-1.0-SNAPSHOT-plain.jar
+ARG JAR_FILE=./build/libs/webservice.jar
 
 # cd /opt/app
 WORKDIR /opt/app

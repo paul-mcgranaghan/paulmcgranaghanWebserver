@@ -1,14 +1,9 @@
 package com.paul.mcgranaghan.webserver.config;
 
-import com.paul.mcgranaghan.webserver.api.LogoutHandler;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+/*@Configuration*/
+public class SecurityConfig /*extends WebSecurityConfigurerAdapter*/ {
 
-@Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+/*
     private final LogoutHandler logoutHandler;
 
     public SecurityConfig(LogoutHandler logoutHandler) {
@@ -23,5 +18,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .addLogoutHandler(logoutHandler);
     }
+*/
 
 }
