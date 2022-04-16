@@ -44,7 +44,7 @@ services:
 
   imdbFileSync:
     build: filesync/
-    image: paul/filesync:1.0-SNAPSHOT
+    image: paul/imdbsync:0.1.0
     depends_on:
       - mongodb
     volumes:
@@ -60,7 +60,7 @@ services:
 
   webService:
     build: webservice/
-    image: paul/webservice:1.0-SNAPSHOT
+    image: paul/webservice:0.1.0
     ports:
       - "8090:8090"
     depends_on:
@@ -72,7 +72,7 @@ services:
   ui:
     hostname: localhost
     build: ui/
-    image: paul/ui:latest
+    image: paul/ui:0.1.0
     ports:
       - "4200:4200"
 

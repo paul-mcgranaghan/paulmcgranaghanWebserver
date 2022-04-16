@@ -6,6 +6,8 @@ plugins {
     id 'io.freefair.lombok'
 }
 
+//version '0.1.0'
+
 repositories {
     mavenCentral()
 }
@@ -24,7 +26,6 @@ dependencies {
     testImplementation(libraries.concordion,
             libraries.springBootTest)
 }
-
 jar {
     enabled = true
     manifest {
@@ -34,7 +35,9 @@ jar {
     }
 }
 
+
 bootJar {
     enabled = true
 }
+
 

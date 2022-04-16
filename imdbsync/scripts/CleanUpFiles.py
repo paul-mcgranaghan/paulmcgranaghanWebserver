@@ -1,26 +1,31 @@
 import os
 import shutil
 import time
+from pprint import pprint
 
 two_days_ago = time.time() - (2 * 86400)
-root = "./"
 
+def cleanupfiles(file_location):
+    print("Starting clean up job for location: " + file_location)
 
-def cleanupfiles():
-    for i in os.listdir(root):
-        path = os.path.join(root, i)
+    pprint("Checking for files older than date: " + str(two_days_ago))
+    for file in os.listdir(file_location):
+        path = os.path.join(file_location, file)
 
         if os.stat(path).st_mtime <= two_days_ago:
+            pprint("File to delete found: " + path)
             if os.path.isfile(path):
                 try:
+
                     os.remove(path)
+                    pprint("File deleted: " + path)
 
                 except:
-                    print("Could not remove file:", i)
+                    pprint("Could not remove file:", file)
 
             else:
                 try:
                     shutil.rmtree(path)
 
                 except:
-                    print("Could not remove directory:", i)
+                    pprint("Could not remove directory:", file)

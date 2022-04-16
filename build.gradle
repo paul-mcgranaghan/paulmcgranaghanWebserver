@@ -4,6 +4,7 @@ plugins {
     id "java-library"
     id "project-report"
     id "io.freefair.lombok" version "$lombokVersion"
+    id "com.palantir.docker" version "0.22.1"
 }
 
 group 'com.paul.mcgranaghan'
@@ -84,4 +85,10 @@ ext {
             ]
     ]
 }
+
+docker {
+    name "${project.name}:${project.version}"
+    files './build/libs/paulmcgranaghanwebserver-1.0-SNAPSHOT-plain.jar','./webservice/Dockerfile'
+}
+docker.dependsOn(jar)
 
