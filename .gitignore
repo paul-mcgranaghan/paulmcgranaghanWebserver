@@ -30,3 +30,7 @@ hs_err_pid*
 build/
 .idea/*
 */bin/*
+
+imdbsync/data/*
+imdbsync/scripts/__pycache__/*
+
