@@ -5,9 +5,11 @@ pluginManagement {
         id 'io.freefair.lombok' version lombokVersion
     }
 }
-rootProject.name = 'paulmcgranaghanWebserver'
+rootProject.name = 'paulmcgranaghanwebserver'
 include 'batch'
 include 'webservice'
+include 'ui'
+include 'imdbsync'
 
 
 

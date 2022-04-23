@@ -6,6 +6,8 @@ plugins {
     id 'io.freefair.lombok'
 }
 
+//version '0.1.0'
+
 repositories {
     mavenCentral()
 }
@@ -17,12 +19,13 @@ dependencies {
             libraries.mybatisSpringBoot,
             libraries.postgresDb,
             libraries.mQueue,
-            libraries.liquibase)
+            libraries.liquibase,
+            //libraries.auth0,
+            libraries.mongoDb)
 
     testImplementation(libraries.concordion,
             libraries.springBootTest)
 }
-
 jar {
     enabled = true
     manifest {
@@ -30,6 +33,11 @@ jar {
                 'Main-Class': 'com.paul.mcgranaghan.webserver.Application'
         )
     }
+}
+
+
+bootJar {
+    enabled = true
 }
 
 

@@ -27,4 +27,10 @@ hs_err_pid*
 .gradle/
 /out/*
 */build/*
-/.idea/*
+build/
+.idea/*
+*/bin/*
+
+imdbsync/data/*
+imdbsync/scripts/__pycache__/*
+

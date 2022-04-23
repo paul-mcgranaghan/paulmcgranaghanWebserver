@@ -1,14 +1,17 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {UserListComponent} from './user-list/user-list.component';
 import {UserFormComponent} from './user-form/user-form.component';
+import {AuthButtonComponent} from "./auth-button/auth-button.component";
 
 const routes: Routes = [
   {path: 'users', component: UserListComponent},
-  {path: 'adduser', component: UserFormComponent}];
+  {path: 'adduser', component: UserFormComponent},
+  {path: 'login', component: AuthButtonComponent}];
+
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, {relativeLinkResolution: 'legacy'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
