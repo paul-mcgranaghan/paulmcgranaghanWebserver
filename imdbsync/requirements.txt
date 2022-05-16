@@ -1,0 +1,5 @@
+pip==22.1
+schedule
+pandas
+datetime
+pymongo==4.1.1
