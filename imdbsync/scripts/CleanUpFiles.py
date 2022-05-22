@@ -5,7 +5,8 @@ from pprint import pprint
 
 two_days_ago = time.time() - (2 * 86400)
 
-def cleanupfiles(file_location):
+
+def cleanup_files(file_location):
     print("Starting clean up job for location: " + file_location)
 
     pprint("Checking for files older than date: " + str(two_days_ago))
@@ -21,11 +22,11 @@ def cleanupfiles(file_location):
                     pprint("File deleted: " + path)
 
                 except:
-                    pprint("Could not remove file:", file)
+                    pprint("Could not remove file:" + file)
 
             else:
                 try:
                     shutil.rmtree(path)
 
                 except:
-                    pprint("Could not remove directory:", file)
+                    pprint("Could not remove directory:" + file)
