@@ -30,6 +30,7 @@ def sync_data_from_file(data_set_name, data_location, data_key):
 
         for chunk in reader:
             chunk = add_id_to_data_chunk(chunk, data_key, data_set_name)
+
             update_database(collection, json.loads(chunk.to_json(orient='records')))
 
         end_time = time.time()
