@@ -10,7 +10,7 @@ def job():
     sync_data_from_file("title.basics", "../data/", "tconst")
     sync_data_from_file("title.principals", "../data/", "nconst")
     sync_data_from_file("name.basics", "../data/", "nconst")
-    cleanup_files("./")
+    cleanup_files("../data/")
     pprint("I've Finished the imdb sync data job")
 
 

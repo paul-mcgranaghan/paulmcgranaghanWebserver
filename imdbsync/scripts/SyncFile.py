@@ -22,20 +22,31 @@ def sync_data_from_file(data_set_name, data_location, data_key):
 
     working_data_file = decompress_todays_file_if_not_done_already(data_location, file_name, compressed_file_name)
 
-    with pandas.read_csv(working_data_file, chunksize=1000000, low_memory=False, encoding="utf-8",
+    chunk_size = 100000
+    insert_count = 0
+    processed_count = 0
+
+    with pandas.read_csv(working_data_file, chunksize=chunk_size, low_memory=False, encoding="utf-8",
                          delimiter='\t') as reader:
         collection = get_db(data_set_name)
         start_time = time.time()
         pprint("Processing chunks")
-
+        i = 1
         for chunk in reader:
+            pprint("Processing chunk number: " + str(i))
             chunk = add_id_to_data_chunk(chunk, data_key, data_set_name)
+            chunk_ids = chunk['_id'].to_list()
 
-            update_database(collection, json.loads(chunk.to_json(orient='records')))
+            insert_count = insert_count + update_database(collection, chunk_ids,
+                                                          chunk)
+            processed_count = processed_count + chunk_size
+            i = i + 1
 
         end_time = time.time()
         time_taken = end_time - start_time
         pprint("Done processing file in :" + str(time_taken))
+        pprint(str(processed_count) + ' entry(s) processed and ' + str(insert_count) +
+               ' new entry(s) inserted into collection: ' + data_set_name)
 
 
 def add_id_to_data_chunk(chunk, data_key, data_set_name):
@@ -87,12 +98,28 @@ def get_db(data_set):
     my_client = pymongo.MongoClient('mongodb://user:pass@host.docker.internal:2717/')
     database = my_client.get_database('imdb')
 
-    pprint("Cleaning out database before load")
-    database.get_collection(data_set).delete_many({})
     return database.get_collection(data_set)
 
 
-def update_database(collection, dictionary_batch):
-    # TODO: work out the update or add if not present
-    collection.insert_many(dictionary_batch, ordered=False)
-    # collection.update_many(dictionary_batch, upsert=True)
+def update_database(collection, data_ids, dictionary_batch):
+    # Look up the ids to process in the database, see if they're already there
+    present_ids = list(collection.find({'_id': {'$in': data_ids}}, '_id'))
+    # Convert the above list of dicts {'_id': 'tt000000001'} into a list of values ['tt000000001']
+    present_ids_to_list = [d['_id'] for d in present_ids]
+
+    # ~ means NOT, df = df[column-name] is in clause (list of values)
+    dictionary_batch = dictionary_batch[~dictionary_batch['_id'].isin(present_ids_to_list)]
+
+    # Convert Dataframe to json, so I can put it in the database
+    to_enter_as_json = json.loads(dictionary_batch.to_json(orient='records'))
+
+    if len(to_enter_as_json) > 0:
+        pprint("New records to add, inserting " + str(len(to_enter_as_json)) + " record(s)")
+        collection.insert_many(to_enter_as_json, ordered=False)
+        return len(to_enter_as_json)
+    else:
+        return 0
+
+
+def get_cursor(collection, data_ids):
+    return collection.find({'_id': {'$in': data_ids}})
