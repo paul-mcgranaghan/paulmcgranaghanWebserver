@@ -4,7 +4,7 @@ import json
 import os
 import time
 import urllib.request
-from pprint import pprint
+from JobLogger import get_module_logger
 
 import pandas
 import pymongo
@@ -20,7 +20,7 @@ def sync_data_from_file(data_set_name, data_location, data_key):
 
     download_todays_file_if_not_present(compressed_file_name, data_location, data_set_name, file_name)
 
-    working_data_file = decompress_todays_file_if_not_done_already(data_location, file_name, compressed_file_name)
+    working_data_file = decompress_todays_file_if_not_done_already(file_name, compressed_file_name)
 
     chunk_size = 100000
     insert_count = 0
@@ -30,10 +30,10 @@ def sync_data_from_file(data_set_name, data_location, data_key):
                          delimiter='\t') as reader:
         collection = get_db(data_set_name)
         start_time = time.time()
-        pprint("Processing chunks")
+        get_module_logger(__name__).info("Processing chunks")
         i = 1
         for chunk in reader:
-            pprint("Processing chunk number: " + str(i))
+            get_module_logger(__name__).info("Processing chunk number: " + str(i))
             chunk = add_id_to_data_chunk(chunk, data_key, data_set_name)
             chunk_ids = chunk['_id'].to_list()
 
@@ -44,8 +44,8 @@ def sync_data_from_file(data_set_name, data_location, data_key):
 
         end_time = time.time()
         time_taken = end_time - start_time
-        pprint("Done processing file in :" + str(time_taken))
-        pprint(str(processed_count) + ' entry(s) processed and ' + str(insert_count) +
+        get_module_logger(__name__).info("Done processing file in :" + str(time_taken))
+        get_module_logger(__name__).info(str(processed_count) + ' entry(s) processed and ' + str(insert_count) +
                ' new entry(s) inserted into collection: ' + data_set_name)
 
 
@@ -59,21 +59,21 @@ def add_id_to_data_chunk(chunk, data_key, data_set_name):
     return chunk
 
 
-def decompress_todays_file_if_not_done_already(data_location, file_name, compressed_file_name):
-    if os.path.isfile(data_location + file_name):
-        pprint("I've already converted today's " + file_name + " file into a csv, fuck doing it again")
-        return os.open(data_location + file_name, flags=os.O_RDONLY)
+def decompress_todays_file_if_not_done_already(file_name, compressed_file_name):
+    if os.path.isfile(file_name):
+        get_module_logger(__name__).info("I've already converted today's " + file_name + " file into a csv, fuck doing it again")
+        return os.open(file_name, flags=os.O_RDONLY)
     else:
-        pprint("Decompressing " + compressed_file_name + " file and converting to csv")
-        return unzip_data_file(data_location, compressed_file_name)
+        get_module_logger(__name__).info("Decompressing " + compressed_file_name + " file and converting to csv")
+        return unzip_data_file( compressed_file_name)
 
 
 def download_todays_file_if_not_present(compressed_file_name, data_location, data_set_name, file_name):
     if os.path.isfile(compressed_file_name) or os.path.isfile(data_location + file_name):
-        pprint("File " + data_set_name + " already pulled for today, I'm not gonna bother downloading again")
+        get_module_logger(__name__).info("File " + data_set_name + " already pulled for today, I'm not gonna bother downloading again")
 
     else:
-        pprint("Downloading today's " + data_set_name + " file")
+        get_module_logger(__name__).info("Downloading today's " + data_set_name + " file")
         urllib.request.urlretrieve("https://datasets.imdbws.com/" + data_set_name + ".tsv.gz", compressed_file_name)
 
 
@@ -114,7 +114,7 @@ def update_database(collection, data_ids, dictionary_batch):
     to_enter_as_json = json.loads(dictionary_batch.to_json(orient='records'))
 
     if len(to_enter_as_json) > 0:
-        pprint("New records to add, inserting " + str(len(to_enter_as_json)) + " record(s)")
+        get_module_logger(__name__).info("New records to add, inserting " + str(len(to_enter_as_json)) + " record(s)")
         collection.insert_many(to_enter_as_json, ordered=False)
         return len(to_enter_as_json)
     else:

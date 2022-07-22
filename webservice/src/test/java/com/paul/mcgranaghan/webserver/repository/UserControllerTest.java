@@ -8,6 +8,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -23,11 +24,15 @@ import static org.mockito.Mockito.when;
 public class UserControllerTest {
 
     private final NamedParameterJdbcTemplate mockNamedParameterJdbcTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_DEEP_STUBS);
+    private final MongoTemplate mockMongoTemplate = Mockito.mock(MongoTemplate.class, Mockito.RETURNS_DEEP_STUBS);
     private final User user = User.builder().name("name").email("email").age(12).build();
 
     @Mock
     private final UserDao mockUserDao = new UserDao(mockNamedParameterJdbcTemplate);
-    private final UserController underTest = new UserController(mockUserDao);
+
+    @Mock
+    private final NameBasicDao nameBasicDao = new NameBasicDao(mockMongoTemplate);
+    private final UserController underTest = new UserController(mockUserDao, nameBasicDao);
 
     @Test
     public void getAllUsers_positive() {

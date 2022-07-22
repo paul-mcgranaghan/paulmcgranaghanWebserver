@@ -62,7 +62,9 @@ ext {
                     "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                     "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
                     "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
-                    "org.springdoc:springdoc-openapi-ui:$springdocVersion"
+                    "org.springdoc:springdoc-openapi-ui:$springdocVersion",
+                    "org.springframework.data:spring-data-mongodb:3.0.3.RELEASE"
+
             ],
             auth0            : [
                     "org.springframework.boot:spring-boot-starter-oauth2-client:$springBootVersion",
