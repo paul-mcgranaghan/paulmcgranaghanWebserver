@@ -13,6 +13,8 @@ today = datetime.date.today()
 date_format = "%m-%d-%y"
 time_format = "hh:MM:ss:sss"
 
+log = get_module_logger(__name__)
+
 
 def sync_data_from_file(data_set_name, data_location, data_key):
     compressed_file_name = data_location + today.strftime(date_format) + "." + data_set_name + ".tsv.gz"
@@ -30,10 +32,10 @@ def sync_data_from_file(data_set_name, data_location, data_key):
                          delimiter='\t') as reader:
         collection = get_db(data_set_name)
         start_time = time.time()
-        get_module_logger(__name__).info("Processing chunks")
+        log.info("Processing chunks")
         i = 1
         for chunk in reader:
-            get_module_logger(__name__).info("Processing chunk number: " + str(i))
+            log.info("Processing chunk number: " + str(i))
             chunk = add_id_to_data_chunk(chunk, data_key, data_set_name)
             chunk_ids = chunk['_id'].to_list()
 
@@ -44,9 +46,9 @@ def sync_data_from_file(data_set_name, data_location, data_key):
 
         end_time = time.time()
         time_taken = end_time - start_time
-        get_module_logger(__name__).info("Done processing file in :" + str(time_taken))
-        get_module_logger(__name__).info(str(processed_count) + ' entry(s) processed and ' + str(insert_count) +
-               ' new entry(s) inserted into collection: ' + data_set_name)
+        log.info("Done processing file in :" + str(time_taken))
+        log.info(str(processed_count) + ' entry(s) processed and ' + str(insert_count) +
+                 ' new entry(s) inserted into collection: ' + data_set_name)
 
 
 def add_id_to_data_chunk(chunk, data_key, data_set_name):
@@ -61,24 +63,24 @@ def add_id_to_data_chunk(chunk, data_key, data_set_name):
 
 def decompress_todays_file_if_not_done_already(file_name, compressed_file_name):
     if os.path.isfile(file_name):
-        get_module_logger(__name__).info("I've already converted today's " + file_name + " file into a csv, fuck doing it again")
+        log.info("I've already converted today's " + file_name + " file into a csv, fuck doing it again")
         return os.open(file_name, flags=os.O_RDONLY)
     else:
-        get_module_logger(__name__).info("Decompressing " + compressed_file_name + " file and converting to csv")
-        return unzip_data_file( compressed_file_name)
+        log.info("Decompressing " + compressed_file_name + " file and converting to csv")
+        return unzip_data_file(compressed_file_name)
 
 
 def download_todays_file_if_not_present(compressed_file_name, data_location, data_set_name, file_name):
     if os.path.isfile(compressed_file_name) or os.path.isfile(data_location + file_name):
-        get_module_logger(__name__).info("File " + data_set_name + " already pulled for today, I'm not gonna bother downloading again")
+        log.info("File " + data_set_name + " already pulled for today, I'm not gonna bother downloading again")
 
     else:
-        get_module_logger(__name__).info("Downloading today's " + data_set_name + " file")
+        log.info("Downloading today's " + data_set_name + " file")
         urllib.request.urlretrieve("https://datasets.imdbws.com/" + data_set_name + ".tsv.gz", compressed_file_name)
 
 
-def unzip_data_file(data_location, compressed_file_name):
-    return gzip.open(data_location + compressed_file_name, 'rb')
+def unzip_data_file(compressed_file_name):
+    return gzip.open(compressed_file_name, 'rb')
 
 
 def add_principal_id(chunk):
@@ -114,7 +116,7 @@ def update_database(collection, data_ids, dictionary_batch):
     to_enter_as_json = json.loads(dictionary_batch.to_json(orient='records'))
 
     if len(to_enter_as_json) > 0:
-        get_module_logger(__name__).info("New records to add, inserting " + str(len(to_enter_as_json)) + " record(s)")
+        log.info("New records to add, inserting " + str(len(to_enter_as_json)) + " record(s)")
         collection.insert_many(to_enter_as_json, ordered=False)
         return len(to_enter_as_json)
     else:
