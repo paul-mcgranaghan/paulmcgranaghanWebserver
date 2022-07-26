@@ -97,7 +97,7 @@ def add_name_id(chunk):
 def get_db(data_set):
     # TODO: environment variables
     # my_client = pymongo.MongoClient('mongodb://user:pass@localhost:2717/')
-    my_client = pymongo.MongoClient('mongodb://user:pass@host.docker.internal:2717/')
+    my_client = pymongo.MongoClient('mongodb://host.docker.internal:27017/')
     database = my_client.get_database('imdb')
 
     return database.get_collection(data_set)

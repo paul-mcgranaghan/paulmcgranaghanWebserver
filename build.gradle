@@ -52,6 +52,7 @@ ext {
             ],
             mongoDb       : [
                     "org.mongodb:mongodb-driver-sync:$mongoDbVerison"
+                    //"org.mongodb:bson:$mongoBsonVerison"
             ],
             mQueue           : [
                     "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"

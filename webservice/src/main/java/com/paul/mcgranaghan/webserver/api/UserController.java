@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.bson.Document;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,7 +62,7 @@ public class UserController {
                     content = @Content)})
     @GetMapping("/getNameById")
     public NameBasics getNameBasic(String id) {
-        return nameBasicsDao.findItemById(id);
+        return nameBasicsDao.findById(id);
     }
 
 

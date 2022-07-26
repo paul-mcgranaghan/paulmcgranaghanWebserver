@@ -8,7 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
-/*@EnableMongoRepositories*/
 @SpringBootApplication
 @Import({MqConfig.class, SecurityConfig.class, MongoConfig.class})
 @Slf4j

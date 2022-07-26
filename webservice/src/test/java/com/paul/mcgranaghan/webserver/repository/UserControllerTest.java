@@ -1,5 +1,6 @@
 package com.paul.mcgranaghan.webserver.repository;
 
+import com.mongodb.client.MongoClient;
 import com.paul.mcgranaghan.webserver.api.UserController;
 import com.paul.mcgranaghan.webserver.dto.User;
 import org.junit.Test;
@@ -24,14 +25,14 @@ import static org.mockito.Mockito.when;
 public class UserControllerTest {
 
     private final NamedParameterJdbcTemplate mockNamedParameterJdbcTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_DEEP_STUBS);
-    private final MongoTemplate mockMongoTemplate = Mockito.mock(MongoTemplate.class, Mockito.RETURNS_DEEP_STUBS);
+    private final MongoClient mongoClient = Mockito.mock(MongoClient.class, Mockito.RETURNS_DEEP_STUBS);
     private final User user = User.builder().name("name").email("email").age(12).build();
 
     @Mock
     private final UserDao mockUserDao = new UserDao(mockNamedParameterJdbcTemplate);
 
     @Mock
-    private final NameBasicDao nameBasicDao = new NameBasicDao(mockMongoTemplate);
+    private final NameBasicDao nameBasicDao = new NameBasicDao(mongoClient);
     private final UserController underTest = new UserController(mockUserDao, nameBasicDao);
 
     @Test
