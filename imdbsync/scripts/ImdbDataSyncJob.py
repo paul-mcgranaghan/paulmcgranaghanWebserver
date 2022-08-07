@@ -1,10 +1,12 @@
-import schedule
 import time
-from SyncFile import sync_data_from_file
+
+import schedule
+
 from CleanUpFiles import cleanup_files
 from JobLogger import get_module_logger
+from SyncFile import sync_data_from_file
 
-SYNC_JOB_TIME = "09:00:00"
+SYNC_JOB_TIME = "21:14:00"
 
 log = get_module_logger(__name__)
 

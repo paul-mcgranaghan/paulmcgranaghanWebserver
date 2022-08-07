@@ -50,9 +50,9 @@ ext {
                     "com.h2database:h2:$h2databaseVersion",
                     "org.hsqldb:hsqldb:$hsqldbVersion"
             ],
-            mongoDb       : [
-                    "org.mongodb:mongodb-driver-sync:$mongoDbVerison"
-                    //"org.mongodb:bson:$mongoBsonVerison"
+            mongoDb          : [
+                    "org.mongodb:mongodb-driver-sync:$mongoDbVerison",
+                    "org.springframework.data:spring-data-mongodb:$springDataMongoVersion"
             ],
             mQueue           : [
                     "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"
@@ -63,9 +63,7 @@ ext {
                     "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                     "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
                     "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
-                    "org.springdoc:springdoc-openapi-ui:$springdocVersion",
-                    "org.springframework.data:spring-data-mongodb:3.0.3.RELEASE"
-
+                    "org.springdoc:springdoc-openapi-ui:$springdocVersion"
             ],
             auth0            : [
                     "org.springframework.boot:spring-boot-starter-oauth2-client:$springBootVersion",
@@ -91,7 +89,7 @@ ext {
 
 docker {
     name "${project.name}:${project.version}"
-    files './build/libs/paulmcgranaghanwebserver-1.0-SNAPSHOT-plain.jar','./webservice/Dockerfile'
+    files './build/libs/paulmcgranaghanwebserver-1.0-SNAPSHOT-plain.jar', './webservice/Dockerfile'
 }
 docker.dependsOn(jar)
 
