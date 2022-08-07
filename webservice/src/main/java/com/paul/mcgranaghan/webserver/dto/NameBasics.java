@@ -3,36 +3,43 @@ package com.paul.mcgranaghan.webserver.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder(toBuilder = true)
+@AllArgsConstructor
 public class NameBasics {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @BsonProperty(value = "_id")
-    public String id;
-    @BsonProperty(value = "nConst")
+    public String _id;
     public String nConst;
-    @BsonProperty(value = "primaryName")
     public String primaryName;
-    @BsonProperty(value = "birthYear")
     public String birthYear;
-    @BsonProperty(value = "deathYear")
     public String deathYear;
-    @BsonProperty(value = "primaryProfession")
-    public List<Profession> primaryProfession;
-    @BsonProperty(value = "knownForTitles")
-    public List<String> knownForTitles;
+    public Set<Profession> primaryProfessions;
+    public Set<String> knownTitles;
+
+    @BsonCreator
+    public NameBasics(@BsonProperty(value = "_id") String _id, @BsonProperty(value = "nconst") String nConst,
+                      @BsonProperty(value = "primaryName") String primaryName, @BsonProperty(value = "birthYear") String birthYear,
+                      @BsonProperty(value = "deathYear") String deathYear, @BsonProperty(value = "primaryProfession") String primaryProfession,
+                      @BsonProperty(value = "knownForTitles") String knownForTitles) {
+        this._id = _id;
+        this.nConst = nConst;
+        this.primaryName = primaryName;
+        this.birthYear = birthYear;
+        this.deathYear = deathYear;
+        this.primaryProfessions = Arrays.stream(primaryProfession.split(","))
+                .map(p -> Profession.valueOf(p.toUpperCase())).collect(Collectors.toSet());
+        this.knownTitles = Arrays.stream(knownForTitles.split(",")).collect(Collectors.toSet());
+    }
 }

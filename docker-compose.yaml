@@ -5,7 +5,7 @@ services:
     image: postgres:latest
     environment:
       POSTGRES_USERNAME: "postgres"
-      POSTGRES_PASSWORD: "Pip3Quinn"
+      POSTGRES_PASSWORD: "Pa22word"
     ports:
       - "5432:5432"
     volumes:
