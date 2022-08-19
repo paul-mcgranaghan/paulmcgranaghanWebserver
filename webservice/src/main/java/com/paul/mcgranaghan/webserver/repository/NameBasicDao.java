@@ -17,18 +17,11 @@ public class NameBasicDao {
     @Autowired
     private final MongoClient mongoClient;
 
-    public NameBasics findById(String id) {
-        MongoDatabase mongoDatabase = mongoClient.getDatabase("imdb");
-        MongoCollection<NameBasics> mongoCollection = mongoDatabase.getCollection("name.basics", NameBasics.class);
-
-        return mongoCollection.find(eq("_id", id)).first();
-    }
-
     public NameBasics findByName(String name) {
         MongoDatabase mongoDatabase = mongoClient.getDatabase("imdb");
         MongoCollection<NameBasics> mongoCollection = mongoDatabase.getCollection("name.basics", NameBasics.class);
 
-        return mongoCollection.find(eq("primaryTitle", name)).first();
+        return mongoCollection.find(eq("primaryName", name)).first();
     }
 
 }

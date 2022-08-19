@@ -38,7 +38,7 @@ public class TitlePrinciple {
         this.tconst = tconst;
         this.ordering = ordering;
         this.nconst = nconst;
-        this.principleCategory = PrincipleCategory.valueOf(category);
+        this.principleCategory = PrincipleCategory.valueOf(category.toUpperCase());
         this.job = job;
         this.charactersPlayed = Arrays.stream(characters.split(",")).collect(Collectors.toList());
 

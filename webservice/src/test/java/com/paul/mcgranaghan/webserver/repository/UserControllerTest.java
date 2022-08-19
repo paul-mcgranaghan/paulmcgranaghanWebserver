@@ -3,6 +3,7 @@ package com.paul.mcgranaghan.webserver.repository;
 import com.mongodb.client.MongoClient;
 import com.paul.mcgranaghan.webserver.api.UserController;
 import com.paul.mcgranaghan.webserver.dto.User;
+import com.paul.mcgranaghan.webserver.service.ActorRolesService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -36,8 +37,10 @@ public class UserControllerTest {
     private final TitleBasicDao titleBasicDao = new TitleBasicDao(mongoClient);
     @Mock
     private final TitlePrincipleDao titlePrincipleDao = new TitlePrincipleDao(mongoClient);
+    @Mock
+    private final ActorRolesService actorRolesService = new ActorRolesService(nameBasicDao, titleBasicDao, titlePrincipleDao);
 
-    private final UserController underTest = new UserController(mockUserDao, nameBasicDao, titleBasicDao, titlePrincipleDao);
+    private final UserController underTest = new UserController(mockUserDao, actorRolesService);
 
     @Test
     public void getAllUsers_positive() {

@@ -1,14 +1,9 @@
 package com.paul.mcgranaghan.webserver.api;
 
-import com.mongodb.client.FindIterable;
-import com.paul.mcgranaghan.webserver.dto.NameBasics;
-import com.paul.mcgranaghan.webserver.dto.TitleBasics;
-import com.paul.mcgranaghan.webserver.dto.TitlePrinciple;
+import com.paul.mcgranaghan.webserver.dto.Actor;
 import com.paul.mcgranaghan.webserver.dto.User;
-import com.paul.mcgranaghan.webserver.repository.NameBasicDao;
-import com.paul.mcgranaghan.webserver.repository.TitleBasicDao;
-import com.paul.mcgranaghan.webserver.repository.TitlePrincipleDao;
 import com.paul.mcgranaghan.webserver.repository.UserDao;
+import com.paul.mcgranaghan.webserver.service.ActorRolesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,11 +26,7 @@ import java.util.List;
 public class UserController {
 
     private final UserDao userDao;
-    private final NameBasicDao nameBasicsDao;
-
-    private final TitleBasicDao titleBasicDao;
-
-    private final TitlePrincipleDao titlePrincipleDao;
+    private final ActorRolesService actorRolesService;
 
     @Operation(summary = "List all the users")
     @ApiResponses(value = {
@@ -62,45 +52,15 @@ public class UserController {
         userDao.setDarkMode(darkMode, userId);
     }
 
-    @Operation(summary = "Get Name Basic by Id")
+    @Operation(summary = "Get List of Roles for an Actor")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Name Found",
+            @ApiResponse(responseCode = "200", description = "Actor Found",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))}),
-            @ApiResponse(responseCode = "404", description = "Name not found",
+            @ApiResponse(responseCode = "404", description = "Actor not found",
                     content = @Content)})
-    @GetMapping("/getNameById")
-    public NameBasics getNameBasic(String id) {
-        return nameBasicsDao.findById(id);
-    }
-
-    @Operation(summary = "Get Title by Name")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Title Found",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = User.class))}),
-            @ApiResponse(responseCode = "404", description = "Title not found",
-                    content = @Content)})
-    @GetMapping("/getTitleByName")
-    public List<TitleBasics> getTitleBasic(String name) {
-        FindIterable<TitleBasics> titleBasics = titleBasicDao.findByTitle(name);
-        List<TitleBasics> titleBasicsList = new ArrayList<>();
-        titleBasics.forEach(titleBasicsList::add);
-        return titleBasicsList;
-    }
-
-    @Operation(summary = "Get Roles by person")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Roles Found",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = User.class))}),
-            @ApiResponse(responseCode = "404", description = "Roles not found",
-                    content = @Content)})
-    @GetMapping("/getRolesByPersonId")
-    public List<TitlePrinciple> getRoles(String personId) {
-        FindIterable<TitlePrinciple> titlePrinciple = titlePrincipleDao.fineRolesForPerson(personId);
-        List<TitlePrinciple> titlePrincipleList = new ArrayList<>();
-        titlePrinciple.forEach(titlePrincipleList::add);
-        return titlePrincipleList;
+    @GetMapping("/getRolesByPerson")
+    public Actor getRolesByActor(String person) {
+        return actorRolesService.resolveRolesForActor(person);
     }
 }

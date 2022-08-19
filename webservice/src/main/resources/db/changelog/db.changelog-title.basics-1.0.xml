@@ -1,0 +1,49 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="changelog-1.0" author="paulmcg">
+        <createTable tableName="title_basics" schemaName="public">
+            <column name="_id" type="text">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="titleType" type="text">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
+            <column name="primaryTitle" type="text">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
+            <column name="originalTitle" type="text">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
+            <column name="isAdult" type="boolean">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
+            <column name="startYear" type="smallint">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
+            <column name="endYear" type="smallint">
+                <constraints nullable="true" primaryKey="false" unique="false"/>
+            </column>
+            <column name="runtimeMinutes" type="smallint">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
+            <column name="genres" type="text">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="title_basics" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="changelog-1.1" author="paulmcg">
+        <createIndex tableName="title_basics" schemaName="public" indexName="TITLE_IDX">
+            <column name="_id"/>
+        </createIndex>
+        <rollback>
+            <dropIndex tableName="title_basics" indexName="TITLE_IDX"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

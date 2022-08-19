@@ -4,10 +4,11 @@ import json
 import os
 import time
 import urllib.request
-from JobLogger import get_module_logger
 
 import pandas
 import pymongo
+
+from JobLogger import get_module_logger
 
 today = datetime.date.today()
 date_format = "%m-%d-%y"
