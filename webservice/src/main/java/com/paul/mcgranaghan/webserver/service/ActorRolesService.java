@@ -31,8 +31,8 @@ public class ActorRolesService {
 
     public Actor resolveRolesForActor(String actorName) {
         NameBasics nameBasics = nameBasicDao.findByName(actorName);
-        List<TitlePrinciple> titlePrinciples = titlePrincipleDao.fineRolesForPerson(nameBasics.getNConst());
-        List<TitleBasics> titleBasics = titleBasicDao.findAllByIds(titlePrinciples.stream().map(p -> p.getTconst()).collect(Collectors.toList()));
+        List<TitlePrinciple> titlePrinciples = titlePrincipleDao.findById(nameBasics.getNConst());
+        List<TitleBasics> titleBasics = titleBasicDao.findById(titlePrinciples.stream().map(TitlePrinciple::getTconst).collect(Collectors.toList()));
         return Actor.builder().name(nameBasics.primaryName).rolesList(titleBasics.stream().map(t -> t.primaryTitle).toList()).build();
 
     }

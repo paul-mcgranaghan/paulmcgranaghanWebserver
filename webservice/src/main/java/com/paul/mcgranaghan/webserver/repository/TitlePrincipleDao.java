@@ -1,35 +1,37 @@
 package com.paul.mcgranaghan.webserver.repository;
 
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.paul.mcgranaghan.webserver.dto.TitlePrinciple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static com.mongodb.client.model.Filters.eq;
+import java.util.Map;
 
 
 @Repository
 @RequiredArgsConstructor
 public class TitlePrincipleDao {
+    private final static String GET_PRINCIPLE_BY_ACTOR_ID = """
+                        SELECT _id, tconst, ordering, nconst, category, job, characters
+                        FROM title_principle
+                        WHERE nconst = :nconst
+            """;
     @Autowired
-    private final MongoClient mongoClient;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public List<TitlePrinciple> fineRolesForPerson(String id) {
-        MongoDatabase mongoDatabase = mongoClient.getDatabase("imdb");
-        MongoCollection<TitlePrinciple> mongoCollection = mongoDatabase.getCollection("title.principals", TitlePrinciple.class);
+    public List<TitlePrinciple> findById(String nconst) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("nconst", nconst);
 
-        FindIterable<TitlePrinciple> principlesIterable = mongoCollection.find(eq("nconst", id));
-
-        return StreamSupport.stream(principlesIterable.spliterator(), false)
-                .collect(Collectors.toList());
+        try {
+            return namedParameterJdbcTemplate.queryForList(GET_PRINCIPLE_BY_ACTOR_ID, paramMap, TitlePrinciple.class);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
 }

@@ -1,27 +1,38 @@
 package com.paul.mcgranaghan.webserver.repository;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.paul.mcgranaghan.webserver.dto.NameBasics;
+import com.paul.mcgranaghan.webserver.dto.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import static com.mongodb.client.model.Filters.eq;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Repository
 @RequiredArgsConstructor
 public class NameBasicDao {
+
+    private final static String GET_ACTOR_BY_NAME = """
+                        SELECT _id, nconst, primaryName, birthYear, deathYear, primaryProfession, knownForTitles 
+                        FROM name_basics
+                        WHERE primaryName = :primaryName
+            """;
     @Autowired
-    private final MongoClient mongoClient;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public NameBasics findByName(String name) {
-        MongoDatabase mongoDatabase = mongoClient.getDatabase("imdb");
-        MongoCollection<NameBasics> mongoCollection = mongoDatabase.getCollection("name.basics", NameBasics.class);
+    public NameBasics findByName(String primaryName) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("primaryName", primaryName);
 
-        return mongoCollection.find(eq("primaryName", name)).first();
+        try {
+            return namedParameterJdbcTemplate.queryForObject(GET_ACTOR_BY_NAME, paramMap, NameBasics.class);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
 }

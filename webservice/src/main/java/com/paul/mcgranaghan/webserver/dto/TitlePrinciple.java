@@ -3,8 +3,6 @@ package com.paul.mcgranaghan.webserver.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

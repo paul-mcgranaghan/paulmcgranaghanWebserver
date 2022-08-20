@@ -1,40 +1,37 @@
 package com.paul.mcgranaghan.webserver.repository;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.paul.mcgranaghan.webserver.dto.TitleBasics;
 import lombok.RequiredArgsConstructor;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import static com.mongodb.client.model.Filters.eq;
+import java.util.Map;
 
 
 @Repository
 @RequiredArgsConstructor
 public class TitleBasicDao {
+    private final static String GET_TITLE_BY_ID = """
+                        SELECT _id, titleType, primaryTitle, originalTitle, isAdult, startYear, endYear, runtimeMinutes, genres
+                        FROM title_basics
+                        WHERE _id = :_id
+            """;
     @Autowired
-    private final MongoClient mongoClient;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public List<TitleBasics> findAllByIds(List<String> ids) {
-        MongoDatabase mongoDatabase = mongoClient.getDatabase("imdb");
-        MongoCollection<TitleBasics> mongoCollection = mongoDatabase.getCollection("title.basics", TitleBasics.class);
+    public List<TitleBasics> findById(List<String> _id) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("_id", _id);
 
-        MongoCollection<Document> mongoCollectiona = mongoDatabase.getCollection("title.basics", Document.class);
-        //Document document = mongoCollectiona.find(eq("_id", ids)).first();
-        var item = mongoCollectiona.find(eq("_id", ids.get(2))).first();
-
-        List<TitleBasics> titleBasics = new ArrayList<>();
-
-        for (String id : ids) {
-            titleBasics.add(mongoCollection.find(eq("_id", id)).first());
+        try {
+            return namedParameterJdbcTemplate.queryForList(GET_TITLE_BY_ID, paramMap, TitleBasics.class);
+        } catch (DataAccessException e) {
+            return null;
         }
-        return titleBasics;
     }
 
 }

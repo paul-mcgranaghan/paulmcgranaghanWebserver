@@ -19,8 +19,7 @@ dependencies {
             libraries.mybatisSpringBoot,
             libraries.postgresDb,
             libraries.mQueue,
-            libraries.liquibase,
-            libraries.mongoDb)
+            libraries.liquibase)
 
     testImplementation(libraries.concordion,
             libraries.springBootTest)
