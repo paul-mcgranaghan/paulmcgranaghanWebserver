@@ -3,8 +3,6 @@ package com.paul.mcgranaghan.webserver.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,11 +26,10 @@ public class NameBasics {
     public Set<Profession> primaryProfessions;
     public Set<String> knownTitles;
 
-    @BsonCreator
-    public NameBasics(@BsonProperty(value = "_id") String _id, @BsonProperty(value = "nconst") String nConst,
-                      @BsonProperty(value = "primaryName") String primaryName, @BsonProperty(value = "birthYear") String birthYear,
-                      @BsonProperty(value = "deathYear") String deathYear, @BsonProperty(value = "primaryProfession") String primaryProfession,
-                      @BsonProperty(value = "knownForTitles") String knownForTitles) {
+    public NameBasics(String _id, String nConst,
+                      String primaryName, String birthYear,
+                      String deathYear, String primaryProfession,
+                      String knownForTitles) {
         this._id = _id;
         this.nConst = nConst;
         this.primaryName = primaryName;

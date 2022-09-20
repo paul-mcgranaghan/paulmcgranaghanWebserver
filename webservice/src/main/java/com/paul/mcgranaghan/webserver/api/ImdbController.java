@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class ImdbController {
             @ApiResponse(responseCode = "404", description = "Actor not found",
                     content = @Content)})
     @GetMapping("/getRolesByPerson")
-    public Actor getRolesByActor(String person) {
+    public Actor getRolesByActor(@PathVariable String person) {
         return actorRolesService.resolveRolesForActor(person);
     }
 }

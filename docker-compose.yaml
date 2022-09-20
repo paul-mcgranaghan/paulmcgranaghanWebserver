@@ -23,7 +23,7 @@ services:
     build: filesync/
     image: paul/imdbsync:latest
     depends_on:
-      - mongodb
+      - db
     volumes:
       - imdb_file_data:/var/lib/imdb/data/files
   mq:
@@ -71,8 +71,6 @@ volumes:
   portainer_data:
     external: false
   rabbitMQ_data:
-    external: false
-  mongo_data:
     external: false
   imdb_file_data:
     external: false

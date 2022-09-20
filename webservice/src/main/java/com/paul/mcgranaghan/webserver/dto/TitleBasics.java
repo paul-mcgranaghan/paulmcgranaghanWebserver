@@ -29,13 +29,9 @@ public class TitleBasics {
     public String runtimeMinutes;
     public Set<Genres> titleGenre;
 
-    @BsonCreator
-    public TitleBasics(@BsonProperty(value = "_id") String _id, @BsonProperty(value = "titleType") String titleType,
-                       @BsonProperty(value = "primaryTitle") String primaryTitle, @BsonProperty(value = "originalTitle") String originalTitle,
-                       @BsonProperty(value = "isAdult") Integer isAdult,
-                       @BsonProperty(value = "startYear") String startYear,
-                       @BsonProperty(value = "endYear") String endYear, @BsonProperty(value = "runtimeMinutes") String runtimeMinutes,
-                       @BsonProperty(value = "genres") String genres) {
+    public TitleBasics(String _id, String titleType, String primaryTitle, String originalTitle,
+                       Integer isAdult, String startYear, String endYear, String runtimeMinutes,
+                       String genres) {
 
 
         this._id = _id;
@@ -51,10 +47,6 @@ public class TitleBasics {
     }
 
     private boolean handleStringOrInt(Integer isAdult) {
-/*        if (isAdultS != null) {
-            return isAdult.equals("1");
-
-        }*/
         return BooleanUtils.toBoolean((int) isAdult, 1, 0);
     }
 }
