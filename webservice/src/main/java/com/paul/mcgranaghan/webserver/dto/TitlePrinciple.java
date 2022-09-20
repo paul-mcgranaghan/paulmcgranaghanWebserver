@@ -26,12 +26,9 @@ public class TitlePrinciple {
     public String job;
     public List<String> charactersPlayed;
 
-    @BsonCreator
-    public TitlePrinciple(@BsonProperty(value = "_id") String _id, @BsonProperty(value = "tconst") String tconst,
-                          @BsonProperty(value = "ordering") Integer ordering, @BsonProperty(value = "nconst") String nconst,
-                          @BsonProperty(value = "category") String category, @BsonProperty(value = "job") String job,
-                          @BsonProperty(value = "characters") String characters) {
-
+    public TitlePrinciple(String _id, String tconst, Integer ordering, String nconst,
+                          String category, String job,
+                          String characters) {
         this._id = _id;
         this.tconst = tconst;
         this.ordering = ordering;

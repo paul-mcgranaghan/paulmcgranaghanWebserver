@@ -2,11 +2,10 @@ import datetime
 import gzip
 import json
 import os
+import pandas
+import psycopg2
 import time
 import urllib.request
-
-import pandas
-import pymongo
 
 from JobLogger import get_module_logger
 
@@ -17,7 +16,7 @@ time_format = "hh:MM:ss:sss"
 log = get_module_logger(__name__)
 
 
-def sync_data_from_file(data_set_name, data_location, data_key):
+def sync_data_from_file(data_set_name, data_location, data_key, convert_method):
     compressed_file_name = data_location + today.strftime(date_format) + "." + data_set_name + ".tsv.gz"
     file_name = today.strftime(date_format) + "." + data_set_name + ".csv"
 
@@ -31,7 +30,7 @@ def sync_data_from_file(data_set_name, data_location, data_key):
 
     with pandas.read_csv(working_data_file, chunksize=chunk_size, low_memory=False, encoding="utf-8",
                          delimiter='\t') as reader:
-        collection = get_db(data_set_name)
+        connection = get_db()
         start_time = time.time()
         log.info("Processing chunks")
         i = 1
@@ -39,8 +38,9 @@ def sync_data_from_file(data_set_name, data_location, data_key):
             log.info("Processing chunk number: " + str(i))
             chunk = add_id_to_data_chunk(chunk, data_key, data_set_name)
             chunk_ids = chunk['_id'].to_list()
+            chunk = convert_method(chunk)
 
-            insert_count = insert_count + update_database(collection, chunk_ids,
+            insert_count = insert_count + update_database(connection, chunk_ids,
                                                           chunk)
             processed_count = processed_count + chunk_size
             i = i + 1
@@ -90,23 +90,23 @@ def add_principal_id(chunk):
 
 
 def add_name_id(chunk):
-    chunk['_id'] = chunk['nconst'] + '-' + chunk['primaryName'].str.replace(" ", "") + '-' + chunk['birthYear'].astype(
+    chunk['_id'] = chunk['nconst'] + '-' + chunk['primaryName'].str.replace(" ", "") + '-' + chunk[
+        'birthYear'].astype(
         str)
     return chunk
 
 
-def get_db(data_set):
-    # TODO: environment variables
-    # my_client = pymongo.MongoClient('mongodb://user:pass@localhost:2717/')
-    my_client = pymongo.MongoClient('mongodb://host.docker.internal:27017/')
-    database = my_client.get_database('imdb')
+def get_db():
+    conn = psycopg2.connect("dbname=postgres user=postgres password=Pa22word")
+    conn.autocommit = True
 
-    return database.get_collection(data_set)
+    return conn
 
 
-def update_database(collection, data_ids, dictionary_batch):
+def update_database(connection, data_ids, dictionary_batch):
     # Look up the ids to process in the database, see if they're already there
-    present_ids = list(collection.find({'_id': {'$in': data_ids}}, '_id'))
+    present_ids = connection.cursor.execute("SELECT _id = ANY(%s) from my_table", (data_ids,))
+    #        list(connection.find({'_id': {'$in': data_ids}}, '_id'))
     # Convert the above list of dicts {'_id': 'tt000000001'} into a list of values ['tt000000001']
     present_ids_to_list = [d['_id'] for d in present_ids]
 
@@ -117,9 +117,15 @@ def update_database(collection, data_ids, dictionary_batch):
     to_enter_as_json = json.loads(dictionary_batch.to_json(orient='records'))
 
     if len(to_enter_as_json) > 0:
+        cursor = connection.cursor()
         log.info("New records to add, inserting " + str(len(to_enter_as_json)) + " record(s)")
-        collection.insert_many(to_enter_as_json, ordered=False)
+        connection.insert_many(to_enter_as_json, ordered=False)
+        cursor.execute()
+        connection.commit()
+        connection.close()
+
         return len(to_enter_as_json)
+
     else:
         return 0
 

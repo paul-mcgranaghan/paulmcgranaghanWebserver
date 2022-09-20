@@ -1,6 +1,5 @@
 package com.paul.mcgranaghan.webserver.repository;
 
-import com.mongodb.client.MongoClient;
 import com.paul.mcgranaghan.webserver.api.ImdbController;
 import com.paul.mcgranaghan.webserver.dto.User;
 import com.paul.mcgranaghan.webserver.service.ActorRolesService;
@@ -16,7 +15,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 public class ImdbControllerTest {
 
     private final NamedParameterJdbcTemplate mockNamedParameterJdbcTemplate = Mockito.mock(NamedParameterJdbcTemplate.class, Mockito.RETURNS_DEEP_STUBS);
-    private final MongoClient mongoClient = Mockito.mock(MongoClient.class, Mockito.RETURNS_DEEP_STUBS);
 
     private final User user = User.builder().name("name").email("email").age(12).build();
 
