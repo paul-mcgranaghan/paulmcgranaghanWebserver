@@ -1,9 +1,11 @@
+from dataclasses import dataclass
+
 import pandas
 
-from filesync.dto.Genres import Genres
+from dto.Genres import Genres
 
 
-# @dataclass
+@dataclass
 class TitleBasics:
     def __init__(self, _id, title_type, primary_title, original_title, is_adult,
                  start_year, end_year, runtime_minutes, genres):
@@ -16,6 +18,34 @@ class TitleBasics:
         self.end_year: str = end_year
         self.runtime_minutes: str = runtime_minutes
         self.genres: set[Genres] = genres
+
+    # getter method
+    def get_id(self):
+        return self._id
+
+    def get_title_type(self):
+        return self.title_type
+
+    def get_primary_title(self):
+        return self.primary_title
+
+    def get_original_title(self):
+        return self.original_title
+
+    def get_is_adult(self):
+        return self.is_adult
+
+    def get_start_year(self):
+        return self.start_year
+
+    def get_end_year(self):
+        return self.end_year
+
+    def get_runtime_minutes(self):
+        return self.runtime_minutes
+
+    def get_genres(self):
+        return self.genres
 
 
 def df_to_list(df: pandas.DataFrame) -> list:

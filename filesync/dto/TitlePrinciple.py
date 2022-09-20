@@ -1,7 +1,7 @@
 import pandas
 from dataclasses import dataclass
 
-from filesync.dto.PrincipleCategory import PrincipleCategory
+from dto.PrincipleCategory import PrincipleCategory
 
 
 @dataclass
