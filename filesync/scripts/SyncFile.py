@@ -1,11 +1,11 @@
 import datetime
 import gzip
-import json
 import os
-import pandas
-import psycopg2
 import time
 import urllib.request
+
+import pandas
+from sqlalchemy import create_engine, text
 
 from JobLogger import get_module_logger
 
@@ -16,32 +16,33 @@ time_format = "hh:MM:ss:sss"
 log = get_module_logger(__name__)
 
 
-def sync_data_from_file(data_set_name, data_location, data_key, convert_method):
+def sync_data_from_file(data_set_name, data_location, data_key):
     compressed_file_name = data_location + today.strftime(date_format) + "." + data_set_name + ".tsv.gz"
     file_name = today.strftime(date_format) + "." + data_set_name + ".csv"
 
     download_todays_file_if_not_present(compressed_file_name, data_location, data_set_name, file_name)
 
     working_data_file = decompress_todays_file_if_not_done_already(file_name, compressed_file_name)
-
+    # chunk_size = 100
     chunk_size = 100000
     insert_count = 0
     processed_count = 0
 
     with pandas.read_csv(working_data_file, chunksize=chunk_size, low_memory=False, encoding="utf-8",
                          delimiter='\t') as reader:
-        connection = get_db()
+        db_engine = get_db()
         start_time = time.time()
         log.info("Processing chunks")
         i = 1
         for chunk in reader:
             log.info("Processing chunk number: " + str(i))
+            chunk = chunk.drop(chunk[chunk.nconst == 'nm13918539'].index)
+
             chunk = add_id_to_data_chunk(chunk, data_key, data_set_name)
             chunk_ids = chunk['_id'].to_list()
-            chunk = convert_method(chunk)
 
-            insert_count = insert_count + update_database(connection, chunk_ids,
-                                                          chunk)
+            insert_count = insert_count + update_database(db_engine, chunk_ids,
+                                                          chunk, data_set_name.replace(".", "_"))
             processed_count = processed_count + chunk_size
             i = i + 1
 
@@ -90,41 +91,28 @@ def add_principal_id(chunk):
 
 
 def add_name_id(chunk):
-    chunk['_id'] = chunk['nconst'] + '-' + chunk['primaryName'].str.replace(" ", "") + '-' + chunk[
-        'birthYear'].astype(
-        str)
+    chunk['_id'] = chunk['nconst'] + '-' + chunk['primaryName'].str.replace(" ", "")
     return chunk
 
 
 def get_db():
-    conn = psycopg2.connect("dbname=postgres user=postgres password=Pa22word")
-    conn.autocommit = True
-
-    return conn
+    return create_engine('postgresql+psycopg2://postgres:Pa22word@localhost:5432/postgres')
 
 
-def update_database(connection, data_ids, dictionary_batch):
+def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, data_set_name):
     # Look up the ids to process in the database, see if they're already there
-    present_ids = connection.cursor.execute("SELECT _id = ANY(%s) from my_table", (data_ids,))
-    #        list(connection.find({'_id': {'$in': data_ids}}, '_id'))
-    # Convert the above list of dicts {'_id': 'tt000000001'} into a list of values ['tt000000001']
-    present_ids_to_list = [d['_id'] for d in present_ids]
 
-    # ~ means NOT, df = df[column-name] is in clause (list of values)
-    dictionary_batch = dictionary_batch[~dictionary_batch['_id'].isin(present_ids_to_list)]
+    query = text("SELECT _id FROM " + data_set_name + " WHERE _id IN :values;")
 
-    # Convert Dataframe to json, so I can put it in the database
-    to_enter_as_json = json.loads(dictionary_batch.to_json(orient='records'))
+    query = query.bindparams(values=tuple(data_ids))
+    present_ids = pandas.read_sql(query, db_engine)['_id'].tolist()
 
-    if len(to_enter_as_json) > 0:
-        cursor = connection.cursor()
-        log.info("New records to add, inserting " + str(len(to_enter_as_json)) + " record(s)")
-        connection.insert_many(to_enter_as_json, ordered=False)
-        cursor.execute()
-        connection.commit()
-        connection.close()
+    if present_ids is not None:
+        dictionary_batch = dictionary_batch[~dictionary_batch['_id'].isin(present_ids)]
 
-        return len(to_enter_as_json)
+    if len(dictionary_batch) > 0:
+        log.info("New records to add, inserting " + str(len(dictionary_batch)) + " record(s)")
+        return dictionary_batch.replace("\\N", None).to_sql(data_set_name, db_engine, if_exists='append', index=False)
 
     else:
         return 0

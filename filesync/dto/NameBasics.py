@@ -1,7 +1,7 @@
 import pandas
 from dataclasses import dataclass
 
-from filesync.dto.Profession import Profession
+from dto.Profession import Profession
 
 
 @dataclass
