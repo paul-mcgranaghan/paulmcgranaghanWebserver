@@ -16,7 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TitleBasicDao {
     private final static String GET_TITLE_BY_ID = """
-                        SELECT _id, titleType, primaryTitle, originalTitle, isAdult, startYear, endYear, runtimeMinutes, genres
+                        SELECT "_id", "titleType", "primaryTitle", "originalTitle", "isAdult", "startYear", "endYear", "runtimeMinutes", genres 
                         FROM title_basics
                         WHERE _id = :_id
             """;

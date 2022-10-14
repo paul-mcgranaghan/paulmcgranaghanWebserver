@@ -6,7 +6,7 @@ from CleanUpFiles import cleanup_files
 from JobLogger import get_module_logger
 from SyncFile import sync_data_from_file
 
-SYNC_JOB_TIME = "23:25:00"
+SYNC_JOB_TIME = "18:27:00"
 
 log = get_module_logger(__name__)
 
@@ -18,9 +18,9 @@ if __name__ == "__main__":
 def job():
     log.info("Syncing data tables")
 
-    # sync_data_from_file("title.basics", "./data/", "tconst")
-    # sync_data_from_file("title.principals", "./data/", "nconst")
-    sync_data_from_file("name.basics", "./data/", "nconst", )
+    sync_data_from_file("title.basics", "./data/", "tconst")
+    sync_data_from_file("title.principals", "./data/", "nconst")
+    # sync_data_from_file("name.basics", "./data/", "nconst", )
     cleanup_files("./data/")
     log.info("I've Finished the imdb sync data job")
 

@@ -16,8 +16,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TitlePrincipleDao {
     private final static String GET_PRINCIPLE_BY_ACTOR_ID = """
-                        SELECT _id, tconst, ordering, nconst, category, job, characters
-                        FROM title_principle
+                        SELECT "_id", tconst, "ordering", nconst, category, job, "characters"
+                        FROM title_principals
                         WHERE nconst = :nconst
             """;
     @Autowired

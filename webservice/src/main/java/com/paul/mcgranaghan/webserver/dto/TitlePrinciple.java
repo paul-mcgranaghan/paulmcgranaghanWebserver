@@ -3,10 +3,13 @@ package com.paul.mcgranaghan.webserver.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +17,9 @@ import java.util.stream.Collectors;
 @Getter
 @Builder(toBuilder = true)
 @AllArgsConstructor
+@Table(name="title_principals")
+@NoArgsConstructor
+@Entity
 public class TitlePrinciple {
 
     @Id
@@ -24,9 +30,9 @@ public class TitlePrinciple {
     public String nconst;
     public PrincipleCategory principleCategory;
     public String job;
-    public List<String> charactersPlayed;
+    public String charactersPlayed;
 
-    public TitlePrinciple(String _id, String tconst, Integer ordering, String nconst,
+/*    public TitlePrinciple(String _id, String tconst, Integer ordering, String nconst,
                           String category, String job,
                           String characters) {
         this._id = _id;
@@ -37,5 +43,5 @@ public class TitlePrinciple {
         this.job = job;
         this.charactersPlayed = Arrays.stream(characters.split(",")).collect(Collectors.toList());
 
-    }
+    }*/
 }

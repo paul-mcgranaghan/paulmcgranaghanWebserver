@@ -3,17 +3,20 @@ package com.paul.mcgranaghan.webserver.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
+import javax.persistence.Table;
 
 @Getter
 @Builder(toBuilder = true)
 @AllArgsConstructor
+@Table(name="name_basics")
+@NoArgsConstructor
+@Entity
 public class NameBasics {
 
     @Id
@@ -23,10 +26,10 @@ public class NameBasics {
     public String primaryName;
     public String birthYear;
     public String deathYear;
-    public Set<Profession> primaryProfessions;
-    public Set<String> knownTitles;
+    public String primaryProfession;
+    public String knownForTitles;
 
-    public NameBasics(String _id, String nConst,
+/*    public NameBasics(String _id, String nConst,
                       String primaryName, String birthYear,
                       String deathYear, String primaryProfession,
                       String knownForTitles) {
@@ -35,8 +38,11 @@ public class NameBasics {
         this.primaryName = primaryName;
         this.birthYear = birthYear;
         this.deathYear = deathYear;
-        this.primaryProfessions = Arrays.stream(primaryProfession.split(","))
+        this.primaryProfession = primaryProfession;
+        this.knownForTitles = knownForTitles;
+
+        *//*this.primaryProfessions = Arrays.stream(primaryProfession.split(","))
                 .map(p -> Profession.valueOf(p.toUpperCase())).collect(Collectors.toSet());
-        this.knownTitles = Arrays.stream(knownForTitles.split(",")).collect(Collectors.toSet());
-    }
+        this.knownTitles = Arrays.stream(knownForTitles.split(",")).collect(Collectors.toSet());*//*
+    }*/
 }

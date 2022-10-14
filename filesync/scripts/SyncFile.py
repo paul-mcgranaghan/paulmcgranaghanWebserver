@@ -36,7 +36,7 @@ def sync_data_from_file(data_set_name, data_location, data_key):
         i = 1
         for chunk in reader:
             log.info("Processing chunk number: " + str(i))
-            chunk = chunk.drop(chunk[chunk.nconst == 'nm13918539'].index)
+            #chunk = chunk.drop(chunk[chunk.nconst == 'nm13918539'].index)
 
             chunk = add_id_to_data_chunk(chunk, data_key, data_set_name)
             chunk_ids = chunk['_id'].to_list()

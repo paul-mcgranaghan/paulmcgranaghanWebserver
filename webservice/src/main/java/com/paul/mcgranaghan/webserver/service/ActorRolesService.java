@@ -30,6 +30,7 @@ public class ActorRolesService {
     public final TitlePrincipleDao titlePrincipleDao;
 
     public Actor resolveRolesForActor(String actorName) {
+        log.info("Requesting for : {} "  ,actorName);
         NameBasics nameBasics = nameBasicDao.findByName(actorName);
         List<TitlePrinciple> titlePrinciples = titlePrincipleDao.findById(nameBasics.getNConst());
         List<TitleBasics> titleBasics = titleBasicDao.findById(titlePrinciples.stream().map(TitlePrinciple::getTconst).collect(Collectors.toList()));
