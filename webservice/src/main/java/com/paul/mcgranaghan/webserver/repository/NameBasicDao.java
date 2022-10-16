@@ -2,15 +2,9 @@ package com.paul.mcgranaghan.webserver.repository;
 
 import com.paul.mcgranaghan.webserver.dto.NameBasics;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.naming.Name;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -97,7 +91,7 @@ public class NameBasicDao implements CrudRepository<NameBasics, String> {
 
     }
 
-    public NameBasics findByName(String name){
-        return (NameBasics)
+    public NameBasics findByName(String name) {
+        return null;
     }
 }

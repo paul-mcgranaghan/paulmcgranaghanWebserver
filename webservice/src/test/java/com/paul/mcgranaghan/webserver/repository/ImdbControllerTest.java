@@ -20,7 +20,7 @@ public class ImdbControllerTest {
 
 
     @Mock
-    private final NameBasicDao nameBasicDao = new NameBasicDao(mockNamedParameterJdbcTemplate);
+    private final NameBasicDao nameBasicDao = new NameBasicDao(/*mockNamedParameterJdbcTemplate*/);
     @Mock
     private final TitleBasicDao titleBasicDao = new TitleBasicDao(mockNamedParameterJdbcTemplate);
     @Mock

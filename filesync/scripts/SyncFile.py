@@ -5,7 +5,7 @@ import time
 import urllib.request
 
 import pandas
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, exc
 
 from JobLogger import get_module_logger
 
@@ -36,7 +36,6 @@ def sync_data_from_file(data_set_name, data_location, data_key):
         i = 1
         for chunk in reader:
             log.info("Processing chunk number: " + str(i))
-            #chunk = chunk.drop(chunk[chunk.nconst == 'nm13918539'].index)
 
             chunk = add_id_to_data_chunk(chunk, data_key, data_set_name)
             chunk_ids = chunk['_id'].to_list()
@@ -112,11 +111,26 @@ def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, dat
 
     if len(dictionary_batch) > 0:
         log.info("New records to add, inserting " + str(len(dictionary_batch)) + " record(s)")
-        return dictionary_batch.replace("\\N", None).to_sql(data_set_name, db_engine, if_exists='append', index=False)
-
+        dictionary_batch = dictionary_batch.replace("\\N", None)
+        try:
+            return dictionary_batch.to_sql(data_set_name, db_engine, if_exists='append', index=False)
+        except exc.DataError:
+            log.error("Batch insert failed due to DataError, inserting individually and swallowing failure")
+            insertIndividually(dictionary_batch, data_set_name, db_engine)
+            pass
     else:
         return 0
 
 
 def get_cursor(collection, data_ids):
     return collection.find({'_id': {'$in': data_ids}})
+
+
+def insertIndividually(dictionary_batch, data_set_name, db_engine):
+    for row in dictionary_batch.iterrows():
+        try:
+            pandas.DataFrame(row[1]).T.to_sql(data_set_name, db_engine, if_exists='append', index=False)
+        except exc.DataError as e:
+            log.error("ERROR Row entry failed thrown exception: ")
+            log.error(e)
+            
