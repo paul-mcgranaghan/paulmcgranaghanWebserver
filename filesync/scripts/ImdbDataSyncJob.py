@@ -6,7 +6,7 @@ from CleanUpFiles import cleanup_files
 from JobLogger import get_module_logger
 from SyncFile import sync_data_from_file
 
-SYNC_JOB_TIME = "17:03:00"
+SYNC_JOB_TIME = "20:56:00"
 
 log = get_module_logger(__name__)
 
