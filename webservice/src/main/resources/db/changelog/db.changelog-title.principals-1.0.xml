@@ -11,7 +11,7 @@
             <column name="tconst" type="text">
                 <constraints nullable="false" primaryKey="false" unique="false"/>
             </column>
-            <column name="ordering" type="smallint">
+            <column name="ordering" type="int">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
             <column name="nconst" type="text">

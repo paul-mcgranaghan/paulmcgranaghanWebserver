@@ -16,14 +16,13 @@ time_format = "hh:MM:ss:sss"
 log = get_module_logger(__name__)
 
 
-def sync_data_from_file(data_set_name, data_location, data_key):
-    compressed_file_name = data_location + today.strftime(date_format) + "." + data_set_name + ".tsv.gz"
+def sync_data_from_file(data_set_name):
+    compressed_file_name = "./data/" + today.strftime(date_format) + "." + data_set_name + ".tsv.gz"
     file_name = today.strftime(date_format) + "." + data_set_name + ".csv"
 
-    download_todays_file_if_not_present(compressed_file_name, data_location, data_set_name, file_name)
+    download_todays_file_if_not_present(compressed_file_name, data_set_name, file_name)
 
     working_data_file = decompress_todays_file_if_not_done_already(file_name, compressed_file_name)
-    # chunk_size = 100
     chunk_size = 100000
     insert_count = 0
     processed_count = 0
@@ -33,17 +32,17 @@ def sync_data_from_file(data_set_name, data_location, data_key):
         db_engine = get_db()
         start_time = time.time()
         log.info("Processing chunks")
-        i = 1
+        chunk_counter = 1
         for chunk in reader:
-            log.info("Processing chunk number: " + str(i))
+            log.info("Processing chunk number: " + str(chunk_counter))
+            chunk = add_id_to_data_chunk(chunk, data_set_name)
 
-            chunk = add_id_to_data_chunk(chunk, data_key, data_set_name)
             chunk_ids = chunk['_id'].to_list()
 
             insert_count = insert_count + update_database(db_engine, chunk_ids,
                                                           chunk, data_set_name.replace(".", "_"))
             processed_count = processed_count + chunk_size
-            i = i + 1
+            chunk_counter = chunk_counter + 1
 
         end_time = time.time()
         time_taken = end_time - start_time
@@ -52,13 +51,13 @@ def sync_data_from_file(data_set_name, data_location, data_key):
                  ' new entry(s) inserted into collection: ' + data_set_name)
 
 
-def add_id_to_data_chunk(chunk, data_key, data_set_name):
+def add_id_to_data_chunk(chunk, data_set_name):
     if data_set_name == "title.principals":
-        chunk = add_principal_id(chunk)
+        chunk = add_principal_id(chunk).dropna(subset=['nconst', 'tconst', 'ordering'])
     elif data_set_name == "name.basics":
-        chunk = add_name_id(chunk)
+        chunk = add_name_id(chunk).dropna(subset=['nconst', 'primaryName'])
     else:
-        chunk = chunk.rename(columns={data_key: '_id'})
+        chunk = chunk.rename(columns={"tconst": '_id'}).dropna(subset=['_id'])
     return chunk
 
 
@@ -71,8 +70,8 @@ def decompress_todays_file_if_not_done_already(file_name, compressed_file_name):
         return unzip_data_file(compressed_file_name)
 
 
-def download_todays_file_if_not_present(compressed_file_name, data_location, data_set_name, file_name):
-    if os.path.isfile(compressed_file_name) or os.path.isfile(data_location + file_name):
+def download_todays_file_if_not_present(compressed_file_name, data_set_name, file_name):
+    if os.path.isfile(compressed_file_name) or os.path.isfile("./data/" + file_name):
         log.info("File " + data_set_name + " already pulled for today, I'm not gonna bother downloading again")
 
     else:
@@ -113,15 +112,11 @@ def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, dat
         log.info("New records to add, inserting " + str(len(dictionary_batch)) + " record(s)")
         dictionary_batch = dictionary_batch.replace("\\N", None)
         try:
-            return dictionary_batch.to_sql(data_set_name, db_engine, if_exists='append', index=False,)
+            return dictionary_batch.to_sql(data_set_name, db_engine, if_exists='append', index=False, )
         except exc.DataError as e:
-            log.error("Batch insert failed due to DataError, dropping failed record : " + e.params)
-            log.error("Error for row")
-            # This e.parmas gives me all the data not just the failed need to find a way to remove from the message maybe?
-            # Need to dictionary_batch = dictionary_batch - bad row, then insert again
+            # TODO: handle insert of non failing rows in batch
+            log.error("Batch insert failed due to DataError, dropping failed record : " + e.args[0])
             return 0
-            # insert_individually(dictionary_batch, data_set_name, db_engine)
-            # pass
     else:
         return 0
 
@@ -137,4 +132,3 @@ def insert_individually(dictionary_batch, data_set_name, db_engine):
         except exc.DataError as e:
             log.error("ERROR Row entry failed thrown exception: ")
             log.error(e)
-            
