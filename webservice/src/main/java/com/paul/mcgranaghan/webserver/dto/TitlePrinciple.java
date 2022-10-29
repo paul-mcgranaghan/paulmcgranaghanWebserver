@@ -3,12 +3,13 @@ package com.paul.mcgranaghan.webserver.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonProperty;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,9 @@ import java.util.stream.Collectors;
 @Getter
 @Builder(toBuilder = true)
 @AllArgsConstructor
+@Table(name="title_principals")
+@NoArgsConstructor
+@Entity
 public class TitlePrinciple {
 
     @Id
@@ -26,21 +30,18 @@ public class TitlePrinciple {
     public String nconst;
     public PrincipleCategory principleCategory;
     public String job;
-    public List<String> charactersPlayed;
+    public String charactersPlayed;
 
-    @BsonCreator
-    public TitlePrinciple(@BsonProperty(value = "_id") String _id, @BsonProperty(value = "tconst") String tconst,
-                          @BsonProperty(value = "ordering") Integer ordering, @BsonProperty(value = "nconst") String nconst,
-                          @BsonProperty(value = "category") String category, @BsonProperty(value = "job") String job,
-                          @BsonProperty(value = "characters") String characters) {
-
+/*    public TitlePrinciple(String _id, String tconst, Integer ordering, String nconst,
+                          String category, String job,
+                          String characters) {
         this._id = _id;
         this.tconst = tconst;
         this.ordering = ordering;
         this.nconst = nconst;
-        this.principleCategory = PrincipleCategory.valueOf(category);
+        this.principleCategory = PrincipleCategory.valueOf(category.toUpperCase());
         this.job = job;
         this.charactersPlayed = Arrays.stream(characters.split(",")).collect(Collectors.toList());
 
-    }
+    }*/
 }

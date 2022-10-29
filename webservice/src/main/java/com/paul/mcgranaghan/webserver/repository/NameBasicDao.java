@@ -1,34 +1,97 @@
 package com.paul.mcgranaghan.webserver.repository;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.paul.mcgranaghan.webserver.dto.NameBasics;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import static com.mongodb.client.model.Filters.eq;
+import java.util.Optional;
 
 
 @Repository
 @RequiredArgsConstructor
-public class NameBasicDao {
+public class NameBasicDao implements CrudRepository<NameBasics, String> {
+
+/*    private final static String GET_ACTOR_BY_NAME = """
+                        SELECT "_id", nconst, "primaryName", "birthYear", "deathYear", "primaryProfession", "knownForTitles" 
+                         FROM name_basics
+                        WHERE "primaryName" = :primaryName
+            """;
     @Autowired
-    private final MongoClient mongoClient;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public NameBasics findById(String id) {
-        MongoDatabase mongoDatabase = mongoClient.getDatabase("imdb");
-        MongoCollection<NameBasics> mongoCollection = mongoDatabase.getCollection("name.basics", NameBasics.class);
+    public NameBasics findByName(String primaryName) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("primaryName", primaryName);
 
-        return mongoCollection.find(eq("_id", id)).first();
+        try {
+            return namedParameterJdbcTemplate.queryForObject(GET_ACTOR_BY_NAME, paramMap, NameBasics.class);
+        } catch (DataAccessException e) {
+            return null;
+        }
+    }*/
+
+    @Override
+    public <S extends NameBasics> S save(S entity) {
+        return null;
+    }
+
+    @Override
+    public <S extends NameBasics> Iterable<S> saveAll(Iterable<S> entities) {
+        return null;
+    }
+
+    @Override
+    public Optional<NameBasics> findById(String s) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean existsById(String s) {
+        return false;
+    }
+
+    @Override
+    public Iterable<NameBasics> findAll() {
+        return null;
+    }
+
+    @Override
+    public Iterable<NameBasics> findAllById(Iterable<String> strings) {
+        return null;
+    }
+
+    @Override
+    public long count() {
+        return 0;
+    }
+
+    @Override
+    public void deleteById(String s) {
+
+    }
+
+    @Override
+    public void delete(NameBasics entity) {
+
+    }
+
+    @Override
+    public void deleteAllById(Iterable<? extends String> strings) {
+
+    }
+
+    @Override
+    public void deleteAll(Iterable<? extends NameBasics> entities) {
+
+    }
+
+    @Override
+    public void deleteAll() {
+
     }
 
     public NameBasics findByName(String name) {
-        MongoDatabase mongoDatabase = mongoClient.getDatabase("imdb");
-        MongoCollection<NameBasics> mongoCollection = mongoDatabase.getCollection("name.basics", NameBasics.class);
-
-        return mongoCollection.find(eq("primaryTitle", name)).first();
+        return null;
     }
-
 }

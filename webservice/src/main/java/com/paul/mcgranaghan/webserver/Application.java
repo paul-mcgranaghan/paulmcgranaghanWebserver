@@ -1,6 +1,5 @@
 package com.paul.mcgranaghan.webserver;
 
-import com.paul.mcgranaghan.webserver.config.MongoConfig;
 import com.paul.mcgranaghan.webserver.config.MqConfig;
 import com.paul.mcgranaghan.webserver.config.SecurityConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({MqConfig.class, SecurityConfig.class, MongoConfig.class})
+@Import({MqConfig.class, SecurityConfig.class})
 @Slf4j
 public class Application {
 

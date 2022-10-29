@@ -19,29 +19,11 @@ services:
     depends_on:
       - db
 
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/var/run/docker.sock mongodb/mongodb
-      - /var/run/docker.sock:/var/run/docker.sock
-
-  mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    restart: always
-    ports:
-      - "8081:8081"
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-
   imdbFileSync:
     build: filesync/
     image: paul/imdbsync:latest
     depends_on:
-      - mongodb
+      - db
     volumes:
       - imdb_file_data:/var/lib/imdb/data/files
   mq:
@@ -89,8 +71,6 @@ volumes:
   portainer_data:
     external: false
   rabbitMQ_data:
-    external: false
-  mongo_data:
     external: false
   imdb_file_data:
     external: false

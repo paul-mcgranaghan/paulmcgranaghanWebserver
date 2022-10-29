@@ -1,6 +1,6 @@
 POSTGRES_PASSWORD=Pa22word
+POSTGRES_USERNAME=postgres
 RABBITMQ_DEFAULT_USER=guest
 RABBITMQ_DEFAULT_PASS=guest
 DATA_SOURCE_URL=jdbc:postgresql://host.docker.internal:5432/postgres
 RABBIT_MQ_URL=host.docker.internal:5672
-MONGO_DB_SOURCE_URL=mongodb://127.0.0.1:27017/
