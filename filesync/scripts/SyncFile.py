@@ -4,6 +4,7 @@ import os
 import time
 import urllib.request
 
+import numpy
 import pandas
 from sqlalchemy import create_engine, text, exc
 
@@ -115,8 +116,10 @@ def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, dat
             return dictionary_batch.to_sql(data_set_name, db_engine, if_exists='append', index=False, )
         except exc.DataError as e:
             # TODO: handle insert of non failing rows in batch
-            log.error("Batch insert failed due to DataError, dropping failed record : " + e.args[0])
-            return 0
+            # TODO: Handle cleaning out duplicates/ updates
+            log.error("Batch insert failed due to DataError,"
+                      " inserting individually and skipping bad record : " + e.args[0])
+            return insert_in_10_chunks(dictionary_batch, data_set_name, db_engine)
     else:
         return 0
 
@@ -125,10 +128,38 @@ def get_cursor(collection, data_ids):
     return collection.find({'_id': {'$in': data_ids}})
 
 
+def insert_in_10_chunks(dictionary_batch, data_set_name, db_engine):
+    # This array split gives empty lists
+    batch_chunks = numpy.array_split(dictionary_batch, 10)
+    batch_chunks = list(filter(lambda x: not x.empty, batch_chunks))
+    rows_inserted = 0
+    for row in batch_chunks:
+        try:
+            row.to_sql(data_set_name, db_engine, if_exists='append', index=False)
+            rows_inserted = rows_inserted + len(row)
+        except exc.DataError as e:
+            log.error(e)
+            rows_processed = insert_individually(row, data_set_name, db_engine)
+            rows_inserted = rows_inserted + len(rows_processed) - 1
+
+            # Drop processed values from batch, some how get this row reprocessed
+            row = row[~row._id.str.contains('|'.join(rows_processed))]
+            # Drop by _id list
+    return rows_inserted
+
+
 def insert_individually(dictionary_batch, data_set_name, db_engine):
+    # TODO: How to remove inserted and failed from chunk and insert again?
+    rows_inserted = 0
+    rows_processed = []
     for row in dictionary_batch.iterrows():
         try:
             pandas.DataFrame(row[1]).T.to_sql(data_set_name, db_engine, if_exists='append', index=False)
+            rows_inserted = rows_inserted + 1
+            rows_processed.append(row[1]['_id'])
         except exc.DataError as e:
-            log.error("ERROR Row entry failed thrown exception: ")
-            log.error(e)
+            log.error("Failed to Insert row _id: " + row[1]['_id'])
+            rows_processed.append(row[1]['_id'])
+            return rows_processed
+
+    return rows_processed

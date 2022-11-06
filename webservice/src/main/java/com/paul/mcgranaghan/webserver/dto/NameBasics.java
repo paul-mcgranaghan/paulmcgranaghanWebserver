@@ -5,18 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder(toBuilder = true)
 @AllArgsConstructor
-@Table(name="name_basics")
 @NoArgsConstructor
-@Entity
 public class NameBasics {
 
     @Id
@@ -28,8 +27,10 @@ public class NameBasics {
     public String deathYear;
     public String primaryProfession;
     public String knownForTitles;
+    public Set<Profession> primaryProfessions;
+    public Set<String> knownTitles;
 
-/*    public NameBasics(String _id, String nConst,
+    public NameBasics(String _id, String nConst,
                       String primaryName, String birthYear,
                       String deathYear, String primaryProfession,
                       String knownForTitles) {
@@ -41,8 +42,14 @@ public class NameBasics {
         this.primaryProfession = primaryProfession;
         this.knownForTitles = knownForTitles;
 
-        *//*this.primaryProfessions = Arrays.stream(primaryProfession.split(","))
+        this.primaryProfessions = Arrays.stream(primaryProfession.split(","))
                 .map(p -> Profession.valueOf(p.toUpperCase())).collect(Collectors.toSet());
-        this.knownTitles = Arrays.stream(knownForTitles.split(",")).collect(Collectors.toSet());*//*
-    }*/
+        this.knownTitles = Arrays.stream(knownForTitles.split(",")).collect(Collectors.toSet());
+    }
+
+    public void setPrimaryProfessionsFromString(String professions) {
+        this.primaryProfessions = Arrays.stream(primaryProfession.split(","))
+                .map(p -> Profession.valueOf(p.toUpperCase())).collect(Collectors.toSet());
+
+    }
 }

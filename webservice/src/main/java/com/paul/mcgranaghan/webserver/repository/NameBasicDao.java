@@ -1,21 +1,29 @@
 package com.paul.mcgranaghan.webserver.repository;
 
 import com.paul.mcgranaghan.webserver.dto.NameBasics;
+import com.paul.mcgranaghan.webserver.dto.Profession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Repository
 @RequiredArgsConstructor
-public class NameBasicDao implements CrudRepository<NameBasics, String> {
+public class NameBasicDao {
 
-/*    private final static String GET_ACTOR_BY_NAME = """
-                        SELECT "_id", nconst, "primaryName", "birthYear", "deathYear", "primaryProfession", "knownForTitles" 
+    private final static String GET_ACTOR_BY_NAME = """
+                        SELECT "_id", nconst, "primaryName", "birthYear", "deathYear", "primaryProfession", "knownForTitles"
                          FROM name_basics
-                        WHERE "primaryName" = :primaryName
+                        WHERE "primaryName" in (:primaryName);
             """;
     @Autowired
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -24,74 +32,33 @@ public class NameBasicDao implements CrudRepository<NameBasics, String> {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("primaryName", primaryName);
 
+        RowMapper<NameBasics> nameBasicsRowSet = (rs, rowNum) -> NameBasics.builder()
+                ._id(rs.getString("_id"))
+                .birthYear(rs.getString("birthYear"))
+                .deathYear(rs.getString("deathYear"))
+                .knownForTitles(rs.getString("knownForTitles"))
+                .nConst(rs.getString("nConst"))
+                .primaryProfession(rs.getString("primaryProfession"))
+                .primaryProfessions(commaDelimitedToSetUtil(rs.getString("primaryProfession")))
+                .primaryName(rs.getString("primaryName"))
+                .knownTitles(commaDelimitedToSetUtilString(rs.getString("knownForTitles")))
+                .build();
+
         try {
-            return namedParameterJdbcTemplate.queryForObject(GET_ACTOR_BY_NAME, paramMap, NameBasics.class);
+            return namedParameterJdbcTemplate.query(GET_ACTOR_BY_NAME, paramMap, nameBasicsRowSet).get(0);
         } catch (DataAccessException e) {
             return null;
         }
-    }*/
-
-    @Override
-    public <S extends NameBasics> S save(S entity) {
-        return null;
     }
 
-    @Override
-    public <S extends NameBasics> Iterable<S> saveAll(Iterable<S> entities) {
-        return null;
+    //Todo: Combine these as generic and move to a util class
+    public Set<Profession> commaDelimitedToSetUtil(String primaryProfession) {
+        return Arrays.stream(primaryProfession.split(","))
+                .map(p -> Profession.valueOf(p.toUpperCase())).collect(Collectors.toSet());
     }
 
-    @Override
-    public Optional<NameBasics> findById(String s) {
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean existsById(String s) {
-        return false;
-    }
-
-    @Override
-    public Iterable<NameBasics> findAll() {
-        return null;
-    }
-
-    @Override
-    public Iterable<NameBasics> findAllById(Iterable<String> strings) {
-        return null;
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public void deleteById(String s) {
-
-    }
-
-    @Override
-    public void delete(NameBasics entity) {
-
-    }
-
-    @Override
-    public void deleteAllById(Iterable<? extends String> strings) {
-
-    }
-
-    @Override
-    public void deleteAll(Iterable<? extends NameBasics> entities) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-
-    }
-
-    public NameBasics findByName(String name) {
-        return null;
+    public Set<String> commaDelimitedToSetUtilString(String primaryProfession) {
+        return Arrays.stream(primaryProfession.split(","))
+                .collect(Collectors.toSet());
     }
 }
