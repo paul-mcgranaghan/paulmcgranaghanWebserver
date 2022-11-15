@@ -9,9 +9,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/imdb")
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class ImdbController {
 
     private final ActorRolesService actorRolesService;
@@ -31,7 +32,8 @@ public class ImdbController {
             @ApiResponse(responseCode = "404", description = "Actor not found",
                     content = @Content)})
     @GetMapping("/getRolesByPerson")
-    public Actor getRolesByActor(@PathVariable String person) {
+    public Actor getRolesByActor(String person) {
+        log.info("Hitting api endooint");
         return actorRolesService.resolveRolesForActor(person);
     }
 }

@@ -1,5 +1,5 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
-import {FormControl} from "@angular/forms";
+import {UntypedFormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   title: string;
 
   @HostBinding('class') className = '';
-  toggleControl = new FormControl(false);
+  toggleControl = new UntypedFormControl(false);
 
   constructor() {
     this.title = 'User Management System';
