@@ -1,0 +1,43 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="changelog-1.0" author="paulmcg">
+        <createTable tableName="title_principals" schemaName="public">
+            <column name="_id" type="text">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="tconst" type="text">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
+            <column name="ordering" type="int">
+                <constraints nullable="true" primaryKey="false" unique="false"/>
+            </column>
+            <column name="nconst" type="text">
+                <constraints nullable="false" primaryKey="false" unique="false"/>
+            </column>
+            <column name="category" type="text">
+                <constraints nullable="true" primaryKey="false" unique="false"/>
+            </column>
+            <column name="job" type="text">
+                <constraints nullable="true" primaryKey="false" unique="false"/>
+            </column>
+            <column name="characters" type="text">
+                <constraints nullable="true" primaryKey="false" unique="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="title_principals" schemaName="public"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="changelog-1.1" author="paulmcg">
+        <createIndex tableName="title_principals" schemaName="public" indexName="PRINCIPAL_IDX">
+            <column name="_id"/>
+        </createIndex>
+        <rollback>
+            <dropIndex tableName="title_principals" indexName="PRINCIPAL_IDX"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

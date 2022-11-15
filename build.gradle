@@ -4,7 +4,7 @@ plugins {
     id "java-library"
     id "project-report"
     id "io.freefair.lombok" version "$lombokVersion"
-    id "com.palantir.docker" version "0.33.0"
+    id "com.palantir.docker" version "0.34.0"
 }
 
 group 'com.paul.mcgranaghan'
@@ -50,9 +50,6 @@ ext {
                     "com.h2database:h2:$h2databaseVersion",
                     "org.hsqldb:hsqldb:$hsqldbVersion"
             ],
-            mongoDb       : [
-                    "org.mongodb:mongodb-driver-sync:$mongoDbVerison"
-            ],
             mQueue           : [
                     "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"
             ],
@@ -88,7 +85,7 @@ ext {
 
 docker {
     name "${project.name}:${project.version}"
-    files './build/libs/paulmcgranaghanwebserver-1.0-SNAPSHOT-plain.jar','./webservice/Dockerfile'
+    files './build/libs/paulmcgranaghanwebserver-1.0-SNAPSHOT-plain.jar', './webservice/Dockerfile'
 }
 docker.dependsOn(jar)
 

@@ -5,7 +5,7 @@ services:
     image: postgres:latest
     environment:
       POSTGRES_USERNAME: "postgres"
-      POSTGRES_PASSWORD: "Pip3Quinn"
+      POSTGRES_PASSWORD: "Pa22word"
     ports:
       - "5432:5432"
     volumes:
@@ -19,34 +19,11 @@ services:
     depends_on:
       - db
 
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    ports:
-      - "2717:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=user
-      - MONGO_INITDB_ROOT_PASSWORD=pass
-    volumes:
-      - mongo_data:/var/run/docker.sock mongodb/mongodb
-      - /var/run/docker.sock:/var/run/docker.sock
-
-  mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    restart: always
-    ports:
-      - "8081:8081"
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=user
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-
   imdbFileSync:
     build: filesync/
-    image: paul/imdbsync:0.1.0
+    image: paul/imdbsync:latest
     depends_on:
-      - mongodb
+      - db
     volumes:
       - imdb_file_data:/var/lib/imdb/data/files
   mq:
@@ -60,7 +37,7 @@ services:
 
   webService:
     build: webservice/
-    image: paul/webservice:0.1.0
+    image: paul/webservice:latest
     ports:
       - "8090:8090"
     depends_on:
@@ -74,7 +51,7 @@ services:
   ui:
     hostname: localhost
     build: ui/
-    image: paul/ui:0.1.0
+    image: paul/ui:latest
     ports:
       - "4200:4200"
 
@@ -94,8 +71,6 @@ volumes:
   portainer_data:
     external: false
   rabbitMQ_data:
-    external: false
-  mongo_data:
     external: false
   imdb_file_data:
     external: false
