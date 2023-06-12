@@ -17,12 +17,13 @@ allprojects {
     repositories {
         mavenCentral()
     }
+    test {
+        systemProperties['concordion.output.dir'] = "./build/reports/spec"
+        testLogging.showStandardStreams = true
+        outputs.upToDateWhen { false }
+    }
 }
-test {
-    systemProperties['concordion.output.dir'] = "$reporting.baseDir/spec"
-    testLogging.showStandardStreams = true
-    outputs.upToDateWhen { false }
-}
+
 
 bootJar {
     enabled = false
@@ -79,6 +80,14 @@ ext {
             ],
             springBootTest   : [
                     "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+            ],
+            cucumber   : [
+                    "io.cucumber:cucumber-java:$cucumberVersion",
+                    "io.cucumber:cucumber-spring:$cucumberVersion",
+                    "io.cucumber:cucumber-junit:$cucumberVersion",
+                    "org.testcontainers:postgresql:1.17.6",
+                    "org.testcontainers:junit-jupiter:1.17.6"
+                    //"org.testcontainers:testcontainers:1.17.6"
             ]
     ]
 }

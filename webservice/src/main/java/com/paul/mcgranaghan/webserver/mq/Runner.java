@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class Runner implements CommandLineRunner {
+public class Runner /*implements CommandLineRunner */{
 
-    static final String topicExchangeName = "spring-boot-exchange";
+    /*static final String topicExchangeName = "spring-boot-exchange";
     private final RabbitTemplate rabbitTemplate;
     private final Receiver receiver;
 
@@ -23,6 +23,6 @@ public class Runner implements CommandLineRunner {
         System.out.println("Sending message...");
         rabbitTemplate.convertAndSend(topicExchangeName, "foo.bar.baz", "Hello from RabbitMQ!");
         receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
-    }
+    }*/
 
 }

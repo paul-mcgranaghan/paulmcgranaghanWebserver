@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:application.properties")
+/*@PropertySource("classpath:application.properties")*/
 public class MqConfig {
 
-    static final String topicExchangeName = "spring-boot-exchange";
+/*    static final String topicExchangeName = "spring-boot-exchange";
     static final String queueName = "rabbit@webservice_users";
 
     @Value("${rabbit.mq.host}")
@@ -59,6 +59,6 @@ public class MqConfig {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
         cachingConnectionFactory.setAddresses(rabbitMQHost);
         return cachingConnectionFactory;
-    }
+    }*/
 
 }

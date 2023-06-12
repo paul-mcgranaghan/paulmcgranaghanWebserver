@@ -1,5 +1,5 @@
 import time
-
+import os
 import schedule
 
 from CleanUpFiles import cleanup_files
@@ -15,9 +15,16 @@ if __name__ == "__main__":
              "This job will sync the Imdb data every day at " + SYNC_JOB_TIME)
 
 
+def create_data_folder_if_none_exists():
+    if not os.path.isdir(
+            "./data"):
+        log.info("Making data file")
+        os.mkdir("./data")
+
+
 def job():
     log.info("Syncing data tables")
-
+    create_data_folder_if_none_exists()
     sync_data_from_file("title.basics")
     sync_data_from_file("title.principals")
     sync_data_from_file("name.basics")

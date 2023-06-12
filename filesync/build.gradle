@@ -1,0 +1,19 @@
+plugins {
+    id "ru.vyarus.use-python"
+}
+
+python {
+    usePythonVerison = "$pythonVersion"
+    minPipVersion = "$pipVersion"
+
+    pip "schedule:$scheduleVersion"
+    pip "pandas:$pandasVersion"
+    pip "datetime:$datetimeVersion"
+    pip "psycopg2:$psycopg2Version"
+    pip "SQLAlchemy:$SQLAlchemyVersion"
+    pip "numpy:$numpyVersion"
+
+
+}
+
+
