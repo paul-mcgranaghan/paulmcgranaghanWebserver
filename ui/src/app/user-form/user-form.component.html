@@ -16,6 +16,7 @@
       <div class="form-group">
         <label for="email">Email</label>
         <input #email="ngModel" [(ngModel)]="user.email"
+               pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
                class="form-control"
                id="email"
                name="email"
