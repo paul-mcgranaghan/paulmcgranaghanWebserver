@@ -23,7 +23,7 @@ public class NameBasicDao {
     private final static String GET_ACTOR_BY_NAME = """
                         SELECT "_id", nconst, "primaryName", "birthYear", "deathYear", "primaryProfession", "knownForTitles"
                          FROM name_basics
-                        WHERE "primaryName" in (:primaryName);
+                        -- WHERE "primaryName" in (:primaryName);
             """;
     @Autowired
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -49,6 +49,10 @@ public class NameBasicDao {
         } catch (DataAccessException e) {
             return null;
         }
+    }
+
+    public void save(NameBasics nameBasics){
+
     }
 
     //Todo: Combine these as generic and move to a util class

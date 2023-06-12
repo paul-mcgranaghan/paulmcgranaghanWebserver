@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({MqConfig.class, SecurityConfig.class})
+@Import({/*MqConfig.class,*/ SecurityConfig.class})
 @Slf4j
 public class Application {
 

@@ -42,8 +42,8 @@ def sync_data_from_file(data_set_name):
 
             insert_count = insert_count + update_database(db_engine, chunk_ids,
                                                           chunk, data_set_name.replace(".", "_"))
-            processed_count = processed_count + chunk_size
-            chunk_counter = chunk_counter + 1
+            processed_count += chunk_size
+            chunk_counter += 1
 
         end_time = time.time()
         time_taken = end_time - start_time
@@ -53,6 +53,7 @@ def sync_data_from_file(data_set_name):
 
 
 def add_id_to_data_chunk(chunk, data_set_name):
+    # TODO: These id's don't really work, they should function as a key, but still getting duplicates
     if data_set_name == "title.principals":
         chunk = add_principal_id(chunk).dropna(subset=['nconst', 'tconst', 'ordering'])
     elif data_set_name == "name.basics":
@@ -95,7 +96,7 @@ def add_name_id(chunk):
 
 
 def get_db():
-    return create_engine('postgresql+psycopg2://postgres:Pa22word@localhost:5432/postgres')
+    return create_engine('postgresql+psycopg2://postgres:Pa22word@host.docker.internal:5432/postgres')
 
 
 def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, data_set_name):
@@ -116,7 +117,7 @@ def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, dat
             return dictionary_batch.to_sql(data_set_name, db_engine, if_exists='append', index=False, )
         except exc.DataError as e:
             # TODO: handle insert of non failing rows in batch
-            # TODO: Handle cleaning out duplicates/ updates
+            # TODO: Handle cleaning out duplicates/ updates, upsert doesn't actually work!
             log.error("Batch insert failed due to DataError,"
                       " inserting individually and skipping bad record : " + e.args[0])
             return insert_in_10_chunks(dictionary_batch, data_set_name, db_engine)
@@ -142,7 +143,8 @@ def insert_in_10_chunks(dictionary_batch, data_set_name, db_engine):
             rows_processed = insert_individually(row, data_set_name, db_engine)
             rows_inserted = rows_inserted + len(rows_processed) - 1
 
-            # Drop processed values from batch, some how get this row reprocessed
+            # Drop processed values from batch,
+            # TODO: need to think about if/how to get this row reprocessed
             row = row[~row._id.str.contains('|'.join(rows_processed))]
             # Drop by _id list
     return rows_inserted
