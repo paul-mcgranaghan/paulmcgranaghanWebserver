@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "^14.2.10",
     "@angular/router": "^14.2.10",
     "@auth0/auth0-angular": "^1.9.0",
-    "amqplib": "0.9.1",
+    "amqplib": "0.10.3",
     "angular-in-memory-web-api": "0.14.0",
     "ci": "^2.2.0",
     "ng-download": "^1.0.3",
