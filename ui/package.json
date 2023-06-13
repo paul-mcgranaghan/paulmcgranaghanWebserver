@@ -23,7 +23,7 @@
     "@angular/router": "^15.2.9",
     "@auth0/auth0-angular": "^2.1.0",
     "amqplib": "0.10.3",
-    "angular-in-memory-web-api": "0.15.0",
+    "angular-in-memory-web-api": "0.16.0",
     "ci": "^2.2.0",
     "ng-download": "^1.0.3",
     "node": "^18.10.0",
