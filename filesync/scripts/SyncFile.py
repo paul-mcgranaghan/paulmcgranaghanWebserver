@@ -1,3 +1,4 @@
+import csv
 import datetime
 import gzip
 import os
@@ -29,7 +30,7 @@ def sync_data_from_file(data_set_name):
     processed_count = 0
 
     with pandas.read_csv(working_data_file, chunksize=chunk_size, low_memory=False, encoding="utf-8",
-                         delimiter='\t') as reader:
+                         delimiter='\t', quoting=csv.QUOTE_NONE) as reader:
         db_engine = get_db()
         start_time = time.time()
         log.info("Processing chunks")
@@ -54,6 +55,7 @@ def sync_data_from_file(data_set_name):
 
 def add_id_to_data_chunk(chunk, data_set_name):
     # TODO: These id's don't really work, they should function as a key, but still getting duplicates
+    # Actually it might just be the data that has duplicates
     if data_set_name == "title.principals":
         chunk = add_principal_id(chunk).dropna(subset=['nconst', 'tconst', 'ordering'])
     elif data_set_name == "name.basics":
@@ -117,7 +119,6 @@ def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, dat
             return dictionary_batch.to_sql(data_set_name, db_engine, if_exists='append', index=False, )
         except exc.DataError as e:
             # TODO: handle insert of non failing rows in batch
-            # TODO: Handle cleaning out duplicates/ updates, upsert doesn't actually work!
             log.error("Batch insert failed due to DataError,"
                       " inserting individually and skipping bad record : " + e.args[0])
             return insert_in_10_chunks(dictionary_batch, data_set_name, db_engine)

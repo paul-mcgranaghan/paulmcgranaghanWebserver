@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,12 +30,21 @@ public class ActorRolesService {
     @Autowired
     public final TitlePrincipleDao titlePrincipleDao;
 
-    public Actor resolveRolesForActor(String actorName) {
-        log.info("Requesting for : {} "  ,actorName);
+    public Set<String> resolveRolesForActor(String actorName, String actorName2) {
+        log.info("Requesting for : {} and {} ", actorName, actorName2);
         NameBasics nameBasics = nameBasicDao.findByName(actorName);
         List<TitlePrinciple> titlePrinciples = titlePrincipleDao.findById(nameBasics.getNConst());
         List<TitleBasics> titleBasics = titleBasicDao.findById(titlePrinciples.stream().map(TitlePrinciple::getTconst).collect(Collectors.toList()));
-        return Actor.builder().name(nameBasics.primaryName).rolesList(titleBasics.stream().map(t -> t.primaryTitle).toList()).build();
+        Actor actor = Actor.builder().name(nameBasics.primaryName).rolesList(titleBasics.stream().map(t -> t.primaryTitle).toList()).build();
+
+        NameBasics nameBasics2 = nameBasicDao.findByName(actorName2);
+        List<TitlePrinciple> titlePrinciples2 = titlePrincipleDao.findById(nameBasics2.getNConst());
+        List<TitleBasics> titleBasics2 = titleBasicDao.findById(titlePrinciples2.stream().map(TitlePrinciple::getTconst).collect(Collectors.toList()));
+        // TODO: handle null responses, throw exception if dao's return null
+        Actor actor2 = Actor.builder().name(nameBasics2.primaryName).rolesList(titleBasics2.stream().map(t -> t.primaryTitle).toList()).build();
+
+        return actor.rolesList.stream().distinct().filter(actor2.rolesList::contains).collect(Collectors.toSet());
+
 
     }
 }
