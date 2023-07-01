@@ -23,7 +23,7 @@ public class NameBasicDao {
     private final static String GET_ACTOR_BY_NAME = """
                         SELECT "_id", nconst, "primaryName", "birthYear", "deathYear", "primaryProfession", "knownForTitles"
                          FROM name_basics
-                        -- WHERE "primaryName" in (:primaryName);
+                        WHERE "primaryName" in (:primaryName);
             """;
     @Autowired
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;

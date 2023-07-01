@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Set;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/imdb")
@@ -32,8 +34,8 @@ public class ImdbController {
             @ApiResponse(responseCode = "404", description = "Actor not found",
                     content = @Content)})
     @GetMapping("/getRolesByPerson")
-    public Actor getRolesByActor(String person) {
-        log.info("Hitting api endooint");
-        return actorRolesService.resolveRolesForActor(person);
+    public Set<String> getRolesByActor(String person, String person2) {
+        log.info("Hitting api endpoint");
+        return actorRolesService.resolveRolesForActor(person, person2);
     }
 }
