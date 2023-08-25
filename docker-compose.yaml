@@ -21,7 +21,7 @@ services:
 
   imdbFileSync:
     build: filesync/
-    image: paul/imdbsync:latest
+    image: paul/datasync:latest
     depends_on:
       - db
     volumes:

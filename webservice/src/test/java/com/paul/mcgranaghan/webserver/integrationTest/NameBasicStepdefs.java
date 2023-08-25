@@ -37,7 +37,7 @@ public class NameBasicStepdefs {
                     .originalTitle(column.get(1))
                     .titleGenre("Action")
                     .runtimeMinutes("120")
-                    .adult(false)
+                    .isAdult(false)
                     .titleType("Movie")
                     .build());
         }

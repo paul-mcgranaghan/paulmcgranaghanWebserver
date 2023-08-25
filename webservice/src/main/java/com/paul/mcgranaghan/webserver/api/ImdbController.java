@@ -1,6 +1,5 @@
 package com.paul.mcgranaghan.webserver.api;
 
-import com.paul.mcgranaghan.webserver.dto.Actor;
 import com.paul.mcgranaghan.webserver.dto.User;
 import com.paul.mcgranaghan.webserver.service.ActorRolesService;
 import io.swagger.v3.oas.annotations.Operation;

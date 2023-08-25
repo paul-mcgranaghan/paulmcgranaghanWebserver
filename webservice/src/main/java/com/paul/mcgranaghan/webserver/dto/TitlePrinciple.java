@@ -5,14 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.persistence.*;
 
 @Getter
 @Builder(toBuilder = true)
@@ -28,20 +21,9 @@ public class TitlePrinciple {
     public String tconst;
     public Integer ordering;
     public String nconst;
-    public PrincipleCategory principleCategory;
+    @Enumerated(EnumType.STRING)
+    public PrincipleCategory category;
     public String job;
-    public String charactersPlayed;
+    public String characters;
 
-/*    public TitlePrinciple(String _id, String tconst, Integer ordering, String nconst,
-                          String category, String job,
-                          String characters) {
-        this._id = _id;
-        this.tconst = tconst;
-        this.ordering = ordering;
-        this.nconst = nconst;
-        this.principleCategory = PrincipleCategory.valueOf(category.toUpperCase());
-        this.job = job;
-        this.charactersPlayed = Arrays.stream(characters.split(",")).collect(Collectors.toList());
-
-    }*/
 }

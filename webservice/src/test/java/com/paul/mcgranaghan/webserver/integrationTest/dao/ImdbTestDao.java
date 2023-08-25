@@ -3,7 +3,6 @@ package com.paul.mcgranaghan.webserver.integrationTest.dao;
 import com.paul.mcgranaghan.webserver.dto.NameBasics;
 import com.paul.mcgranaghan.webserver.dto.TitleBasics;
 import com.paul.mcgranaghan.webserver.dto.TitlePrinciple;
-import liquibase.util.SqlUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -68,9 +67,9 @@ public class ImdbTestDao {
         paramMap.put("tconst", titlePrinciple.tconst);
         paramMap.put("ordering", titlePrinciple.ordering);
         paramMap.put("nconst", titlePrinciple.nconst);
-        paramMap.put("category", titlePrinciple.principleCategory);
+        paramMap.put("category", titlePrinciple.category);
         paramMap.put("job", titlePrinciple.job);
-        paramMap.put("characters", titlePrinciple.charactersPlayed);
+        paramMap.put("characters", titlePrinciple.characters);
 
         namedParameterJdbcTemplate.update(INSERT_INTO_TITLE_PRINCIPAL_TABLE, paramMap);
     }
