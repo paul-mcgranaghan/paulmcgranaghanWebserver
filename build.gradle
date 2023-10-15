@@ -4,14 +4,14 @@ plugins {
     id "java-library"
     id "project-report"
     id "io.freefair.lombok" version "$lombokVersion"
-    id "com.palantir.docker" version "0.34.0"
+    id "com.palantir.docker" version "0.35.0"
 }
 
 group 'com.paul.mcgranaghan'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_20
+targetCompatibility = JavaVersion.VERSION_20
 
 allprojects {
     repositories {
@@ -55,7 +55,6 @@ ext {
                     "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"
             ],
             springBootStarter: [
-                    "javax:javaee-api:$javaEEVersion",
                     "org.springframework.cloud:spring-cloud-starter-sleuth:$springSleuthVersion",
                     "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                     "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
