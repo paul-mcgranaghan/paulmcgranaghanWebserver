@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../model/user';
 import {Observable} from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class UserService {
@@ -11,8 +12,8 @@ export class UserService {
   private login: string;
 
   constructor(private http: HttpClient) {
-
-    this.usersUrl = 'http://localhost:8090/users/listAll';
+    //TODO: Work out parameters for environments
+    this.usersUrl = 'http://localhost:8090/imdb/getRolesByPerson';
     this.addUserUrl = 'http://localhost:8090/users/addUser';
     this.login = 'http://localhost:8090/';
   }
