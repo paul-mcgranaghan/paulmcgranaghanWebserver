@@ -1,0 +1,32 @@
+
+body {
+    background-color: rgb(0, 0, 0);  
+    margin: 0px;  
+    height: 100vh;
+    display: grid;
+    place-items: center;
+  }
+  
+.box {
+    background-color: white;
+    width: 40%;
+    height: 110px;
+    border-radius: 30px;
+}
+
+.box:hover {
+    background-color: darkgray ;
+}
+
+.text-input {
+    background-color: grey;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 1000;
+    text-align: center;
+    font-size: xx-large;
+}
+
+.top-result {
+    background-color: blue;
+
+}
