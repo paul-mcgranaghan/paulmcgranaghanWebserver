@@ -4,14 +4,13 @@ plugins {
     id "java-library"
     id "project-report"
     id "io.freefair.lombok" version "$lombokVersion"
-    id "com.palantir.docker" version "0.34.0"
 }
 
 group 'com.paul.mcgranaghan'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 allprojects {
     repositories {
@@ -43,7 +42,7 @@ ext {
                     "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisVersion"
             ],
             liquibase        : [
-                    "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion",
+                    "org.springframework.boot:spring-boot-starter-data-jpa:",
                     "org.liquibase:liquibase-core:$liquibaseVersion"
             ],
             postgresDb       : [
@@ -52,24 +51,23 @@ ext {
                     "org.hsqldb:hsqldb:$hsqldbVersion"
             ],
             mQueue           : [
-                    "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"
+                    "org.springframework.boot:spring-boot-starter-amqp"
             ],
             springBootStarter: [
-                    "javax:javaee-api:$javaEEVersion",
                     "org.springframework.cloud:spring-cloud-starter-sleuth:$springSleuthVersion",
-                    "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
-                    "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
+                    "org.springframework.boot:spring-boot-starter-web",
+                    "org.springframework.boot:spring-boot-starter-actuator",
                     "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
                     "org.springdoc:springdoc-openapi-ui:$springdocVersion"
             ],
             auth0            : [
-                    "org.springframework.boot:spring-boot-starter-oauth2-client:$springBootVersion",
-                    "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion",
+                    "org.springframework.boot:spring-boot-starter-oauth2-client",
+                    "org.springframework.boot:spring-boot-starter-thymeleaf",
                     "org.thymeleaf.extras:thymeleaf-extras-springsecurity5:$thymeleafSpringVersion",
                     "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:$thymeleafLayoutVersion"
             ],
             springBatch      : [
-                    "org.springframework.boot:spring-boot-starter-batch:$springBootVersion"
+                    "org.springframework.boot:spring-boot-starter-batch:"
             ],
             concordion       : [
                     "org.concordion:concordion:$concordionVersion"
@@ -79,22 +77,15 @@ ext {
                     "org.junit.platform:junit-platform-runner:$junitVersion"
             ],
             springBootTest   : [
-                    "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+                    "org.springframework.boot:spring-boot-starter-test:"
             ],
             cucumber   : [
                     "io.cucumber:cucumber-java:$cucumberVersion",
                     "io.cucumber:cucumber-spring:$cucumberVersion",
                     "io.cucumber:cucumber-junit:$cucumberVersion",
-                    "org.testcontainers:postgresql:1.17.6",
-                    "org.testcontainers:junit-jupiter:1.17.6"
-                    //"org.testcontainers:testcontainers:1.17.6"
+                    "org.testcontainers:postgresql:$postgresTestContainerVersion",
+                    "org.testcontainers:junit-jupiter:$postgresTestContainerVersion"
             ]
     ]
 }
-
-docker {
-    name "${project.name}:${project.version}"
-    files './build/libs/paulmcgranaghanwebserver-1.0-SNAPSHOT-plain.jar', './webservice/Dockerfile'
-}
-docker.dependsOn(jar)
 

@@ -17,8 +17,8 @@
             <column name="originalTitle" type="text">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
-            <column name="isAdult" type="smallint">
-                <constraints nullable="true" primaryKey="false" unique="false"/>
+            <column name="isAdult" type="bool">
+                <constraints primaryKey="false" unique="false"/>
             </column>
             <column name="startYear" type="smallint">
                 <constraints nullable="true" primaryKey="false" unique="false"/>

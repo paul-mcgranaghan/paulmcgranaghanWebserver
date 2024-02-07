@@ -15,14 +15,14 @@ repositories {
 dependencies {
     compileOnly libraries.guava
 
-    implementation(libraries.springBootStarter,
+    implementation libraries.springBootStarter,
             libraries.mybatisSpringBoot,
             libraries.postgresDb,
             libraries.mQueue,
-            libraries.liquibase)
+            libraries.liquibase
 
-    testImplementation(libraries.concordion,
-            libraries.springBootTest, libraries.cucumber)
+    testImplementation libraries.concordion,
+            libraries.springBootTest, libraries.cucumber
 }
 jar {
     enabled = true

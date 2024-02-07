@@ -7,7 +7,8 @@ import urllib.request
 
 import numpy
 import pandas
-from sqlalchemy import create_engine, text, exc
+import sqlalchemy.types
+from sqlalchemy import create_engine, text, exc, Boolean
 
 from JobLogger import get_module_logger
 
@@ -62,6 +63,7 @@ def add_id_to_data_chunk(chunk, data_set_name):
         chunk = add_name_id(chunk).dropna(subset=['nconst', 'primaryName'])
     else:
         chunk = chunk.rename(columns={"tconst": '_id'}).dropna(subset=['_id'])
+        chunk = convert_number_to_bool(chunk)
     return chunk
 
 
@@ -97,6 +99,11 @@ def add_name_id(chunk):
     return chunk
 
 
+def convert_number_to_bool(chunk):
+    chunk['isAdult'] = chunk['isAdult'].astype(bool)
+    return chunk
+
+
 def get_db():
     return create_engine('postgresql+psycopg2://postgres:Pa22word@host.docker.internal:5432/postgres')
 
@@ -116,7 +123,8 @@ def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, dat
         log.info("New records to add, inserting " + str(len(dictionary_batch)) + " record(s)")
         dictionary_batch = dictionary_batch.replace("\\N", None)
         try:
-            return dictionary_batch.to_sql(data_set_name, db_engine, if_exists='append', index=False, )
+            return dictionary_batch.to_sql(data_set_name, db_engine, if_exists='append',
+                                           index=False, dtype={"isAdult": Boolean})
         except exc.DataError as e:
             # TODO: handle insert of non failing rows in batch
             log.error("Batch insert failed due to DataError,"
