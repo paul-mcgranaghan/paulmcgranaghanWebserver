@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Builder(toBuilder = true)
 @AllArgsConstructor
-@Document(indexName = "blog", type = "actor")
+@Document(indexName = "actor")
 public class Actor {
 
     @Id

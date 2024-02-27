@@ -35,6 +35,15 @@ services:
     depends_on:
       - db
 
+  elasticSearch:
+    image: elasticsearch
+    restart: always
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+
   imdbFileSync:
     build: filesync/
     image: paul/datasync:latest

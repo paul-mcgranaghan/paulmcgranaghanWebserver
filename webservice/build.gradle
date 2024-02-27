@@ -22,7 +22,6 @@ dependencies {
             libraries.postgresDb,
             libraries.mQueue,
             libraries.liquibase,
-            libraries.openapi,
             libraries.flagsmith
 
 
