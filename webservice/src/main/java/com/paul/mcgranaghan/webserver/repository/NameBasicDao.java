@@ -21,27 +21,27 @@ import java.util.stream.Collectors;
 public class NameBasicDao {
 
     private final static String GET_ACTOR_BY_NAME = """
-                        SELECT "_id", nconst, "primaryName", "birthYear", "deathYear", "primaryProfession", "knownForTitles"
+                        SELECT "_id", nconst, "primary_name", "birth_year", "death_year", "primary_profession", "known_for_titles"
                          FROM name_basics
-                        WHERE "primaryName" in (:primaryName);
+                        WHERE "primary_name" in (:primary_name);
             """;
     @Autowired
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public NameBasics findByName(String primaryName) {
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("primaryName", primaryName);
+        paramMap.put("primary_name", primaryName);
 
         RowMapper<NameBasics> nameBasicsRowSet = (rs, rowNum) -> NameBasics.builder()
                 ._id(rs.getString("_id"))
-                .birthYear(rs.getString("birthYear"))
-                .deathYear(rs.getString("deathYear"))
-                .knownForTitles(rs.getString("knownForTitles"))
-                .nConst(rs.getString("nConst"))
-                .primaryProfession(rs.getString("primaryProfession"))
-                .primaryProfessions(commaDelimitedToSetUtil(rs.getString("primaryProfession")))
-                .primaryName(rs.getString("primaryName"))
-                .knownTitles(commaDelimitedToSetUtilString(rs.getString("knownForTitles")))
+                .birthYear(rs.getString("birth_year"))
+                .deathYear(rs.getString("death_year"))
+                .knownForTitles(rs.getString("known_for_titles"))
+                .nConst(rs.getString("nconst"))
+                .primaryProfession(rs.getString("primary_profession"))
+                .primaryProfessions(commaDelimitedToSetUtil(rs.getString("primary_profession")))
+                .primaryName(rs.getString("primary_name"))
+                .knownTitles(commaDelimitedToSetUtilString(rs.getString("known_for_titles")))
                 .build();
 
         try {

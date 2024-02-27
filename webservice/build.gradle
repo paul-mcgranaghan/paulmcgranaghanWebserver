@@ -4,6 +4,7 @@ plugins {
     id 'java-library'
     id 'project-report'
     id 'io.freefair.lombok'
+    id 'info.solidsoft.pitest'
 }
 
 //version '0.1.0'
@@ -13,16 +14,21 @@ repositories {
 }
 
 dependencies {
+
     compileOnly libraries.guava
 
     implementation libraries.springBootStarter,
             libraries.mybatisSpringBoot,
             libraries.postgresDb,
             libraries.mQueue,
-            libraries.liquibase
+            libraries.liquibase,
+            libraries.openapi,
+            libraries.flagsmith
+
 
     testImplementation libraries.concordion,
-            libraries.springBootTest, libraries.cucumber
+            libraries.springBootTest,
+            libraries.cucumber
 }
 jar {
     enabled = true
@@ -31,6 +37,19 @@ jar {
                 'Main-Class': 'com.paul.mcgranaghan.webserver.Application'
         )
     }
+}
+
+pitest {
+    targetClasses = ['com.paul.mcgranaghan.webserver.*']  //by default "${project.group}.*"
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    testSourceSets = [sourceSets.test]
+    mainSourceSets = [sourceSets.main]
+    jvmArgs = ['-Xmx1024m']
+    useClasspathFile = true     //useful with bigger projects on Windows
+    fileExtensionsToFilter.addAll('xml', 'orbit')
+    mutators = ['STRONGER']
 }
 
 

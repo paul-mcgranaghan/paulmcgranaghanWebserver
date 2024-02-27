@@ -31,6 +31,7 @@ public class ImdbTestDao {
                     ("_id", "tconst", "ordering", "nconst", "category", "job", "characters")
             VALUES (:_id, :tconst, :ordering, :nconst, :category, :job, :characters);
             """;
+
     @Autowired
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -57,7 +58,7 @@ public class ImdbTestDao {
         paramMap.put("startYear", titleBasic.startYear);
         paramMap.put("endYear", titleBasic.endYear);
         paramMap.put("runtimeMinutes", Integer.valueOf(titleBasic.runtimeMinutes));
-        paramMap.put("genres", titleBasic.titleGenre);
+        paramMap.put("genres", titleBasic.genres);
 
         namedParameterJdbcTemplate.update(INSERT_INTO_TITLE_BASIC_TABLE, paramMap);
     }

@@ -1,5 +1,6 @@
 package com.paul.mcgranaghan.webserver.integrationTest;
 
+import com.paul.mcgranaghan.webserver.api.ImdbController;
 import com.paul.mcgranaghan.webserver.dto.NameBasics;
 import com.paul.mcgranaghan.webserver.dto.Profession;
 import com.paul.mcgranaghan.webserver.dto.TitleBasics;
@@ -18,13 +19,10 @@ import java.util.List;
 public class NameBasicStepdefs {
 
     @Autowired
-    NameBasicDao nameBasicDao;
-
-    @Autowired
     ImdbTestDao imdbTestDao;
 
     @Autowired
-    ActorRolesService actorRolesService;
+    ImdbController imdbController;
 
     @Given("the following titles exist:")
     public void the_following_titles_exist(io.cucumber.datatable.DataTable dataTable) {
@@ -35,7 +33,7 @@ public class NameBasicStepdefs {
                     ._id(column.get(0))
                     .primaryTitle(column.get(1))
                     .originalTitle(column.get(1))
-                    .titleGenre("Action")
+                    .genres("Action")
                     .runtimeMinutes("120")
                     .isAdult(false)
                     .titleType("Movie")
@@ -43,8 +41,21 @@ public class NameBasicStepdefs {
         }
     }
 
-    @Given("There is a person {string} with {string} who was a {string} of {string}")
-    public void there_is_a_person_name_with_nameid_who_was_an_title_role_on_title_id(String name, String nameId, String titleRole, String titleId) {
+
+    @When("I search for that user by the {string}")
+    public void i_search_for_that_user_by_the(String string) {
+        imdbController.getRolesByActor(string, string);
+
+    }
+
+    @Then("I should find person with id {string} result")
+    public void i_should_find_person_with_id_result(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+    @Given("There is a person {} with {} who was a {} of {}")
+    public void thereIsAPersonWithWhoWasAOf(String name, String nameId, String titleId, String titleRole) {
         imdbTestDao.saveNameBasic(NameBasics.builder()
                 .primaryName(name)
                 ._id(nameId)
@@ -61,17 +72,4 @@ public class NameBasicStepdefs {
                 .job(titleRole)
                 .build());
     }
-
-    @When("I search for that user by the {string}")
-    public void i_search_for_that_user_by_the(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
-    @Then("I should find person with id {string} result")
-    public void i_should_find_person_with_id_result(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
 }

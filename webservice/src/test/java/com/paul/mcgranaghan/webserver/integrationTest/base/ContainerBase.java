@@ -1,5 +1,9 @@
 package com.paul.mcgranaghan.webserver.integrationTest.base;
 
+import com.github.dockerjava.api.model.ExposedPort;
+import com.github.dockerjava.api.model.HostConfig;
+import com.github.dockerjava.api.model.PortBinding;
+import com.github.dockerjava.api.model.Ports;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -12,14 +16,20 @@ public abstract class ContainerBase {
     public static final PostgreSQLContainer DB_CONTAINER;
 
     static  {
-        DB_CONTAINER = new PostgreSQLContainer("postgres:13.6-alpine")
-                .withDatabaseName("openexl")
-                .withUsername("root")
-                .withPassword("root");
+        int containerPort = 5432 ;
+        int localPort = 5432 ;
 
+        DB_CONTAINER = new PostgreSQLContainer<>("postgres:13.6-alpine")
+                .withDatabaseName("test")
+                .withUsername("root")
+                .withPassword("root")
+                .withReuse(true)
+                .withExposedPorts(containerPort)
+                .withCreateContainerCmdModifier(cmd -> cmd.withHostConfig(
+                        new HostConfig().withPortBindings(new PortBinding(Ports.Binding.bindPort(localPort), new ExposedPort(containerPort)))
+                ));
 
         DB_CONTAINER.start();
-
     }
     @Container
     private static PostgreSQLContainer container = DB_CONTAINER;

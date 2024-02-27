@@ -1,26 +1,14 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
-import {UntypedFormControl} from "@angular/forms";
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  standalone: true,
+  imports: [CommonModule, RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
 })
-
-export class AppComponent implements OnInit {
-
-  title: string;
-
-  @HostBinding('class') className = '';
-  toggleControl = new UntypedFormControl(false);
-
-  constructor() {
-    this.title = 'User Management System';
-  }
-
-  ngOnInit(): void {
-    this.toggleControl.valueChanges.subscribe((darkMode) => {
-      const darkClassName = 'darkMode';
-      this.className = darkMode ? darkClassName : '';
-    });
-  }
+export class AppComponent {
+  title = 'ui';
 }

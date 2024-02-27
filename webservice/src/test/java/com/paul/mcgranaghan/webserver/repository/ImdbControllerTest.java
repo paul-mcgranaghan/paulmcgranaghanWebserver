@@ -3,6 +3,7 @@ package com.paul.mcgranaghan.webserver.repository;
 import com.paul.mcgranaghan.webserver.api.ImdbController;
 import com.paul.mcgranaghan.webserver.dto.User;
 import com.paul.mcgranaghan.webserver.service.ActorRolesService;
+import com.paul.mcgranaghan.webserver.service.FlagsmithService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -28,7 +29,13 @@ public class ImdbControllerTest {
     @Mock
     private final ActorRolesService actorRolesService = new ActorRolesService(nameBasicDao, null, null);
 
-    private final ImdbController underTest = new ImdbController(actorRolesService);
+    @Mock
+    private final FlagsmithService flagsmithService = new FlagsmithService();
+
+    private final ImdbController underTest = new ImdbController(actorRolesService,flagsmithService);
+
+    public ImdbControllerTest()  {
+    }
 
     @Test
     public void getAllUsers_positive() {

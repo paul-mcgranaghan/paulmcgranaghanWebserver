@@ -24,4 +24,5 @@ The following guides illustrate how to use some features concretely:
 These additional references should also help you:
 
 * [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
+This batch job is gonna run off the back of the file sync one, and It will take the actor names from name.basics table and push it to the elastic search instance
 
