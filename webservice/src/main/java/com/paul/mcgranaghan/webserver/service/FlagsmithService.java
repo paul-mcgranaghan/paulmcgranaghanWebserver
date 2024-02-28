@@ -25,7 +25,6 @@ public class FlagsmithService {
                         .expireAfterWrite(10, TimeUnit.SECONDS)
                         .recordStats()
                         .build())
-                //.withApiUrl(flagsmithURI)
                 .withApiUrl(flagsmithURI)
                 .build();
     }

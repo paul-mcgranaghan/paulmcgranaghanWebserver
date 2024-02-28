@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
@@ -6,6 +8,8 @@ plugins {
     id 'io.freefair.lombok'
     id 'info.solidsoft.pitest'
 }
+
+apply plugin: 'application'
 
 //version '0.1.0'
 
@@ -29,12 +33,10 @@ dependencies {
             libraries.springBootTest,
             libraries.cucumber
 }
-jar {
+bootJar {
     enabled = true
     manifest {
-        attributes(
-                'Main-Class': 'com.paul.mcgranaghan.webserver.Application'
-        )
+        attributes 'Start-Class': 'com.paul.mcgranaghan.webserver.Application'
     }
 }
 
@@ -49,11 +51,6 @@ pitest {
     useClasspathFile = true     //useful with bigger projects on Windows
     fileExtensionsToFilter.addAll('xml', 'orbit')
     mutators = ['STRONGER']
-}
-
-
-bootJar {
-    enabled = true
 }
 
 

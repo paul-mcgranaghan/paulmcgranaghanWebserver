@@ -32,6 +32,11 @@ build/
 .idea/*
 */bin/*
 
-imdbsync/data/*
+filesync/scripts/data/
 imdbsync/scripts/__pycache__/*
 
+*/.idea/*
+.settings/
+.jpb/*
+ui/ui.code-workspace
+venv/

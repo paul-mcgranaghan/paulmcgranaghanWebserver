@@ -1,12 +1,12 @@
-pandas==2.0.2
+pandas==2.2.1
 dataclasses~=0.6
-numpy==1.24.3
+numpy==1.26.4
 # DON'T UPGRADE SCHEDULE, it seems to break the plugin
-schedule==1.1.0
+#schedule==1.1.0
+schedule==1.2.1
 django-scheduler==0.10.1
-pip==23.2.1
-datetime==5.1
-psycopg2==2.9.6
-sqlalchemy==2.0.15
-pipenv~=2023.8.23
+pip==24.0
+datetime==5.4
+psycopg2==2.9.9
+sqlalchemy==2.0.27
 python-dotenv~=1.0.0
