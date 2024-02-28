@@ -49,7 +49,7 @@ ext {
     def thymeleafSpringVersion = "3.1.2.RELEASE"
     def thymeleafLayoutVersion = "3.0.0"
     def concordionVersion = "4.0.1"
-    def springBatchVersion = "4.3.3"
+    def springBatchVersion = "5.1.1"
     def junitVersion = "4.13.2"
     def cucumberVersion = "7.15.0"
     def postgresTestContainerVersion = "1.19.6"
