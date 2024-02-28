@@ -3,7 +3,6 @@ plugins {
 }
 
 python {
-    usePythonVerison = "$pythonVersion"
     minPipVersion = "$pipVersion"
 
     pip "schedule:$scheduleVersion"

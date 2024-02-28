@@ -1,10 +1,20 @@
 pluginManagement {
+
+def springVersion="1.1.3"
+def springBootVersion="3.2.2"
+def lombokVersion="8.4"
+def usePythonVersion="3.0.0"
+
     plugins {
         id 'io.spring.dependency-management' version springVersion
         id 'org.springframework.boot' version springBootVersion
         id 'io.freefair.lombok' version lombokVersion
+<<<<<<< HEAD
         id 'ru.vyarus.use-python' version usePythonVerison
         id 'info.solidsoft.pitest' version piTestVersion
+=======
+        id 'ru.vyarus.use-python' version usePythonVersion
+>>>>>>> 6ab679a (Fixing versioning so dependabot picks up versions)
     }
 }
 rootProject.name = 'paulmcgranaghanwebserver'
@@ -12,6 +22,4 @@ include 'batch'
 include 'webservice'
 include 'ui'
 include 'filesync'
-
-
 
