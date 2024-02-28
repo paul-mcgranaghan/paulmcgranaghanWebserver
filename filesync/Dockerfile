@@ -4,4 +4,4 @@ COPY ./* ./
 RUN mkdir -p /usr/src/app/data
 RUN ls -lrt /usr/src/app/
 RUN pip install --no-cache-dir -r requirements.txt
-CMD ["python", "-u", "ImdbDataSyncJob.py"]
+CMD ["python", "-u", "imdb_data_sync_job.py"]

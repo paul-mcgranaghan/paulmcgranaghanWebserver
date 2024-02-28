@@ -1,4 +1,4 @@
-FROM node:16-bookworm-slim as node
+FROM node:hydrogen-slim as node
 
 WORKDIR /usr/src/app
 

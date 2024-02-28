@@ -2,21 +2,23 @@ import time
 import os
 import schedule
 
+from schedule import every
 from clean_up_files import cleanup_files
 from job_logger import get_module_logger
 from sync_file import sync_data_from_file
 
 log = get_module_logger(__name__)
+
+# TODO: I should just take these in as parameters then pass them through the docker file
 job_sync_time = os.environ.get('SYNC_JOB_TIME')
 data_file_dir = os.environ.get('DATA_FILE_DIR')
 
 
 def create_data_folder_if_none_exists():
     """Set up required data dir"""
-    if not os.path.isdir(
-            "./data/tsv"):
-        log.info("Making data file")
-        os.mkdir("./data/tsv")
+    if not os.path.isdir(data_file_dir):
+        log.info("Making data folder")
+        os.makedirs(data_file_dir)
 
 
 def job():
@@ -31,8 +33,8 @@ def job():
     log.info("I'm Starting the imdb sync data job. ")
     log.info("Syncing data tables")
     create_data_folder_if_none_exists()
-  #  sync_data_from_file("title.basics")
-   # sync_data_from_file("title.principals")
+    sync_data_from_file("title.basics")
+    sync_data_from_file("title.principals")
     sync_data_from_file("name.basics")
     cleanup_files(data_file_dir)
     log.info("I've Finished the imdb sync data job")
@@ -54,7 +56,8 @@ if __name__ == "__main__":
                  "then subsequent syncs will be run every day at {job_sync_time}"
                  .format(job_sync_time=job_sync_time))
         job()
-        schedule.every().day.at(job_sync_time).do(job)
+
+        every().day.at(job_sync_time).do(job)
 
 while True:
     schedule.run_pending()

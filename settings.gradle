@@ -9,12 +9,9 @@ def usePythonVersion="3.0.0"
         id 'io.spring.dependency-management' version springVersion
         id 'org.springframework.boot' version springBootVersion
         id 'io.freefair.lombok' version lombokVersion
-<<<<<<< HEAD
-        id 'ru.vyarus.use-python' version usePythonVerison
-        id 'info.solidsoft.pitest' version piTestVersion
-=======
         id 'ru.vyarus.use-python' version usePythonVersion
->>>>>>> 6ab679a (Fixing versioning so dependabot picks up versions)
+        id 'info.solidsoft.pitest' version piTestVersion
+        id 'application'
     }
 }
 rootProject.name = 'paulmcgranaghanwebserver'
