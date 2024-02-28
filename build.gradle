@@ -47,7 +47,7 @@ ext {
     def jacksonVersion="2.16.1"
     def spingElasticsearchVersion="5.2.3"
     def thymeleafSpringVersion = "3.1.2.RELEASE"
-    def thymeleafLayoutVersion = "3.0.0"
+    def thymeleafLayoutVersion = "3.3.0"
     def concordionVersion = "4.0.1"
     def springBatchVersion = "5.1.1"
     def junitVersion = "4.13.2"
