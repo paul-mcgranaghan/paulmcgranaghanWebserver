@@ -4,7 +4,7 @@ numpy==1.24.3
 # DON'T UPGRADE SCHEDULE, it seems to break the plugin
 schedule==1.1.0
 django-scheduler==0.10.1
-pip==23.2.1
+pip==23.3
 datetime==5.1
 psycopg2==2.9.6
 sqlalchemy==2.0.15
