@@ -8,25 +8,25 @@
             <column name="_id" type="text">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
-            <column name="titleType" type="text">
+            <column name="title_type" type="text">
                 <constraints nullable="false" primaryKey="false" unique="false"/>
             </column>
-            <column name="primaryTitle" type="text">
+            <column name="primary_title" type="text">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
-            <column name="originalTitle" type="text">
+            <column name="original_title" type="text">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
-            <column name="isAdult" type="bool">
+            <column name="is_adult" type="bool">
                 <constraints primaryKey="false" unique="false"/>
             </column>
-            <column name="startYear" type="smallint">
+            <column name="start_year" type="smallint">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
-            <column name="endYear" type="smallint">
+            <column name="end_year" type="smallint">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
-            <column name="runtimeMinutes" type="int">
+            <column name="runtime_minutes" type="int">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
             <column name="genres" type="text">

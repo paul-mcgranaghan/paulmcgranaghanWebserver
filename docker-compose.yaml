@@ -19,6 +19,31 @@ services:
     depends_on:
       - db
 
+  flagsmith:
+    image: flagsmith
+    restart: always
+    environment:
+      DATABASE_URL: "postgres://postgres:Pa22word@localhost:5432/postgres"
+      DJANGO_ALLOWED_HOSTS: '*' # Change this in production
+      DJANGO_SECRET_KEY: "secret"
+      # DATABASE_URL: "postgres://postgres:Pa22word@host.docker.internal:5432/postgres"
+      # ALLOW_ADMIN_INITIATION_VIA_CLI: "'true' # Change this in production
+      # FLAGSMITH_DOMAIN: "localhost:8000 # Change this in production
+      # TODO: it doesn't like when I move the port from 8000
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+
+  elasticSearch:
+    image: elasticsearch
+    restart: always
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+
   imdbFileSync:
     build: filesync/
     image: paul/datasync:latest

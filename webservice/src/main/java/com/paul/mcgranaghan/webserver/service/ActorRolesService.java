@@ -43,7 +43,10 @@ public class ActorRolesService {
         // TODO: handle null responses, throw exception if dao's return null
         Actor actor2 = Actor.builder().name(nameBasics2.primaryName).rolesList(titleBasics2.stream().map(t -> t.primaryTitle).toList()).build();
 
-        return actor.rolesList.stream().distinct().filter(actor2.rolesList::contains).collect(Collectors.toSet());
+        Set<String> commonRoles = actor.rolesList.stream().distinct().filter(actor2.rolesList::contains).collect(Collectors.toSet());
+
+        log.info("For Actors {} and {}, returning roles: {}", actorName, actorName2,commonRoles);
+        return commonRoles;
 
 
     }

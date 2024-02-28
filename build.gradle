@@ -4,6 +4,7 @@ plugins {
     id "java-library"
     id "project-report"
     id "io.freefair.lombok" version "$lombokVersion"
+    id "com.palantir.docker" version "0.35.0"
 }
 
 group 'com.paul.mcgranaghan'
@@ -42,8 +43,11 @@ ext {
                     "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisVersion"
             ],
             liquibase        : [
-                    "org.springframework.boot:spring-boot-starter-data-jpa:",
+                    "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion",
                     "org.liquibase:liquibase-core:$liquibaseVersion"
+            ],
+            flagsmith           : [
+                    "com.flagsmith:flagsmith-java-client:7.2.0"
             ],
             postgresDb       : [
                     "org.postgresql:postgresql:$postgresqlVersion",
@@ -51,41 +55,53 @@ ext {
                     "org.hsqldb:hsqldb:$hsqldbVersion"
             ],
             mQueue           : [
-                    "org.springframework.boot:spring-boot-starter-amqp"
+                    "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"
             ],
             springBootStarter: [
                     "org.springframework.cloud:spring-cloud-starter-sleuth:$springSleuthVersion",
-                    "org.springframework.boot:spring-boot-starter-web",
-                    "org.springframework.boot:spring-boot-starter-actuator",
+                    "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
+                    "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
                     "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
-                    "org.springdoc:springdoc-openapi-ui:$springdocVersion"
+                    "org.springdoc:springdoc-openapi-ui:$springdocVersion",
+
+                    "co.elastic.clients:elasticsearch-java:8.12.2",
+                    "com.fasterxml.jackson.core:jackson-databind:2.16.1",
+                    "org.springframework.data:spring-data-elasticsearch:5.2.3"
+
             ],
             auth0            : [
-                    "org.springframework.boot:spring-boot-starter-oauth2-client",
-                    "org.springframework.boot:spring-boot-starter-thymeleaf",
+                    "org.springframework.boot:spring-boot-starter-oauth2-client:$springBootVersion",
+                    "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion",
                     "org.thymeleaf.extras:thymeleaf-extras-springsecurity5:$thymeleafSpringVersion",
                     "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:$thymeleafLayoutVersion"
             ],
             springBatch      : [
-                    "org.springframework.boot:spring-boot-starter-batch:"
+                    "org.springframework.boot:spring-boot-starter-batch:$springBootVersion"
             ],
             concordion       : [
                     "org.concordion:concordion:$concordionVersion"
             ],
             springBatchTest  : [
                     "org.springframework.batch:spring-batch-test:$springBatchVersion",
-                    "org.junit.platform:junit-platform-runner:$junitVersion"
+                    "org.junit.platform:junit-platform-runner:$junitVersion",
+                    "org.example.pit.plugins:pitest-custom-plugin:0.42"
             ],
             springBootTest   : [
-                    "org.springframework.boot:spring-boot-starter-test:"
+                    "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
             ],
             cucumber   : [
                     "io.cucumber:cucumber-java:$cucumberVersion",
                     "io.cucumber:cucumber-spring:$cucumberVersion",
                     "io.cucumber:cucumber-junit:$cucumberVersion",
-                    "org.testcontainers:postgresql:$postgresTestContainerVersion",
-                    "org.testcontainers:junit-jupiter:$postgresTestContainerVersion"
+                    "org.testcontainers:postgresql:1.17.6",
+                    "org.testcontainers:junit-jupiter:1.17.6"
             ]
     ]
 }
+
+docker {
+    name "${project.name}:${project.version}"
+    files './build/libs/paulmcgranaghanwebserver-1.0-SNAPSHOT-plain.jar', './webservice/Dockerfile'
+}
+docker.dependsOn(jar)
 

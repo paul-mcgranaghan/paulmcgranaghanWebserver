@@ -11,19 +11,19 @@
             <column name="nconst" type="text">
                 <constraints nullable="false" primaryKey="false" unique="false"/>
             </column>
-            <column name="primaryName" type="text">
+            <column name="primary_name" type="text">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
-            <column name="birthYear" type="smallint">
+            <column name="birth_year" type="smallint">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
-            <column name="deathYear" type="smallint">
+            <column name="death_year" type="smallint">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
-            <column name="primaryProfession" type="text">
+            <column name="primary_profession" type="text">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
-            <column name="knownForTitles" type="text">
+            <column name="known_for_titles" type="text">
                 <constraints nullable="true" primaryKey="false" unique="false"/>
             </column>
         </createTable>

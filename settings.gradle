@@ -4,6 +4,7 @@ pluginManagement {
         id 'org.springframework.boot' version springBootVersion
         id 'io.freefair.lombok' version lombokVersion
         id 'ru.vyarus.use-python' version usePythonVerison
+        id 'info.solidsoft.pitest' version piTestVersion
     }
 }
 rootProject.name = 'paulmcgranaghanwebserver'

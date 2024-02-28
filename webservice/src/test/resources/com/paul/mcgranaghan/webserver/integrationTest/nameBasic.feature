@@ -3,9 +3,8 @@ Feature: Find by name
 
   Background:
     Given the following titles exist:
-      | titleId | title          |
-      | t1      | Ocean's Eleven |
-      | t2      | Titanic        |
+      | t1 | Ocean's Eleven |
+      | t2 | Titanic        |
 
   Scenario Outline: Find person by their name
     Given There is a person <name> with <nameid> who was a <titleId> of <titleRole>

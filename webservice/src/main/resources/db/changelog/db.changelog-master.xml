@@ -4,7 +4,11 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
     <include file="db/changelog/db.changelog-name.basics-1.0.xml"/>
     <include file="db/changelog/db.changelog-title.principals-1.0.xml"/>
     <include file="db/changelog/db.changelog-title.basics-1.0.xml"/>
+    <include file="db/changelog/db.changelog-title.principals-2.0.xml"/>
+    <include file="db/changelog/db.changelog-name.basics-2.0.xml"/>
+
 </databaseChangeLog>

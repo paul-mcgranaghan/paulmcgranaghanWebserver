@@ -29,6 +29,6 @@ public class TitleBasics {
     public String startYear;
     public String endYear;
     public String runtimeMinutes;
-    public String titleGenre;
+    public String genres;
 
 }
