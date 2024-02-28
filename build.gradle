@@ -93,7 +93,7 @@ ext {
                     "io.cucumber:cucumber-java:$cucumberVersion",
                     "io.cucumber:cucumber-spring:$cucumberVersion",
                     "io.cucumber:cucumber-junit:$cucumberVersion",
-                    "org.testcontainers:postgresql:1.17.6",
+                    "org.testcontainers:postgresql:1.19.6",
                     "org.testcontainers:junit-jupiter:1.17.6"
             ]
     ]
