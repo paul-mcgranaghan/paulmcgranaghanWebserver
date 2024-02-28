@@ -1,23 +1,11 @@
 package com.paul.mcgranaghan.webserver.config;
 
-/*@Configuration*/
-public class SecurityConfig /*extends WebSecurityConfigurerAdapter*/ {
+import org.springframework.context.annotation.Configuration;
 
-/*
-    private final LogoutHandler logoutHandler;
-
-    public SecurityConfig(LogoutHandler logoutHandler) {
-        this.logoutHandler = logoutHandler;
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .oauth2Login()
-                .and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .addLogoutHandler(logoutHandler);
-    }
-*/
-
+@Configuration
+public class SecurityConfig /*extends WebSecurityConfigurerAdapter */{
+/*    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/swagger-ui/**", "/bus/v3/api-docs/**");
+    }*/
 }

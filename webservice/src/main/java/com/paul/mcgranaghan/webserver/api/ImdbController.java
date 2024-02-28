@@ -58,6 +58,7 @@ public class ImdbController {
 
         try{
             Flags envronmentFlags = flagsmithService.getFeatureFlagClient().getEnvironmentFlags();
+            //flagsmithService.getFeatureFlagClient().getEnvironmentFlags()
             featureEnabled = envronmentFlags.isFeatureEnabled("enable_test_feature");
         } catch (FlagsmithClientError e) {
             throw new FlagsmithClientError("Functionality controlled by feature flag, error determining flag state " + e);
