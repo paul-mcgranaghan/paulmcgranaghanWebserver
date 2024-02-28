@@ -40,7 +40,7 @@ ext {
     def postgresqlVersion = "42.6.0"
     def h2databaseVersion = "2.2.224"
     def hsqldbVersion = "2.7.2"
-    def springSleuthVersion = "3.1.9"
+    def springSleuthVersion = "3.1.11"
     def springBootVersion="3.2.2"
     def springdocVersion = "1.7.0"
     def elasticsearchVersion="8.12.2"
