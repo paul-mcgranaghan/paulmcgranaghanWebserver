@@ -37,7 +37,7 @@ ext {
     def mybatisVersion = "3.0.2"
     def liquibaseVersion = "4.24.0"
     def flagsmithVersion="7.2.0"
-    def postgresqlVersion = "42.6.0"
+    def postgresqlVersion = "42.7.2"
     def h2databaseVersion = "2.2.224"
     def hsqldbVersion = "2.7.2"
     def springSleuthVersion = "3.1.9"
