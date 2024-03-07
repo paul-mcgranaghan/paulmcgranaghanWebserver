@@ -79,7 +79,7 @@ def sync_data_from_file(data_set_name):
 
 def get_db():
     """Get a db engine by specified data source url"""
-    return create_engine(database_url)
+    return create_engine(database_url, connect_args={'options': '-csearch_path={}'.format('imdb')})
 
 
 def snake_case(s):

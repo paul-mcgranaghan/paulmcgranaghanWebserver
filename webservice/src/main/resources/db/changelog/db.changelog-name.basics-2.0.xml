@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="changelog-2.0" author="paulmcg">
-        <createIndex tableName="name_basics" schemaName="public" indexName="P_NAME_IDX">
+        <createIndex tableName="name_basics" schemaName="imdb" indexName="P_NAME_IDX">
             <column name="primary_name"/>
         </createIndex>
         <rollback>

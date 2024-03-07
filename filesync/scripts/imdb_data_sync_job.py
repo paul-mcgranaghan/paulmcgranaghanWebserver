@@ -12,6 +12,7 @@ log = get_module_logger(__name__)
 # TODO: I should just take these in as parameters then pass them through the docker file
 job_sync_time = os.environ.get('SYNC_JOB_TIME')
 data_file_dir = os.environ.get('DATA_FILE_DIR')
+run_sync_on_start = os.environ.get('RUN_SYNC_ON_START')
 
 
 def create_data_folder_if_none_exists():
@@ -33,9 +34,12 @@ def job():
     log.info("I'm Starting the imdb sync data job. ")
     log.info("Syncing data tables")
     create_data_folder_if_none_exists()
-    sync_data_from_file("title.basics")
-    sync_data_from_file("title.principals")
-    sync_data_from_file("name.basics")
+
+    data_files = ["title.basics", "title.principals", "name.basics"]
+
+    for data_file in data_files:
+        sync_data_from_file(data_file)
+
     cleanup_files(data_file_dir)
     log.info("I've Finished the imdb sync data job")
     log.info("Next sync run will start at: {job_sync_time} "
@@ -44,17 +48,18 @@ def job():
 
 if __name__ == "__main__":
 
-    if job_sync_time != "99:99:99":
+    if not run_sync_on_start:
         log.info("This job will sync the Imdb data every day at: {job_sync_time}"
                  .format(job_sync_time=job_sync_time))
 
         schedule.every().day.at(job_sync_time).do(job)
+
     else:
-        job_sync_time = "15:10"
-        log.info("Job start time set to '99:99:99' ")
+        log.info("Job set to run on start")
         log.info("This job will start immediately, "
                  "then subsequent syncs will be run every day at {job_sync_time}"
                  .format(job_sync_time=job_sync_time))
+
         job()
 
         every().day.at(job_sync_time).do(job)
