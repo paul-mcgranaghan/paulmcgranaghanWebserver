@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="changelog-1.0" author="paulmcg">
-        <createTable tableName="title_basics" schemaName="public">
+        <createTable tableName="title_basics" schemaName="imdb">
             <column name="_id" type="text">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
@@ -34,12 +34,12 @@
             </column>
         </createTable>
         <rollback>
-            <dropTable tableName="title_basics" schemaName="public"/>
+            <dropTable tableName="title_basics" schemaName="imdb"/>
         </rollback>
     </changeSet>
 
     <changeSet id="changelog-1.1" author="paulmcg">
-        <createIndex tableName="title_basics" schemaName="public" indexName="TITLE_IDX">
+        <createIndex tableName="title_basics" schemaName="imdb" indexName="TITLE_IDX">
             <column name="_id"/>
         </createIndex>
         <rollback>

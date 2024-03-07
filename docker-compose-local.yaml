@@ -6,10 +6,13 @@ services:
     environment:
       POSTGRES_USERNAME: "postgres"
       POSTGRES_PASSWORD: "Pa22word"
+      POSTGRES_DB:  data
+
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
   registry:
     container_name: registry
