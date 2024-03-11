@@ -30,9 +30,12 @@ public class ImdbControllerTest {
     private final ActorRolesService actorRolesService = new ActorRolesService(nameBasicDao, null, null);
 
     @Mock
+    private final ActorNameRepository actorNameRepository = null;
+
+    @Mock
     private final FlagsmithService flagsmithService = new FlagsmithService();
 
-    private final ImdbController underTest = new ImdbController(actorRolesService,flagsmithService);
+    private final ImdbController underTest = new ImdbController(actorNameRepository, actorRolesService,flagsmithService);
 
     public ImdbControllerTest()  {
     }

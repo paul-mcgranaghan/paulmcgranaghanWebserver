@@ -4,20 +4,15 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="changelog-1.0" author="paulmcg">
-        <sql dbms="postgresql" endDelimiter=";">
+        <sql dbms="postgresql" endDelimiter=";" catalogName="data">
             CREATE SCHEMA IF NOT EXISTS imdb
         </sql>
 
         <rollback>
-            <sql dbms="postgresql" endDelimiter=";">
-                SET AUTOCOMMIT = ON
-                DROP DATABASE data
-            </sql>
-            <sql dbms="postgresql" endDelimiter=";">
-                DROP SCHEMA IF NOT EXISTS imdb
+            <sql dbms="postgresql" endDelimiter=";" catalogName="data">
+                DROP SCHEMA IF EXISTS imdb
             </sql>
         </rollback>
     </changeSet>
-
 
 </databaseChangeLog>
