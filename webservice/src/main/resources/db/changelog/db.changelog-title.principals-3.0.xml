@@ -3,8 +3,8 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="changelog-1.0" author="paulmcg">
-        <createTable tableName="title_principals" schemaName="imdb">
+    <changeSet id="changelog-3.0" author="paulmcg">
+        <createTable tableName="title_principals" schemaName="imdb" catalogName="data">
             <column name="_id" type="text">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
@@ -28,16 +28,25 @@
             </column>
         </createTable>
         <rollback>
-            <dropTable tableName="title_principals" schemaName="imdb"/>
+            <dropTable tableName="title_principals" schemaName="imdb" catalogName="data"/>
         </rollback>
     </changeSet>
 
-    <changeSet id="changelog-1.1" author="paulmcg">
-        <createIndex tableName="title_principals" schemaName="imdb" indexName="PRINCIPAL_IDX">
+    <changeSet id="changelog-3.1" author="paulmcg">
+        <createIndex tableName="title_principals" indexName="PRINCIPAL_IDX" schemaName="imdb" catalogName="data">
             <column name="_id"/>
         </createIndex>
         <rollback>
-            <dropIndex tableName="title_principals" indexName="PRINCIPAL_IDX"/>
+            <dropIndex tableName="title_principals" indexName="PRINCIPAL_IDX" schemaName="imdb" catalogName="data"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="changelog-3.2" author="paulmcg">
+        <createIndex tableName="title_principals" indexName="N_C_PRINCIPAL_IDX" schemaName="imdb" catalogName="data">
+            <column name="nconst"/>
+        </createIndex>
+        <rollback>
+            <dropIndex tableName="title_principals" indexName="N_C_PRINCIPAL_IDX" catalogName="data"/>
         </rollback>
     </changeSet>
 </databaseChangeLog>

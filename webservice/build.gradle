@@ -26,7 +26,8 @@ dependencies {
             libraries.postgresDb,
             libraries.mQueue,
             libraries.liquibase,
-            libraries.flagsmith
+            libraries.flagsmith,
+            libraries.elasticSearch
 
 
     testImplementation libraries.concordion,

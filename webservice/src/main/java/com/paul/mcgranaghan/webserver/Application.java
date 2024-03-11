@@ -1,14 +1,10 @@
 package com.paul.mcgranaghan.webserver;
 
-import com.paul.mcgranaghan.webserver.config.ElasticSearchClientConfig;
-import com.paul.mcgranaghan.webserver.config.SecurityConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({/*MqConfig.class,SecurityConfig.class*/ ElasticSearchClientConfig.class})
 @Slf4j
 public class Application {
 

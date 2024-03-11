@@ -42,10 +42,8 @@ ext {
     def hsqldbVersion = "2.7.2"
     def springSleuthVersion = "3.1.11"
     def springBootVersion="3.2.3"
-    def springdocVersion = "1.7.0"
-    def elasticsearchVersion="8.12.2"
-    def jacksonVersion="2.16.1"
-    def spingElasticsearchVersion="5.2.3"
+    def springdocVersion = "2.3.0"
+    def springElasticsearchVersion = "4.0.0.RELEASE"
     def thymeleafSpringVersion = "3.1.2.RELEASE"
     def thymeleafLayoutVersion = "3.3.0"
     def concordionVersion = "4.0.1"
@@ -85,12 +83,11 @@ ext {
                     "org.springframework.boot:spring-boot-starter-web:$springBootVersion",
                     "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion",
                     "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
-                    "org.springdoc:springdoc-openapi-ui:$springdocVersion",
+                    "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion",
 
-                    "co.elastic.clients:elasticsearch-java:$elasticsearchVersion",
-                    "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
-                    "org.springframework.data:spring-data-elasticsearch:$spingElasticsearchVersion"
-
+            ],
+            elasticSearch: [
+                   "org.springframework.data:spring-data-elasticsearch:$springElasticsearchVersion"
             ],
             auth0            : [
                     "org.springframework.boot:spring-boot-starter-oauth2-client:$springBootVersion",
@@ -121,5 +118,4 @@ ext {
             ]
     ]
 }
-
 
