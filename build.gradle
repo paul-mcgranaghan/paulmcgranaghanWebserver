@@ -44,7 +44,7 @@ ext {
     def springBootVersion="3.2.3"
     def springdocVersion = "1.7.0"
     def elasticsearchVersion="8.12.2"
-    def jacksonVersion="2.16.1"
+    def jacksonVersion="2.16.2"
     def spingElasticsearchVersion="5.2.3"
     def thymeleafSpringVersion = "3.1.2.RELEASE"
     def thymeleafLayoutVersion = "3.3.0"
