@@ -42,7 +42,7 @@ ext {
     def hsqldbVersion = "2.7.2"
     def springSleuthVersion = "3.1.11"
     def springBootVersion="3.2.3"
-    def springdocVersion = "2.3.0"
+    def springdocVersion = "2.4.0"
     def springElasticsearchVersion = "4.0.0.RELEASE"
     def thymeleafSpringVersion = "3.1.2.RELEASE"
     def thymeleafLayoutVersion = "3.3.0"
