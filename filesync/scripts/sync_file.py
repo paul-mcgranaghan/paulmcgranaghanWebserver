@@ -43,9 +43,10 @@ def sync_data_from_file(data_set_name):
 
     with pandas.read_csv(working_data_file, chunksize=chunk_size, low_memory=False,
                          encoding="utf-8", delimiter='\t', quoting=csv.QUOTE_NONE) as reader:
-        start_time = time.time()
+        start_time = datetime.datetime.now()
 
-        log.info("Processing chunks")
+        log.info("Processing chunks, start time " + start_time.strftime("%I:%M:%S %p"))
+
         chunk_counter = 1
         for chunk in reader:
 
@@ -68,18 +69,23 @@ def sync_data_from_file(data_set_name):
             processed_count += chunk_size
             chunk_counter += 1
 
-        end_time = time.time()
-        time_taken = end_time - start_time
-
-        log.info("Done processing file in : {time_taken}".format(time_taken=time_taken))
         log.info("{processed_count} entry(s) processed and {insert_count} "
                  " new entry(s) inserted into collection: {data_set_name}"
-                 .format(processed_count=processed_count, insert_count=insert_count, data_set_name=data_set_name))
+                 .format(processed_count=processed_count, insert_count=insert_count, data_set_name=data_set_name[0]))
+
+        end_time = datetime.datetime.now()
+        time_taken = end_time - start_time
+
+        hours, remainder = divmod(time_taken.total_seconds(), 3600)
+        minutes, seconds = divmod(remainder, 60)
+
+        log.info("Time taken: {:.0f} hours, {:.0f} minutes, {:.2f} seconds".format(hours, minutes, seconds))
 
 
 def get_db():
     """Get a db engine by specified data source url"""
-    return create_engine(database_url, connect_args={'options': '-csearch_path={}'.format('imdb')})
+    return create_engine(database_url, connect_args={'options': '-csearch_path={}'.format('imdb')},
+                         executemany_mode='values_plus_batch')
 
 
 def snake_case(s):
@@ -168,12 +174,15 @@ def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, dat
         dictionary_batch = dictionary_batch[~dictionary_batch['_id'].isin(present_ids)]
 
     if len(dictionary_batch) > 0:
-        log.info("New records to add, inserting {dictionary_batch} record(s)"
-                 .format(dictionary_batch=len(dictionary_batch) ))
+        log.info("Processing batch of {dictionary_batch} new record(s)."
+                 .format(dictionary_batch=len(dictionary_batch)))
         dictionary_batch = dictionary_batch.replace("\\N", None)
+
         try:
+            log.info("New records to add, inserting {dictionary_batch} record(s)"
+                     .format(dictionary_batch=len(dictionary_batch)))
             return dictionary_batch.to_sql(data_set_name, db_engine, if_exists='append',
-                                           index=False, dtype={"isAdult": Boolean})
+                                           index=False, dtype={"isAdult": Boolean}, method='multi')
         except exc.DataError as e:
             # TODO: handle insert of non failing rows in batch
             log.error("Batch insert failed due to DataError,"
