@@ -2,5 +2,5 @@ POSTGRES_PASSWORD=Pa22word
 POSTGRES_USERNAME=postgres
 RABBITMQ_DEFAULT_USER=guest
 RABBITMQ_DEFAULT_PASS=guest
-DATA_SOURCE_URL=jdbc:postgresql://host.docker.internal:5432/data
-RABBIT_MQ_URL=host.docker.internal:5672
+DATA_SOURCE_URL=jdbc:postgresql://192.168.50.56:32432/data
+RABBIT_MQ_URL=192.168.50.56:5672

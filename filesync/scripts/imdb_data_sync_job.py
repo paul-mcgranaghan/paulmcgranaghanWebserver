@@ -1,8 +1,7 @@
-import time
 import os
 import schedule
+import time
 
-from schedule import every
 from clean_up_files import cleanup_files
 from job_logger import get_module_logger
 from sync_file import sync_data_from_file
@@ -62,7 +61,7 @@ if __name__ == "__main__":
 
         job()
 
-        every().day.at(job_sync_time).do(job)
+        schedule.every().day.at(job_sync_time).do(job)
 
 while True:
     schedule.run_pending()
