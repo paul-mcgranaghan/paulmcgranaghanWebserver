@@ -3,7 +3,7 @@ pluginManagement {
 def springVersion="1.1.4"
 def springBootVersion="3.2.4"
 def lombokVersion="8.6"
-def usePythonVersion="3.0.0"
+def usePythonVersion="4.0.0"
 
     plugins {
         id 'io.spring.dependency-management' version springVersion
