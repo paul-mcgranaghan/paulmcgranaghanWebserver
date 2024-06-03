@@ -39,7 +39,7 @@ ext {
     def flagsmithVersion="7.2.0"
     def postgresqlVersion = "42.7.3"
     def h2databaseVersion = "2.2.224"
-    def hsqldbVersion = "2.7.2"
+    def hsqldbVersion = "2.7.3"
     def springSleuthVersion = "3.1.11"
     def springBootVersion="3.2.4"
     def springdocVersion = "2.4.0"
