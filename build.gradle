@@ -49,8 +49,9 @@ ext {
     def concordionVersion = "4.0.1"
     def springBatchVersion = "5.1.2"
     def junitVersion = "4.13.2"
+    def postgresTestContainerVersion = "1.19.8"
     def cucumberVersion = "7.18.0"
-    def postgresTestContainerVersion = "1.19.7"
+
     def pitestVersion="0.42"
 
     libraries = [
