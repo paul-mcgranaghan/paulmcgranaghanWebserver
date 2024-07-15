@@ -7,12 +7,31 @@ services:
       POSTGRES_USERNAME: "postgres"
       POSTGRES_PASSWORD: "Pa22word"
       POSTGRES_DB:  data
-
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/var/run/docker.sock mongodb/mongodb
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    depends_on:
+      - mongodb
 
   registry:
     container_name: registry
@@ -76,6 +95,7 @@ services:
     image: paul/datasync:latest
     depends_on:
       - db
+      - mongodb
     volumes:
       - imdb_file_data:/var/lib/imdb/data/files
   mq:
@@ -94,6 +114,7 @@ services:
       - "8090:8090"
     depends_on:
       - db
+      - mongodb
       - mq
     environment:
       - PYTHONUNBUFFERED=1
@@ -107,6 +128,28 @@ services:
     image: paul/ui:latest
     ports:
       - "4200:4200"
+
+  healthchecks:
+    image: healthchecks/healthchecks:latest
+    container_name: healthchecks
+    environment:
+      - ALLOWED_HOSTS=localhost,http://192.168.50.56/
+      - DB=postgres
+      - DB_NAME=/data/hc.sqlite
+      - DEBUG=False
+      - DEFAULT_FROM_EMAIL=fixme-email-address-here
+      - EMAIL_HOST=fixme-smtp-host-here
+      - EMAIL_HOST_PASSWORD=fixme-smtp-password-here
+      - EMAIL_HOST_USER=fixme-smtp-username-here
+      - EMAIL_PORT=587
+      - EMAIL_USE_TLS=True
+      - SECRET_KEY=---
+      - SITE_ROOT=http://localhost:8000
+    ports:
+      - "8002:8000"
+    volumes:
+      - healthchecks-data:/data
+    restart: unless-stopped
 
   portainer:
     image: portainer/portainer-ce
@@ -128,6 +171,8 @@ volumes:
   imdb_file_data:
     external: false
   registry_data:
+    external: false
+  mongo_data:
     external: false
 
 

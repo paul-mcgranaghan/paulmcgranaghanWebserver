@@ -76,6 +76,10 @@ ext {
                     "com.h2database:h2:$h2databaseVersion",
                     "org.hsqldb:hsqldb:$hsqldbVersion"
             ],
+            mongoDb          : [
+                    "org.mongodb:mongodb-driver-sync:$mongoDbVerison",
+                    "org.springframework.data:spring-data-mongodb:$springDataMongoVersion"
+            ],
             mQueue           : [
                     "org.springframework.boot:spring-boot-starter-amqp:$springBootVersion"
             ],
