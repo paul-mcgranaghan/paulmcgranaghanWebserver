@@ -1,16 +1,19 @@
 import csv
 import datetime
 import gzip
+import math
 import os
-import time
 import urllib.request
 from re import sub
 
 import numpy
 import pandas
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, text, exc, Boolean
 
+from sqlalchemy import exc
+
+import mongodb_dao
+import postgres_dao
 from job_logger import get_module_logger
 
 today = datetime.date.today()
@@ -19,8 +22,9 @@ TIME_FORMAT = "hh:MM:ss:sss"
 
 load_dotenv()
 
-database_url = os.environ.get('DATABASE_URL')
+datasource = os.environ.get('DATASOURCE')
 data_file_dir = os.environ.get('DATA_FILE_DIR')
+
 
 log = get_module_logger(__name__)
 
@@ -30,6 +34,12 @@ def sync_data_from_file(data_set_name):
         * Get and decompress file
         * Update the database in a batched manner
     """
+
+    if datasource == 'POSTGRES':
+        datasource_engine = postgres_dao.get_db()
+    else:
+        datasource_engine = mongodb_dao.get_db(data_set_name)
+
     compressed_file_name = (data_file_dir + today.strftime(DATE_FORMAT) +
                             "." + data_set_name + ".tsv.gz")
     file_name = today.strftime(DATE_FORMAT) + "." + data_set_name + ".csv"
@@ -40,6 +50,15 @@ def sync_data_from_file(data_set_name):
     chunk_size = 100000
     insert_count = 0
     processed_count = 0
+
+    with gzip.open(working_data_file.name, 'rb') as f:
+        for i, l in enumerate(f):
+            pass
+    total_row_count = i + 1
+
+    log.info("File contains {0} line(s)".format(total_row_count))
+    log.info("Batching File into {0} chunks, of {1} rows per batch".format
+             (math.ceil(total_row_count / chunk_size), chunk_size))
 
     with pandas.read_csv(working_data_file, chunksize=chunk_size, low_memory=False,
                          encoding="utf-8", delimiter='\t', quoting=csv.QUOTE_NONE) as reader:
@@ -64,7 +83,7 @@ def sync_data_from_file(data_set_name):
 
             chunk_ids = chunk['_id'].to_list()
 
-            insert_count = insert_count + update_database(get_db(), chunk_ids,
+            insert_count = insert_count + update_database(datasource_engine, chunk_ids,
                                                           chunk, data_set_name.replace(".", "_"))
             processed_count += chunk_size
             chunk_counter += 1
@@ -80,12 +99,6 @@ def sync_data_from_file(data_set_name):
         minutes, seconds = divmod(remainder, 60)
 
         log.info("Time taken: {:.0f} hours, {:.0f} minutes, {:.2f} seconds".format(hours, minutes, seconds))
-
-
-def get_db():
-    """Get a db engine by specified data source url"""
-    return create_engine(database_url, connect_args={'options': '-csearch_path={}'.format('imdb')},
-                         executemany_mode='values_plus_batch')
 
 
 def snake_case(s):
@@ -135,12 +148,26 @@ def add_id_to_data_chunk(chunk, data_set_name):
     #  but still getting duplicates
     # Actually it might just be the data that has duplicates
     if data_set_name == "title.principals":
+        chunk = strip_from_nconst(chunk)
+        chunk = strip_from_tconst(chunk)
         chunk = add_principal_id(chunk).dropna(subset=['nconst', 'tconst', 'ordering'])
     elif data_set_name == "name.basics":
+        chunk = strip_from_nconst(chunk)
         chunk = add_name_id(chunk).dropna(subset=['nconst', 'primary_name'])
     else:
+        chunk = strip_from_tconst(chunk)
         chunk = chunk.rename(columns={"tconst": '_id'}).dropna(subset=['_id'])
         chunk = convert_number_to_bool(chunk)
+    return chunk
+
+
+def strip_from_nconst(chunk):
+    chunk['nconst'] = chunk['nconst'].str.lstrip('nm0')
+    return chunk
+
+
+def strip_from_tconst(chunk):
+    chunk['tconst'] = chunk['tconst'].str.lstrip('tt0')
     return chunk
 
 
@@ -162,13 +189,16 @@ def convert_number_to_bool(chunk):
     return chunk
 
 
-def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, data_set_name):
+def update_database(datasource_engine, data_ids, dictionary_batch: pandas.DataFrame, data_set_name):
     """Look up the ids to process in the database, see if they're already there."""
 
-    query = text("SELECT _id FROM " + data_set_name + " WHERE _id IN :values;")
-
-    query = query.bindparams(values=tuple(data_ids))
-    present_ids = pandas.read_sql(query, db_engine)['_id'].tolist()
+    if datasource == 'POSTGRES':
+        present_ids = postgres_dao.get_all_by_ids(data_set_name, data_ids)
+    elif datasource == 'MONGO':
+        present_ids = mongodb_dao.get_all_by_ids(datasource_engine, data_ids)
+    else:
+        log.error("Invalid datasource MONGO OR POSTGRES supported, provided: " + datasource)
+        present_ids = None
 
     if present_ids is not None:
         dictionary_batch = dictionary_batch[~dictionary_batch['_id'].isin(present_ids)]
@@ -181,18 +211,24 @@ def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, dat
         try:
             log.info("New records to add, inserting {dictionary_batch} record(s)"
                      .format(dictionary_batch=len(dictionary_batch)))
-            return dictionary_batch.to_sql(data_set_name, db_engine, if_exists='append',
-                                           index=False, dtype={"isAdult": Boolean}, method='multi')
+
+            if datasource == 'POSTGRES':
+                return postgres_dao.insert_as_batch(data_set_name, dictionary_batch)
+            elif datasource == 'MONGO':
+                return mongodb_dao.insert_as_batch(datasource_engine, dictionary_batch)
+            else:
+                return None
+
         except exc.DataError as e:
             # TODO: handle insert of non failing rows in batch
             log.error("Batch insert failed due to DataError,"
                       " inserting individually and skipping bad record: {bad_record}".format(bad_record=e.args[0]))
-            return insert_in_10_chunks(dictionary_batch, data_set_name, db_engine)
+            return insert_in_10_chunks(dictionary_batch, data_set_name)
     else:
         return 0
 
 
-def insert_in_10_chunks(dictionary_batch, data_set_name, db_engine):
+def insert_in_10_chunks(dictionary_batch, data_set_name):
     """For if the batch insert fails insert in smaller chunks"""
     # This array split gives empty lists
     batch_chunks = numpy.array_split(dictionary_batch, 10)
@@ -200,11 +236,12 @@ def insert_in_10_chunks(dictionary_batch, data_set_name, db_engine):
     rows_inserted = 0
     for row in batch_chunks:
         try:
-            row.to_sql(data_set_name, db_engine, if_exists='append', index=False)
+            postgres_dao.insert_as_batch(data_set_name, row)
+            # TODO: Mongo abstract batch insert
             rows_inserted = rows_inserted + len(row)
         except exc.DataError as e:
             log.error(e)
-            rows_processed = insert_individually(row, data_set_name, db_engine)
+            rows_processed = insert_individually(row, data_set_name)
             rows_inserted = rows_inserted + len(rows_processed) - 1
 
             # Drop processed values from batch,
@@ -214,15 +251,15 @@ def insert_in_10_chunks(dictionary_batch, data_set_name, db_engine):
     return rows_inserted
 
 
-def insert_individually(dictionary_batch, data_set_name, db_engine):
+def insert_individually(dictionary_batch, data_set_name):
     """Insert data one at a time, and error out the failing row"""
     # TODO: How to remove inserted and failed from chunk and insert again?
     rows_inserted = 0
     rows_processed = []
     for row in dictionary_batch.iterrows():
         try:
-            pandas.DataFrame(row[1]).T.to_sql(data_set_name, db_engine,
-                                              if_exists='append', index=False)
+            # TODO: Mongo abstract batch insert
+            postgres_dao.insert_as_batch(data_set_name, pandas.DataFrame(row[1]))
             rows_inserted = rows_inserted + 1
             rows_processed.append(row[1]['_id'])
 

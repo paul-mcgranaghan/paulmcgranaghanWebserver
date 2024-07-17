@@ -8,7 +8,7 @@
             <column name="_id" type="text">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
-            <column name="nconst" type="text">
+            <column name="nconst" type="int">
                 <constraints nullable="false" primaryKey="false" unique="false"/>
             </column>
             <column name="primary_name" type="text">

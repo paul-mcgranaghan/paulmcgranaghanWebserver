@@ -2,6 +2,8 @@ import os
 
 from sqlalchemy import create_engine, text, exc
 
+from postgres_dao import get_db
+
 database_url = os.environ.get('DATABASE_URL')
 
 
@@ -11,9 +13,7 @@ def cleanup_database():
     # db_engine.
 
 
-def get_db():
-    """Get db engine"""
-    return create_engine(database_url)
+
 
 # with unused_pricipals AS(
 # select tb."_id", tp."_id"
