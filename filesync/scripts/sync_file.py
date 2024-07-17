@@ -194,8 +194,11 @@ def update_database(datasource_engine, data_ids, dictionary_batch: pandas.DataFr
 
     if datasource == 'POSTGRES':
         present_ids = postgres_dao.get_all_by_ids(data_set_name, data_ids)
-    else:
+    elif datasource == 'MONGO':
         present_ids = mongodb_dao.get_all_by_ids(datasource_engine, data_ids)
+    else:
+        log.error("Invalid datasource MONGO OR POSTGRES supported, provided: " + datasource)
+        present_ids = None
 
     if present_ids is not None:
         dictionary_batch = dictionary_batch[~dictionary_batch['_id'].isin(present_ids)]
@@ -211,8 +214,10 @@ def update_database(datasource_engine, data_ids, dictionary_batch: pandas.DataFr
 
             if datasource == 'POSTGRES':
                 return postgres_dao.insert_as_batch(data_set_name, dictionary_batch)
-            else:
+            elif datasource == 'MONGO':
                 return mongodb_dao.insert_as_batch(datasource_engine, dictionary_batch)
+            else:
+                return None
 
         except exc.DataError as e:
             # TODO: handle insert of non failing rows in batch
