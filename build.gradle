@@ -50,7 +50,7 @@ ext {
     def springBatchVersion = "5.1.2"
     def junitVersion = "4.13.2"
     def postgresTestContainerVersion = "1.19.8"
-    def cucumberVersion = "7.18.0"
+    def cucumberVersion = "7.18.1"
 
     def pitestVersion="0.42"
 
