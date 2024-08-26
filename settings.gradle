@@ -1,7 +1,7 @@
 pluginManagement {
 
 def springVersion="1.1.6"
-def springBootVersion="3.3.2"
+def springBootVersion="3.3.3"
 def lombokVersion="8.6"
 def usePythonVersion="4.0.0"
 
