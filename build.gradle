@@ -40,7 +40,7 @@ ext {
     
     def flagsmithVersion="7.3.0"
 
-    def liquibaseVersion = "4.29.0"
+    def liquibaseVersion = "4.29.2"
 
     def postgresqlVersion = "42.7.3"
     
