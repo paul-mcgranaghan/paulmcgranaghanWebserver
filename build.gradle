@@ -38,7 +38,7 @@ ext {
     
     def mybatisVersion = "3.0.3"
     
-    def flagsmithVersion="7.3.0"
+    def flagsmithVersion="7.4.2"
 
     def liquibaseVersion = "4.29.0"
 
