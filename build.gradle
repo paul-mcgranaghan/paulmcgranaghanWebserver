@@ -42,7 +42,7 @@ ext {
 
     def liquibaseVersion = "4.29.0"
 
-    def postgresqlVersion = "42.7.3"
+    def postgresqlVersion = "42.7.4"
     
     def h2databaseVersion = "2.3.230"
     
@@ -50,7 +50,7 @@ ext {
     
     def springSleuthVersion = "3.1.11"
     
-    def springBootVersion="3.3.2"
+    def springBootVersion="3.3.5"
     
     def springdocVersion = "2.4.0"
     
@@ -68,7 +68,7 @@ ext {
 
     def postgresTestContainerVersion = "1.20.1"
 
-    def cucumberVersion = "7.18.1"
+    def cucumberVersion = "7.20.1"
 
     def pitestVersion="0.42"
 
