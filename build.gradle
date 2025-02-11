@@ -49,7 +49,7 @@ ext {
     def hsqldbVersion = "2.7.3"
     
     def springSleuthVersion = "3.1.11"
-    
+
     def springBootVersion="3.3.5"
     
     def springdocVersion = "2.4.0"
