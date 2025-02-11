@@ -44,7 +44,7 @@ ext {
 
     def postgresqlVersion = "42.7.4"
     
-    def h2databaseVersion = "2.3.230"
+    def h2databaseVersion = "2.3.232"
     
     def hsqldbVersion = "2.7.3"
     
