@@ -33,24 +33,43 @@ bootJar {
 
 ext {
     def dockerVersion = "6.7.0"
-    def guavaVersion = "33.2.1-jre"
+    
+    def guavaVersion = "33.3.1-jre"
+    
     def mybatisVersion = "3.0.3"
-    def liquibaseVersion = "4.28.0"
-    def flagsmithVersion="7.2.0"
-    def postgresqlVersion = "42.7.3"
-    def h2databaseVersion = "2.2.224"
+    
+    def flagsmithVersion="7.3.0"
+
+    def liquibaseVersion = "4.29.2"
+
+    def postgresqlVersion = "42.7.4"
+    
+    def h2databaseVersion = "2.3.230"
+    
     def hsqldbVersion = "2.7.3"
+    
     def springSleuthVersion = "3.1.11"
-    def springBootVersion="3.2.4"
-    def springBootVersion="3.3.1"
+
+    def springBootVersion="3.3.5"
+    
+    def springdocVersion = "2.4.0"
+    
     def springElasticsearchVersion = "4.0.0.RELEASE"
+    
     def thymeleafSpringVersion = "3.1.2.RELEASE"
+    
     def thymeleafLayoutVersion = "3.3.0"
+    
     def concordionVersion = "4.0.1"
+    
     def springBatchVersion = "5.1.2"
+    
     def junitVersion = "4.13.2"
-    def cucumberVersion = "7.18.0"
-    def postgresTestContainerVersion = "1.19.7"
+
+    def postgresTestContainerVersion = "1.20.3"
+
+    def cucumberVersion = "7.20.1"
+
     def pitestVersion="0.42"
 
     libraries = [
