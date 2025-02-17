@@ -56,7 +56,7 @@ ext {
     
     def springElasticsearchVersion = "4.0.0.RELEASE"
     
-    def thymeleafSpringVersion = "3.1.2.RELEASE"
+    def thymeleafSpringVersion = "3.1.3.RELEASE"
     
     def thymeleafLayoutVersion = "3.3.0"
     
