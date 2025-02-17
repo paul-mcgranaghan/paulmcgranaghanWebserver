@@ -36,7 +36,7 @@ ext {
     
     def guavaVersion = "33.3.1-jre"
     
-    def mybatisVersion = "3.0.3"
+    def mybatisVersion = "3.0.4"
     
     def flagsmithVersion="7.4.2"
 
