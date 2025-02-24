@@ -58,7 +58,7 @@ ext {
     
     def thymeleafSpringVersion = "3.1.3.RELEASE"
     
-    def thymeleafLayoutVersion = "3.3.0"
+    def thymeleafLayoutVersion = "3.4.0"
     
     def concordionVersion = "4.0.1"
     
