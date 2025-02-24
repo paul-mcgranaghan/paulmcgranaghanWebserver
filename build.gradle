@@ -50,7 +50,7 @@ ext {
     
     def springSleuthVersion = "3.1.11"
 
-    def springBootVersion="3.3.5"
+    def springBootVersion="3.4.3"
     
     def springdocVersion = "2.8.5"
     
