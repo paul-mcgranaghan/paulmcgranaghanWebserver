@@ -52,7 +52,7 @@ ext {
 
     def springBootVersion="3.4.3"
     
-    def springdocVersion = "2.8.5"
+    def springdocVersion = "2.8.6"
     
     def springElasticsearchVersion = "4.0.0.RELEASE"
     
