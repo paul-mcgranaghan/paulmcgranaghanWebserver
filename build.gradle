@@ -42,7 +42,7 @@ ext {
 
     def liquibaseVersion = "4.31.1"
 
-    def postgresqlVersion = "42.7.5"
+    def postgresqlVersion = "42.7.6"
     
     def h2databaseVersion = "2.3.232"
     
