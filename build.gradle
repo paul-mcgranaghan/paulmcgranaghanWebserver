@@ -68,7 +68,7 @@ ext {
 
     def postgresTestContainerVersion = "1.20.6"
 
-    def cucumberVersion = "7.21.1"
+    def cucumberVersion = "7.23.0"
 
     def pitestVersion="0.42"
 
