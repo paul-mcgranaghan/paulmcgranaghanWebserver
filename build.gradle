@@ -34,7 +34,7 @@ bootJar {
 ext {
     def dockerVersion = "6.7.0"
     
-    def guavaVersion = "33.4.6-jre"
+    def guavaVersion = "33.4.8-jre"
     
     def mybatisVersion = "3.0.4"
     
