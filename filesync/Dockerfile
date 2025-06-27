@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.14-rc-slim-bookworm
 WORKDIR /usr/src/app
 COPY ./* ./
 RUN mkdir -p /usr/src/app/data
