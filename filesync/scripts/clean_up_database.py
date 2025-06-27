@@ -12,6 +12,7 @@ def cleanup_database():
 
 
 def get_db():
+    return create_engine('postgresql+psycopg2://postgres:TGsH6DzzgWSEiqHkPWX@host.docker.internal:5432/data')
     """Get db engine"""
     return create_engine(database_url)
 
