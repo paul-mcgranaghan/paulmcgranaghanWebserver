@@ -4,21 +4,19 @@ plugins {
     id "java-library"
     id "project-report"
     id "io.freefair.lombok" version "$lombokVersion"
-    id "com.palantir.docker" version "0.34.0"
 }
 
 group 'com.paul.mcgranaghan'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 allprojects {
     repositories {
         mavenCentral()
     }
     test {
-        systemProperties['concordion.output.dir'] = "./build/reports/spec"
         testLogging.showStandardStreams = true
         outputs.upToDateWhen { false }
     }
@@ -71,9 +69,6 @@ ext {
             springBatch      : [
                     "org.springframework.boot:spring-boot-starter-batch:$springBootVersion"
             ],
-            concordion       : [
-                    "org.concordion:concordion:$concordionVersion"
-            ],
             springBatchTest  : [
                     "org.springframework.batch:spring-batch-test:$springBatchVersion",
                     "org.junit.platform:junit-platform-runner:$junitVersion"
@@ -92,9 +87,4 @@ ext {
     ]
 }
 
-docker {
-    name "${project.name}:${project.version}"
-    files './build/libs/paulmcgranaghanwebserver-1.0-SNAPSHOT-plain.jar', './webservice/Dockerfile'
-}
-docker.dependsOn(jar)
 

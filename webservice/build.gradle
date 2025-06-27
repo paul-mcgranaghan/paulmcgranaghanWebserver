@@ -21,8 +21,7 @@ dependencies {
             libraries.mQueue,
             libraries.liquibase)
 
-    testImplementation(libraries.concordion,
-            libraries.springBootTest, libraries.cucumber)
+    testImplementation(libraries.springBootTest, libraries.cucumber)
 }
 jar {
     enabled = true

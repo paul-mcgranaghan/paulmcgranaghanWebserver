@@ -98,7 +98,7 @@ def add_name_id(chunk):
 
 
 def get_db():
-    return create_engine('postgresql+psycopg2://postgres:Pa22word@host.docker.internal:5432/postgres')
+    return create_engine('postgresql+psycopg2://postgres:TGsH6DzzgWSEiqHkPWX@host.docker.internal:5432/data')
 
 
 def update_database(db_engine, data_ids, dictionary_batch: pandas.DataFrame, data_set_name):
