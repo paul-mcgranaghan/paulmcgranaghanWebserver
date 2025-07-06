@@ -29,10 +29,7 @@ dependencies {
             libraries.flagsmith,
             libraries.elasticSearch
 
-
-    testImplementation libraries.concordion,
-            libraries.springBootTest,
-            libraries.cucumber
+    testImplementation(libraries.springBootTest, libraries.cucumber)
 }
 bootJar {
     enabled = true

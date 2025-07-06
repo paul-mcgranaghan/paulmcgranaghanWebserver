@@ -10,7 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation(libraries.postgresDb, libraries.springBatch)
+    implementation(libraries.postgresDb, libraries.springBootStarter)
+    implementation("org.apache.commons:commons-csv:1.14.0")
+    implementation("org.apache.poi:poi:5.3.0")
+
     testImplementation(libraries.springBootTest)
 
 }
